@@ -8,13 +8,15 @@ use App\Models\ServiceMaster;
 class homePage extends Controller
 {
     private $service;
+    public $title;
     public function __construct()
     {
         $this->service = new ServiceMaster();
+        $this->title= 'Home';
     }
     public function header()
     {
-        $data = $this->service->getServiceMaster();
-        return view('Layouts.MasterLayout', compact('data'));
+        $title = $this->title;
+        return view('Pages.User.Home', compact('title'));
     }
 }

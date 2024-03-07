@@ -10,12 +10,14 @@ class Header extends Component
 {
 
     public $prop;
+    public $title;
     /**
      * Create a new component instance.
      */
-    public function __construct($prop)
+    public function __construct($prop, $title)
     {
         $this->prop = $prop;
+        $this->title = $title;
     }
 
     /**

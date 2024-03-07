@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ajax\ajaxServiceController;
+use App\Http\Controllers\ajax\ajaxTranslateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/get-service-type', [ajaxServiceController::class, 'getServiceTypeAjax']);
+Route::post('/translate', [ajaxTranslateController::class, 'translateLang']);
+Route::get('/translate', [ajaxTranslateController::class, 'translateLang']);

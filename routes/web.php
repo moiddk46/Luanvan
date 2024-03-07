@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\user\homePage;
+use App\Http\Controllers\user\servicePage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [homePage::class, 'header']);
+Route::get('/', [homePage::class, 'header'])->name('index');
+Route::prefix('user')->group(function () {
+    Route::get('/service', [servicePage::class, 'initService'])->name('service');
+});

@@ -3,7 +3,7 @@
         <div class="col-8">
             <div class="row">
                 <div class="form-group col-6">
-                    <select class="form-select form-select-lg rounded-pill" name="loaidichvu" id="loaidichvu">
+                    <select class="form-select form-select-lg rounded-pill" name="dichvu" id="dichvu">
                         <option selected>--Chọn loại dịch vụ--</option>
                         @if (isset($prop))
                             @foreach ($prop as $item)
@@ -13,7 +13,7 @@
                     </select>
                 </div>
                 <div class="form-group col-6">
-                    <select class="form-select form-select-lg rounded-pill" name="dichvu" id="dichvu">
+                    <select class="form-select form-select-lg rounded-pill" name="loaidichvu" id="loaidichvu">
                         <option selected>--Chọn dịch vụ--</option>
                     </select>
                 </div>

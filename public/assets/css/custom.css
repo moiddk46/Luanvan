@@ -4,17 +4,47 @@
     padding: 0;
     box-sizing: border-box;
 }
+.main {
+    background-color: aliceblue;
+}
 .imgHomePage {
     width: 500px;
     height: 550px;
     border-radius: 20px;
 }
-.content1 {
-    background-color: rgb(5, 188, 188);
+.header {
+    position: -webkit-sticky; /* Cho Safari */
+    position: sticky;
+    top: 0;
+    background-color: aliceblue;
+}
+.footer {
+    background-color: aliceblue;
+    box-shadow: 0px 2px 5px #888888;
+}
+.a-custom {
+    color: black; /* Màu văn bản đen */
+    text-decoration: none; /* Loại bỏ gạch dưới */
+    transition: color 0.3s; /* Hiệu ứng chuyển đổi màu khi hover */
+}
+
+/* In đậm văn bản khi rê chuột vào */
+.a-custom:hover {
+    font-weight: bold; /* In đậm văn bản */
+    color: #333; /* Thay đổi màu văn bản khi hover */
 }
 .navCustom {
-    position: block;
     background-color: aliceblue;
-    opacity: 0.9;
-    border-radius: 30px;
+    box-shadow: 0px 2px 5px #888888;
+}
+.box-img {
+    width: 100%;
+    height: 700px; /* Đảm bảo tỷ lệ khung hình được bảo tồn */
+    overflow: hidden; /* Ẩn các nội dung bên ngoài khung hình */
+}
+
+.box-img img {
+    width: 100%; /* Hình ảnh chiếm toàn bộ chiều rộng của phần tử cha */
+    height: 700px; /* Đảm bảo tỷ lệ khung hình được bảo tồn */
+    display: block; /* Đảm bảo hình ảnh hiển thị đúng cách */
 }
