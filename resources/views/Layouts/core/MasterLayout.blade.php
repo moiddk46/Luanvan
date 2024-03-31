@@ -8,19 +8,13 @@
     <title>{{ $title }}</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <header class="header">
-        <x-User.Header :prop="$data" :title="$title" />
-    </header>
-    <main class="main">
+    <main role="main">
         @yield('content')
-        {{--  @extends('Pages.User.Home', compact('data'))  --}}
     </main>
-    <footer class="footer">
-        <x-User.footer />
-    </footer>
 </body>
 <script src="{{ asset('assets/js/popper.js') }}"></script>
 <script src="{{ asset('assets/js/bootstap.js') }}"></script>

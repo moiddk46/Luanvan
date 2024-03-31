@@ -1,7 +1,20 @@
-@extends('Layouts.MasterLayout')
+@extends('Layouts.User.MasterLayout')
 
 @section('content')
     <div class="border border-light px-5">
+        @if (session('message'))
+            <div class="position-fixed top-0 end-0 p-3 mt-5" style="z-index: 1050;">
+                <div id="myToast"
+                    class="toast align-items-center {{ session('status') == true ? 'text-bg-success' : 'text-bg-danger' }}"
+                    role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('message') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row p-5">
             <div class="col-7 row align-items-center">
                 <div class="textcotent">
@@ -11,7 +24,7 @@
                         an toàn bảo mật thông tin cho khách hàng.
                     </p>
                     <div class="mt-5">
-                        <x-form.quote :prop="$data" />
+                        <x-form.quote :prop="$header" />
                     </div>
                 </div>
             </div>

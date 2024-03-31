@@ -11,13 +11,20 @@ class Header extends Component
 
     public $prop;
     public $title;
+    public $order;
+
     /**
      * Create a new component instance.
      */
-    public function __construct($prop, $title)
+    public function __construct($prop, $title, $order = null)
     {
         $this->prop = $prop;
         $this->title = $title;
+
+        // Kiểm tra nếu $order không null thì gán giá trị cho $this->order
+        if ($order !== null) {
+            $this->order = $order;
+        }
     }
 
     /**

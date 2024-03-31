@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\orderModel;
 use Illuminate\Support\ServiceProvider;
 use App\Models\ServiceMaster;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->service = new ServiceMaster;
-        $data = $this->service->getServiceMaster();
-        View::share('data', $data);     
+        $header = $this->service->getServiceMaster();
+
+        View::share('header', $header);
     }
 }
