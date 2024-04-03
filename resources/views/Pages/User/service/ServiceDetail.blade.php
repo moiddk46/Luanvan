@@ -22,8 +22,8 @@
                 </div>
             @endif
             <div class="w-50 border border-light rounded bg-dark-subtle p-3 m-auto">
-                <h5 class="text-center">Đặt hàng</h5>
-                <form method="post" action="{{ route('order') }}" enctype="multipart/form-data">
+                <h5 class="text-center">Yêu cầu báo giá</h5>
+                <form method="post" action="{{ route('priceRequest') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="serviceTypeCode" value="{{ $detailService->service_type_code }}">
                     <div class="mb-3">
@@ -47,26 +47,20 @@
                     @error('sdt')
                         <div class="form-text text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="mb-3 row">
-                        <div class="col-lg-10 col-md-8">
-                            <label for="formFile" class="form-label">Gửi tài liệu</label>
-                            <input class="form-control" type="file" id="formFile" name="files[][file]" multiple>
-                            @error('files.*.file')
-                                <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-lg-2 col-md-4">
-                            <label for="quantity" class="form-label">Số bản</label>
-                            <input class="form-control" type="number" id="quantity" name="files[][quantity]" min="1"
-                                max="500">
-                            @error('files.*.quantity')
-                                <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Nội dung</label>
+                        <textarea class="form-control" id="content" style="height: 100px" name="content"></textarea>
                     </div>
-
-
-
+                    @error('content')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Gửi tài liệu</label>
+                        <input class="form-control" type="file" id="formFile" name="files">
+                        @error('files')
+                            <div class="form-text text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="mb-3 d-flex justify-content-center">
                         <button class="btn btn-success">Đặt hàng</button>
                     </div>

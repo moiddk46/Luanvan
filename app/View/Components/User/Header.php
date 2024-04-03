@@ -12,11 +12,12 @@ class Header extends Component
     public $prop;
     public $title;
     public $order;
+    public $priceRequest;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($prop, $title, $order = null)
+    public function __construct($prop, $title, $order = null, $priceRequest = null)
     {
         $this->prop = $prop;
         $this->title = $title;
@@ -24,6 +25,9 @@ class Header extends Component
         // Kiểm tra nếu $order không null thì gán giá trị cho $this->order
         if ($order !== null) {
             $this->order = $order;
+        }
+        if ($priceRequest !== null) {
+            $this->priceRequest = $priceRequest;
         }
     }
 

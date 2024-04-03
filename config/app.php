@@ -187,5 +187,6 @@ return [
 
 
 
-    'pathFile' => env('UPLOADED_FILE_PATH', 'contents'),
+    'pathFilePriceRequest' => env('UPLOADED_FILE_PATH', 'contents') . '/priceRequest',
+    'pathFileOrder' => env('UPLOADED_FILE_PATH', 'contents') . '/order',
 ];

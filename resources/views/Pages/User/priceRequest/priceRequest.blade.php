@@ -16,14 +16,14 @@
             </div>
         @endif
         <div class="container-fluid">
-            <h3 class="text-center mt-5 mb-3 fw-bold">Danh sách đơn hàng</h3>
+            <h3 class="text-center mt-5 mb-3 fw-bold">Danh sách yêu cầu</h3>
             @if (isset($data) && !empty($data))
                 <table class="table align-middle mb-0 bg-white table-striped">
                     <thead class="bg-light">
                         <tr>
-                            <th>Mã đơn hàng</th>
+                            <th>Mã báo giá</th>
                             <th>Tên dịch vụ</th>
-                            <th>Ngày đặt hàng</th>
+                            <th>Ngày yêu cầu</th>
                             <th>Trạng thái</th>
                             <th></th>
                         </tr>
@@ -33,30 +33,26 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>
-                                    {{ $item->order_id }}
+                                    {{ $item->request_id }}
                                 </td>
                                 <td>
                                     {{ $item->service_type_name }}
                                 </td>
                                 <td id="date">
-                                    {{ $item->order_date }}
+                                    {{ $item->request_date }}
                                 </td>
                                 <td>
                                     <span
                                         class="badge  
-                                            @if ($item->status_id == '1') text-bg-warning
-                                            @elseif($item->status_id == '2')
-                                                text-bg-primary
-                                            @elseif($item->status_id == '3')
-                                                text-bg-secondary
+                                            @if ($item->status_id == '5') text-bg-warning
                                             @else
                                                 text-bg-success @endif
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailPriceRequestUser', ['data' => $item->order_id]) }}"
+                                    <a href="{{ route('detailPriceRequestUser', ['data' => $item->request_id]) }}"
                                         class="btn btn-outline-dark">
-                                        Chi tiết
+                                        Xem
                                     </a>
                                 </td>
                             </tr>
@@ -65,7 +61,7 @@
                     </tbody>
                 </table>
             @else
-                <p class="mt-5 text-center">Chưa có đơn hàng nào.</p>
+                <p class="mt-5 text-center">Chưa có yêu cầu báo giá nào.</p>
             @endif
         </div>
 

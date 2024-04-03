@@ -61,7 +61,7 @@
                             <button type="submit" class="btn btn-success">Xác nhận đơn hàng</button>
                         </div>
                     </div>
-                    <table class="table align-middle mb-0 bg-white">
+                    <table class="table align-middle mb-0 bg-white table-striped">
                         <thead class="bg-light">
                             <tr>
                                 <th>
@@ -107,9 +107,9 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-dark">
+                                        <a href="{{ route('detailOrder', ['data' => $item->order_id]) }}" class="btn btn-outline-dark">
                                             Chi tiết
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -118,7 +118,7 @@
                     </table>
                 </form>
             @else
-                <p>Chưa có đơn hàng nào.</p>
+                <p class="mt-5 text-center">Chưa có đơn hàng nào.</p>
             @endif
 
         </div>

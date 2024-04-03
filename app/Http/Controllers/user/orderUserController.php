@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\order\orderRequest;
 use App\Const\KCconst;
+use Illuminate\Http\Request;
 use App\Models\orderModel;
 
 class orderUserController extends Controller
@@ -17,20 +17,20 @@ class orderUserController extends Controller
         $this->service = new orderModel();
     }
 
-    public function initOrder(orderRequest $request)
+    public function initOrder(Request $request)
     {
         $formData = $request->all();
-        if (empty($formData)) {
-            $message = 'Bạn đã đặt hàng thất bại.Kiểm tra lại';
+        if (empty($formData) || empty($formData['quantity'])) {
+            $message = 'Bạn đã đặt hàng thất bại.Kiểm tra lại số lượng bản cần.';
             return redirect()->back()->with([
                 'message' => $message,
                 'status' => false
             ]);
         }
-        $count = $this->service->insertOrder($formData['serviceTypeCode'], KCconst::DB_STATUS_ORDER_HANDLING, $formData['name'], $formData['address'], $formData['sdt'], $formData['files']);
+        $count = $this->service->insertOrder($formData);
         if ($count > 0) {
             $message = 'Bạn đã đặt hàng thành công';
-            return redirect()->back()->with([
+            return redirect()->route('cart')->with([
                 'message' => $message,
                 'status' => true
             ]);
@@ -39,7 +39,6 @@ class orderUserController extends Controller
 
     public function listOrder()
     {
-
         $data  = $this->service->getAllOrderUser();
         $title = 'Giỏ hàng';
         return view('Pages.User.cart.Cart', compact('title', 'data'));

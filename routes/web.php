@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\admin\homeAdminController;
 use App\Http\Controllers\admin\orderAdminController;
-use App\Http\Controllers\admin\assignmentAdminController;
+use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
 use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
+use App\Http\Controllers\user\priceRequestController;
 use App\Http\Controllers\user\serviceUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,10 +34,17 @@ Route::prefix('core')->group(function () {
 
 Route::prefix('admin')->middleware('is_admin')->group(function () {
     Route::get('/home', [homeAdminController::class, 'home'])->name('indexAdmin');
-    Route::get('/assignment', [assignmentAdminController::class, 'initAssignment'])->name('assignment');
     Route::prefix('order')->group(function () {
         Route::get('/initOrder', [orderAdminController::class, 'order'])->name('orderAdmin');
         Route::post('/updateStatusOrder', [orderAdminController::class, 'updateStatus'])->name('updateStatus');
+        Route::get('/detailOrder/{data}', [orderAdminController::class, 'detailOrder'])->name('detailOrder');
+        Route::post('/updateDetailOrder', [orderAdminController::class, 'updateDetailOrder'])->name('updateDetailOrder');
+    });
+    Route::prefix('priceRequest')->group(function () {
+        Route::get('/priceRequest', [priceRequestAdminController::class, 'priceRequest'])->name('priceRequestAdmin');
+        Route::get('/detailPriceRequest/{data}', [priceRequestAdminController::class, 'detailPriceRequest'])->name('detailPriceRequest');
+        Route::get('/download/{data}', [priceRequestAdminController::class, 'getDownload'])->name('download');
+        Route::post('/updateDetailRequest', [priceRequestAdminController::class, 'updateDetailRequest'])->name('updateDetailRequest');
     });
 });
 
@@ -45,6 +53,9 @@ Route::prefix('user')->group(function () {
     Route::get('/service/detail/{data}', [serviceUserController::class, 'detailService'])->name('detailService');
     Route::prefix('auth')->middleware('is_customers')->group(function () {
         Route::post('/order', [orderUserController::class, 'initOrder'])->name('order');
+        Route::get('/priceRequest', [priceRequestController::class, 'listPriceRequest'])->name('priceRequestUser');
         Route::get('/cart', [orderUserController::class, 'listOrder'])->name('cart');
+        Route::post('/priceRequest', [priceRequestController::class, 'initPriceRequest'])->name('priceRequest');
+        Route::get('/detailPriceRequest/{data}', [priceRequestController::class, 'detailPriceRequest'])->name('detailPriceRequestUser');
     });
 });

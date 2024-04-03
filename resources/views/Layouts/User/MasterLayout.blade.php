@@ -14,8 +14,8 @@
 
 <body>
     <header class="bg-light">
-        @if (isset($countOrder))
-            <x-User.Header :prop="$header" :title="$title" :order="$countOrder" />
+        @if (isset($count))
+            <x-User.Header :prop="$header" :title="$title" :order="$count['order']" :priceRequest="$count['priceRequest']" />
         @else
             <x-User.Header :prop="$header" :title="$title" />
         @endif

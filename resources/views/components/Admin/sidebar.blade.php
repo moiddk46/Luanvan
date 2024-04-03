@@ -2,17 +2,21 @@
 <div class="sidebar-sticky mt-5">
     <ul class="nav flex-column nav-underline w-50 m-auto">
         <li class="nav-item mt-3">
-            <a class="nav-link text-black" href="{{ route('indexAdmin') }}">Doanh thu</a>
+            <a class="nav-link text-black" href="{{ route('indexAdmin') }}"><i class="bi bi-bar-chart-line-fill me-2"></i>Doanh thu</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-black" href="#">Nhân viên</a>
+            <a class="nav-link text-black" href="#"><i class="bi bi-person-workspace me-2"></i>Nhân viên</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-black" href="{{ route('orderAdmin') }}">Đơn hàng</a>
+            <a class="nav-link text-black" href="#"> <i class="bi bi-person-video me-2"></i>Khách hàng</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-black" href="{{ route('assignment') }}">Phân công</a>
+            <a class="nav-link text-black" href="{{ route('orderAdmin') }}"><i class="bi bi-card-list me-2"></i>Đơn hàng</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link text-black" href="{{ route('priceRequestAdmin') }}"><i class="bi bi-tags me-2"></i>Báo giá</a>
+        </li>
+        
     </ul>
 </div>
 </nav>

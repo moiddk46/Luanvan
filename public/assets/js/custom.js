@@ -125,9 +125,24 @@ $(".checkAll").click(function () {
     $(".check").prop("checked", $(this).prop("checked"));
 });
 
-$(document).ready(function() {
-    $('#statusSelect').change(function() {
+$(document).ready(function () {
+    $("#statusSelect").change(function () {
         var selectedStatus = $(this).val();
-        $('#statusValue').val(selectedStatus);
+        $("#statusValue").val(selectedStatus);
+    });
+});
+$(document).ready(function () {
+    $("#staff").change(function () {
+        var selectedStaff = $(this).val();
+        $("#staffValue").val(selectedStaff);
+    });
+});
+
+$(document).ready(function () {
+    $("#sample").click(function () {
+        var name = $("#name").text();
+        var service = $("#service").text();
+        var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là {$money} ạ. `;
+        $("#reply").val(sampleLetter);
     });
 });

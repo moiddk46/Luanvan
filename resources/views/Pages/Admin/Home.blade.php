@@ -15,6 +15,6 @@
                 </div>
             </div>
         @endif
-        <canvas id="radar-chart" width="800" height="600"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
 @endsection

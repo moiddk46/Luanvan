@@ -17,14 +17,13 @@
         @endif
         <div class="row">
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-5">
+                <table class="table align-middle mb-0 bg-white mt-5 table-striped">
                     <thead class="bg-light">
                         <tr>
-                            <th>Mã đơn hàng</th>
+                            <th>Mã báo giá</th>
                             <th>Tên dịch vụ</th>
-                            <th>Đơn giá</th>
-                            <th>Ngày đặt hàng</th>
-                            <th>Trạng thái đơn hàng</th>
+                            <th>Ngày yêu cầu</th>
+                            <th>Trạng thái</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -33,31 +32,27 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>
-                                    {{ $item->order_id }}
+                                    {{ $item->request_id }}
                                 </td>
                                 <td>
                                     {{ $item->service_type_name }}
                                 </td>
-                                <td id="currency">
-                                    {{ $item->total_price }}
-                                </td>
                                 <td id="date">
-                                    {{ $item->order_date }}
+                                    {{ $item->request_date }}
                                 </td>
                                 <td>
                                     <span
-                                        class="badge @if ($item->status_id == '1') text-bg-warning
-                                        @elseif($item->status_id == '2')
-                                            text-bg-primary
-                                        @elseif($item->status_id == '3')
-                                            text-bg-secondary
-                                        @else
-                                            text-bg-success @endif rounded-pill d-inline">{{ $item->status }}</span>
+                                        class="badge  
+                                            @if ($item->status_id == '5') text-bg-warning
+                                            @else
+                                                text-bg-success @endif
+                                                rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-dark">
-                                        Chi tiết
-                                    </button>
+                                    <a href="{{ route('detailPriceRequest', ['data' => $item->request_id]) }}"
+                                        class="btn btn-outline-dark">
+                                        Trả lời
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -65,7 +60,7 @@
                     </tbody>
                 </table>
             @else
-                <p>Chưa có đơn hàng nào để phân công</p>
+                <p>Chưa có yêu cầu nào.</p>
             @endif
 
         </div>

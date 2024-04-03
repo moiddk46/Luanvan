@@ -39,18 +39,21 @@
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <div class="me-2">
-                    <a class="btn btn-primary position-relative btn-lg" href="{{ route('cart') }}">
-                        <i class="bi bi-cart4"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            @if (isset($order))
-                                {{ $order }}
-                            @endif
-                            <span class="visually-hidden">unread messages</span>
-                        </span>
-                    </a>
-                </div>
-                @if (Auth::check())
+                <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2">
+                    <i class="bi bi-cart4"></i> <span class="badge text-bg-danger">
+                        @if (isset($order))
+                            {{ $order }}
+                        @endif
+                    </span>
+                </a>
+                <a href="{{ route('priceRequestUser') }}" class="btn btn-outline-dark me-2">
+                    <i class="bi bi-tags me-2"></i> <span class="badge text-bg-danger">
+                        @if (isset($priceRequest))
+                            {{ $priceRequest }}
+                        @endif
+                    </span>
+                </a>
+                @if (Auth::check() && Auth::user()->position == 3)
                     <a class="btn btn-outline-dark" href="{{ route('logout') }}">{{ Auth::user()->name }}</a>
                 @else
                     <a class="btn btn-outline-dark" href="{{ route('login') }}">Đăng nhập</a>

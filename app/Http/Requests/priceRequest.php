@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\order;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class orderRequest extends FormRequest
+class priceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +13,7 @@ class orderRequest extends FormRequest
     {
         return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,8 +25,8 @@ class orderRequest extends FormRequest
             'name' => 'required|min:8',
             'address' => 'required|min:20',
             'sdt' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
-            'files.*.file' => 'required|mimes:doc,docx',
-            'files.*.quantity' => 'required|min:1'
+            'content' => 'required|min:20',
+            'files' => 'required|mimes:doc,docx,mpeng,mp4',
         ];
     }
 
@@ -38,10 +39,10 @@ class orderRequest extends FormRequest
             'address.min' => 'Địa chỉ email không hợp lệ.',
             'sdt.required' => 'Vui lòng nhập số điện thoại.',
             'sdt.regex' => 'Số điện thoại không đúng định dạng',
-            'files.*.file.required' => 'Vui lòng chọn tệp',
-            'files.*.file.mimes' => 'Tệp không phải dạng doc hoặc docx',
-            'files.*.quantity.required' => 'Vui lòng chọn số lượng bạn cần',
-            'files.*.quantity.min' => 'Số lượng phải từ 1 trở lên',
+            'content.required' => 'Vui lòng nhập nội dung.',
+            'content.min' => 'Nội dung quá ngắn.',
+            'files.required' => 'Vui lòng chọn tệp',
+            'files.mimes' => 'Tệp không phải dạng doc, docx, mpeng hoặc mp4.',
         ];
     }
 }
