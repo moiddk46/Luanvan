@@ -68,32 +68,32 @@ $(document).ready(function () {
     }, 3000);
 });
 
-$(document).ready(function () {
-    new Chart(document.getElementById("bar-chart-grouped"), {
-        type: "bar",
-        data: {
-            labels: ["1900", "1950", "1999", "2050"],
-            datasets: [
-                {
-                    label: "Africa",
-                    backgroundColor: "#3e95cd",
-                    data: [133, 221, 783, 2478],
-                },
-                {
-                    label: "Europe",
-                    backgroundColor: "#8e5ea2",
-                    data: [408, 547, 675, 734],
-                },
-            ],
-        },
-        options: {
-            title: {
-                display: true,
-                text: "Population growth (millions)",
-            },
-        },
-    });
-});
+// $(document).ready(function () {
+//     new Chart(document.getElementById("bar-chart-grouped"), {
+//         type: "bar",
+//         data: {
+//             labels: ["1900", "1950", "1999", "2050"],
+//             datasets: [
+//                 {
+//                     label: "Africa",
+//                     backgroundColor: "#3e95cd",
+//                     data: [133, 221, 783, 2478],
+//                 },
+//                 {
+//                     label: "Europe",
+//                     backgroundColor: "#8e5ea2",
+//                     data: [408, 547, 675, 734],
+//                 },
+//             ],
+//         },
+//         options: {
+//             title: {
+//                 display: true,
+//                 text: "Population growth (millions)",
+//             },
+//         },
+//     });
+// });
 function formatCurrency(amount) {
     return new Intl.NumberFormat("vi-VN", {
         style: "currency",
@@ -145,4 +145,52 @@ $(document).ready(function () {
         var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là {$money} ạ. `;
         $("#reply").val(sampleLetter);
     });
+});
+
+$(document).ready(function () {
+    var name = $("#name").val();
+    $("#name").on("input change", function () {
+        name = $(this).val();
+        updateValues();
+    });
+
+    var address = $("#address").val();
+    $("#address").on("input change", function () {
+        address = $(this).val();
+        updateValues();
+    });
+
+    var sdt = $("#sdt").val();
+    $("#sdt").on("input change", function () {
+        sdt = $(this).val();
+        updateValues();
+    });
+
+    var service = $("#service").text();
+    var quantity = $("#quantity").val();
+    $("#quantity").on("input change", function () {
+        quantity = $(this).val();
+        updateValues();
+    });
+
+    var statusReceipt = $("#statusReceipt option:selected").text();
+    $("#statusReceipt").change(function () {
+        statusReceipt = $(this).find("option:selected").text();
+        updateValues();
+    });
+
+    function updateValues() {
+        var sum = $("#currency1").val() * quantity;
+
+        $("#name1").text(name);
+        $("#address1").text(address);
+        $("#sdt1").text(sdt);
+        $("#quantity1").text(quantity);
+        $("#service1").text(service);
+        $("#statusReceipt1").text(statusReceipt);
+        $("#sum").text(formatCurrency(sum));
+        $("#sum1").val(sum);
+    }
+    // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
+    updateValues();
 });

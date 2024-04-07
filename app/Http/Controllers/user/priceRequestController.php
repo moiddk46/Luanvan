@@ -28,7 +28,7 @@ class priceRequestController extends Controller
         $count = $this->service->insertRequest($formData);
         if ($count) {
             $message = 'Bạn đã yêu cầu báo giá thành công';
-            return redirect()->back()->with([
+            return redirect()->route('priceRequestUser')->with([
                 'message' => $message,
                 'status' => true
             ]);
@@ -50,7 +50,9 @@ class priceRequestController extends Controller
         }
         $status = $this->service->getStatus();
 
-        return view('Pages.User.priceRequest.priceRequestDetail', compact('title', 'data', 'status'));
+        $statusReceipt = $this->service->getStatusMethod();
+
+        return view('Pages.User.priceRequest.priceRequestDetail', compact('title', 'data', 'status', 'statusReceipt'));
     }
 
     public function listPriceRequest()

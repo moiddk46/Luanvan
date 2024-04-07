@@ -43,13 +43,17 @@
                     <i class="bi bi-cart4"></i> <span class="badge text-bg-danger">
                         @if (isset($order))
                             {{ $order }}
+                        @else
+                            0
                         @endif
                     </span>
                 </a>
                 <a href="{{ route('priceRequestUser') }}" class="btn btn-outline-dark me-2">
-                    <i class="bi bi-tags me-2"></i> <span class="badge text-bg-danger">
+                    <i class="bi bi-tags"></i> <span class="badge text-bg-danger">
                         @if (isset($priceRequest))
                             {{ $priceRequest }}
+                        @else
+                            0
                         @endif
                     </span>
                 </a>

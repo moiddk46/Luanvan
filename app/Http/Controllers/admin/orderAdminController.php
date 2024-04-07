@@ -83,7 +83,7 @@ class orderAdminController extends Controller
         $message = "Vui lòng chọn nhân viên để hoàn thành đơn hàng";
         if ($count > 0) {
             $message = "Bạn đã cập nhật trạng thái và phân công đơn hàng thành công";
-            return redirect()->back()->with([
+            return redirect()->route('orderAdmin')->with([
                 'message' => $message,
                 'status' => true
             ]);

@@ -78,7 +78,7 @@ class priceRequestAdminController extends Controller
         $message = "Thực hiện trả lời báo giá không thành công";
         if ($count > 0) {
             $message = "Bạn đã trả lời và cập nhật yêu cầu báo giá thành công";
-            return redirect()->back()->with([
+            return redirect()->route('priceRequestAdmin')->with([
                 'message' => $message,
                 'status' => true
             ]);

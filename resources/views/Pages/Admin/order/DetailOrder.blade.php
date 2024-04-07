@@ -34,8 +34,16 @@
                                     <input type="hidden" value="{{ $item->order_id }}" name="orderId">
                                 </tr>
                                 <tr>
+                                    <th>Tên khách hàng</th>
+                                    <td>{{ $item->name }}</td>
+                                </tr>
+                                <tr>
                                     <th>Loại dịch vụ</th>
                                     <td>{{ $item->service_type_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ngày đặt hàng</th>
+                                    <td id="date">{{ $item->order_date }}</td>
                                 </tr>
                                 <tr>
                                     <th>Số lượng</th>
@@ -47,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <th>Tổng giá</th>
-                                    <td id="currency">{{ $item->price * $item->quantity }}</td>
+                                    <td id="currency">{{ $item->unit_price }}</td>
                                 </tr>
                                 <tr>
                                     <th>Trạng thái</th>

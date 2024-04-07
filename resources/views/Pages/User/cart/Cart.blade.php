@@ -54,7 +54,7 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailPriceRequestUser', ['data' => $item->order_id]) }}"
+                                    <a href="{{ route('detailCart', ['data' => $item->order_id]) }}"
                                         class="btn btn-outline-dark">
                                         Chi tiết
                                     </a>

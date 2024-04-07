@@ -43,7 +43,7 @@
                                 <td>
                                     <span
                                         class="badge  
-                                            @if ($item->status_id == '5') text-bg-warning
+                                            @if ($item->status_id == '2') text-bg-warning
                                             @else
                                                 text-bg-success @endif
                                                 rounded-pill d-inline">{{ $item->status }}</span>

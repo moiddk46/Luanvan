@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Const\KCconst;
 use Illuminate\Http\Request;
 use App\Models\orderModel;
+use App\Models\staffModel;
 
 class orderUserController extends Controller
 {
@@ -20,7 +21,13 @@ class orderUserController extends Controller
     public function initOrder(Request $request)
     {
         $formData = $request->all();
-        if (empty($formData) || empty($formData['quantity'])) {
+        if ($formData['status'] == KCconst::DB_STATUS_DONT_REPLY) {
+            $message = 'Bạn không thể đặt hàng với yêu cầu báo giá chưa được trả lời';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        } else if (empty($formData['quantity'])) {
             $message = 'Bạn đã đặt hàng thất bại.Kiểm tra lại số lượng bản cần.';
             return redirect()->back()->with([
                 'message' => $message,
@@ -35,6 +42,25 @@ class orderUserController extends Controller
                 'status' => true
             ]);
         }
+    }
+
+
+    public function detailOrder($data)
+    {
+        $title = 'Chi tiết đơn hàng';
+        $service = $this->service;
+
+        $data = $this->service->selectDetailOrderUser($data);
+        if (empty($data)) {
+            $message = "Không có chi tiết đơn hàng";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $status = $this->service->getStatus();
+
+        return view('Pages.user.Cart.CartDetail', compact('title', 'data', 'status'));
     }
 
     public function listOrder()

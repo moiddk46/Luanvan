@@ -39,14 +39,17 @@ class priceRequestModel extends Model
             'status' => KCconst::DB_STATUS_DONT_REPLY
         ]);
 
-
-        $path = config('app.pathFilePriceRequest') . '/' . $count;
-        $file = $formData['files']->storeAs($path, $fileName, 'public');
-        if (Storage::disk('public')->exists($file)) {
-            $upload = true;
-            DB::commit();
-        } else {
+        if (!isset($count) || empty($count)) {
             DB::rollback();
+        } else {
+            $path = config('app.pathFilePriceRequest') . '/' . $count;
+            $file = $formData['files']->storeAs($path, $fileName, 'public');
+            if (Storage::disk('public')->exists($file)) {
+                $upload = true;
+                DB::commit();
+            } else {
+                DB::rollback();
+            }
         }
         return $upload;
     }
@@ -62,7 +65,7 @@ class priceRequestModel extends Model
         $select  = DB::table('price_request as pr')
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
-            ->join('status_master as sm', 'sm.status_id', '=', 'pr.status')
+            ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
             ->where('id_user', $user->id)
             ->get()->toArray();
         return $select;
@@ -78,7 +81,7 @@ class priceRequestModel extends Model
         $select  = DB::table('price_request as pr')
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
-            ->join('status_master as sm', 'sm.status_id', '=', 'pr.status')
+            ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
             ->get()->toArray();
         return $select;
     }
@@ -92,7 +95,7 @@ class priceRequestModel extends Model
         $select  = DB::table('price_request as pr')
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
-            ->join('status_master as sm', 'sm.status_id', '=', 'pr.status')
+            ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
             ->where('pr.request_id', $data)
             ->get()->toArray();
         return $select;
@@ -105,12 +108,35 @@ class priceRequestModel extends Model
      */
     public function getStatus(): array
     {
-        $select  = DB::table('status_master')
-            ->where('status_id', KCconst::DB_STATUS_DONT_REPLY)
-            ->orWhere('status_id', KCconst::DB_STATUS_REPLY)
+        $select  = DB::table('status_reply')
             ->get()->toArray();
         return $select;
     }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getStatusReceipt(): array
+    {
+        $select  = DB::table('status_receipt')
+            ->get()->toArray();
+        return $select;
+    }
+
+     /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getStatusMethod(): array
+    {
+        $select  = DB::table('status_method')
+            ->get()->toArray();
+        return $select;
+    }
+
 
     /**
      * @return int

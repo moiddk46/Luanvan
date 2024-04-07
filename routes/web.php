@@ -57,5 +57,6 @@ Route::prefix('user')->group(function () {
         Route::get('/cart', [orderUserController::class, 'listOrder'])->name('cart');
         Route::post('/priceRequest', [priceRequestController::class, 'initPriceRequest'])->name('priceRequest');
         Route::get('/detailPriceRequest/{data}', [priceRequestController::class, 'detailPriceRequest'])->name('detailPriceRequestUser');
+        Route::get('/detailCart/{data}', [orderUserController::class, 'detailOrder'])->name('detailCart');
     });
 });

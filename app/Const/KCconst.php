@@ -10,8 +10,10 @@ class KCconst
     const DB_STATUS_ORDER_CONFIRMED = 2; // Đã xác nhận
     const DB_STATUS_ORDER_FINISHING = 3; // Đang hoàn thành
     const DB_STATUS_ORDER_FINISHED = 4;  // Đã hoàn thành
-    const DB_STATUS_DONT_REPLY = 5;  // Chưa trả lời
-    const DB_STATUS_REPLY = 6;  // Đã trả lời
+
+    //reply
+    const DB_STATUS_DONT_REPLY = 2;  // Chưa trả lời
+    const DB_STATUS_REPLY = 1;  // Đã trả lời
 
 
     //User
@@ -22,5 +24,12 @@ class KCconst
     //số bản
     const DB_QUANTITY_DEFAULT = 1; // admin
 
+    //receipt
 
+    const DB_DONT_RECEIPT = 1; // chưa thanh toán
+    const DB_DONE_RECEIPT = 2; // đã thanh toán
+
+    // hình thức thanh toán
+    const DB_RECEIPT_WHEN_GIVE = 1; // Thanh toán khi nhận hàng
+    const DB_RECEIPT_ONLINE =2; // Thanh toán online
 }

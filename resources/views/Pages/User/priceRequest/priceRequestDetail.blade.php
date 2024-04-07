@@ -36,13 +36,34 @@
                                 </tr>
                                 <tr>
                                     <th>Tên khách hàng</th>
-                                    <td id="name">{{ $item->name }}</td>
+                                    <td>
+                                        <div class="col-8">
+                                            <input class="form-control" type="text" name="name" id="name"
+                                                value="{{ $item->name }}">
+                                        </div>
+                                    </td>
                                     <input type="hidden" name="idUser" value="{{ $item->id_user }}">
-                                    <input type="hidden" name="name" value="{{ $item->name }}">
-                                    <input type="hidden" name="address" value="{{ $item->address }}">
-                                    <input type="hidden" name="sdt" value="{{ $item->phone }}">
                                     <input type="hidden" name="price"
                                         value="{{ !empty($item->price) ? $item->price : '0' }}">
+                                </tr>
+                                <tr>
+                                    <th>Địa chỉ</th>
+                                    <td>
+                                        <div class="col-8">
+                                            <input class="form-control" type="text" name="address" id="address"
+                                                value="{{ $item->address }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Số điện thoại</th>
+                                    <td>
+                                        <div class="col-8">
+                                            <input class="form-control" type="tel" name="sdt" id="sdt"
+                                                value="{{ $item->phone }}" pattern="[0-9]{10,11}"
+                                                title="Số điện thoại phải có từ 10 đến 11 chữ số">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Loại dịch vụ</th>
@@ -56,8 +77,9 @@
                                 <tr>
                                     <th>Số bản</th>
                                     <td>
-                                        <div class="col-6">
-                                            <input type="number" id="quantity" name="quantity" class="form-control">
+                                        <div class="col-2">
+                                            <input type="number" id="quantity" name="quantity" class="form-control"
+                                                value="1">
                                         </div>
                                     </td>
                                 </tr>
@@ -73,10 +95,11 @@
                                     <td>
                                         <span
                                             class="badge  
-                                            @if ($item->status_id == '5') text-bg-warning
+                                            @if ($item->status_id == '2') text-bg-warning
 @else
 text-bg-success @endif
                                                 rounded-pill d-inline">{{ $item->status }}</span>
+                                        <input type="hidden" name="status" value="{{ $item->status_id }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,6 +109,19 @@ text-bg-success @endif
                                             {{ !empty($item->price) ? $item->price : '0' }}
 
                                         </div>
+                                        <input type="hidden" id="currency1"
+                                            value="{{ !empty($item->price) ? $item->price : '0' }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Báo giá</th>
+                                    <td>
+                                        <select class="form-select form-select-md w-50" aria-label="Small select example"
+                                            name="statusReceipt" id="statusReceipt">
+                                            @foreach ($statusReceipt as $row)
+                                                <option value="{{ $row->status_id }}">{{ $row->status }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -104,9 +140,58 @@ text-bg-success @endif
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="{{ route('cart') }}" class="btn btn-secondary me-2">Quay
+                        <a href="{{ route('priceRequestUser') }}" class="btn btn-secondary me-2">Quay
                             lại</a>
-                        <button type="submit" class="btn btn-success">Đặt hàng</button>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            Đặt hàng
+                        </button>
+                    </div>
+
+
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5 class="text-center fw-bold">Thông tin đặt hàng</h5>
+                                    <div class="row mt-3 ">
+                                        <div class="col-4 py-3 bg-body-secondary">Tên</div>
+                                        <div class="col-8 p-3" id="name1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Đia chỉ</div>
+                                        <div class="col-8 p-3" id="address1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Số điện thoại</div>
+                                        <div class="col-8 p-3" id="sdt1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Loại dịch vụ</div>
+                                        <div class="col-8 p-3" id="service1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Số bản</div>
+                                        <div class="col-8 p-3" id="quantity1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Hình thức thanh toán</div>
+                                        <div class="col-8 p-3" id="statusReceipt1"></div>
+                                    </div>
+                                    <div class="row fw-bold ">
+                                        <div class="col-4 py-3 bg-body-secondary">Tổng</div>
+                                        <div class="col-8 p-3" id="sum"> </div>
+                                        <input type="hidden" name="sum" id="sum1" value="">
+                                    </div>
+                                </div>
+                                <div class="modal-footer m-auto">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             @endif
