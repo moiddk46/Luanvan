@@ -33,4 +33,8 @@
             </div>
         </div>
     </div>
+
+    <form action="{{ route('payment') }}" method="post">
+        <button type="submit">Thanh Toan</button>
+    </form>
 @endsection

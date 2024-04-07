@@ -172,12 +172,14 @@ $(document).ready(function () {
         quantity = $(this).val();
         updateValues();
     });
-
+    var statusValue = $("#statusReceipt").val();
     var statusReceipt = $("#statusReceipt option:selected").text();
     $("#statusReceipt").change(function () {
         statusReceipt = $(this).find("option:selected").text();
+        statusValue = $(this).val();
         updateValues();
     });
+    console.log( $("#form_order").attr("action"));
 
     function updateValues() {
         var sum = $("#currency1").val() * quantity;
@@ -190,6 +192,13 @@ $(document).ready(function () {
         $("#statusReceipt1").text(statusReceipt);
         $("#sum").text(formatCurrency(sum));
         $("#sum1").val(sum);
+        if (statusValue == 2) {
+            $("#form_order").attr("action", `http://127.0.0.1:8000/user/auth/payment`);
+            $("#button").text("Thanh toán");
+        } else {
+            $("#form_order").attr("action", `http://127.0.0.1:8000/user/auth/order`);
+            $("#button").text("Xác nhận");
+        }
     }
     // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
     updateValues();

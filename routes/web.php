@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\orderAdminController;
 use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
+use App\Http\Controllers\pay\paymentController;
 use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
 use App\Http\Controllers\user\priceRequestController;
@@ -58,5 +59,7 @@ Route::prefix('user')->group(function () {
         Route::post('/priceRequest', [priceRequestController::class, 'initPriceRequest'])->name('priceRequest');
         Route::get('/detailPriceRequest/{data}', [priceRequestController::class, 'detailPriceRequest'])->name('detailPriceRequestUser');
         Route::get('/detailCart/{data}', [orderUserController::class, 'detailOrder'])->name('detailCart');
+        Route::post('/payment', [paymentController::class, 'payment'])->name('payment');
+        Route::get('/statusPayment', [paymentController::class, 'statusPayment'])->name('statusPayment');
     });
 });

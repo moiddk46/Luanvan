@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <h5>Danh sách giỏ hàng</h5>
             @if (isset($data) && !empty($data))
-                <form action="{{ route('order') }}" method="post">
+                <form action="{{ route('order') }}" method="post" id="form_order">
                     @csrf
                     <table class="table align-middle mb-0 bg-white mt-5 table-striped">
                         <thead>
@@ -188,7 +188,9 @@ text-bg-success @endif
                                 </div>
                                 <div class="modal-footer m-auto">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                    <button type="submit" class="btn btn-success" name="redirect"  id="button">Xác
+                                        nhận</button>
+
                                 </div>
                             </div>
                         </div>

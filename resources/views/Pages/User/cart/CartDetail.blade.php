@@ -89,7 +89,7 @@
                             <div class="col-4 py-3">Trạng thái thanh toán</div>
                             <div class="col-8 py-3"><span
                                     class="badge  
-                                    @if ($item->status_id == '1') text-bg-warning
+                                    @if ($item->sr_status_id == '1') text-bg-warning
                                     @else
                                     text-bg-success @endif
                                 rounded-pill d-inline">{{ $item->sr_status }}</span>
