@@ -70,4 +70,31 @@ class orderUserController extends Controller
         $title = 'Giỏ hàng';
         return view('Pages.User.cart.Cart', compact('title', 'data'));
     }
+
+
+    public function giveOrder($data)
+    {
+        if (isset($data)) {
+            $count = $this->service->updateGiveOrder($data);
+            if ($count < 1) {
+                $message = "Đã có lỗi xảy ra vui lòng thử lại";
+                return redirect()->back()->with([
+                    'message' => $message,
+                    'status' => false
+                ]);
+            } else {
+                $message = "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi";
+                return redirect()->route('cart')->with([
+                    'message' => $message,
+                    'status' => true
+                ]);
+            }
+        } else {
+            $message = "Đã có lỗi xảy ra vui lòng thử lại";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+    }
 }

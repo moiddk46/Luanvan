@@ -40,7 +40,7 @@ class paymentController extends Controller
         $vnp_TmnCode = "ER4E99U9"; //Mã website tại VNPAY 
         $vnp_HashSecret = "QRZAHUDJXSILAJAOEPTPAWNUSSWROXWN"; //Chuỗi bí mật
 
-        $vnp_TxnRef = $formData['requestId']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $formData['requestId'] . md5(rand(10, 100)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toan online";
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;
@@ -98,14 +98,16 @@ class paymentController extends Controller
     public function statusPayment(Request  $request)
     {
         $formData = $request->all();
-        if (isset($formData['vnp_SecureHash'])) {
+        if (isset($formData['vnp_ResponseCode']) && $formData['vnp_ResponseCode'] == '00') {
+            // Giao dịch thành công
             $message = 'Bạn đã đặt hàng và thanh toán thành công';
             return redirect()->route('cart')->with([
                 'message' => $message,
                 'status' => true
             ]);
         } else {
-            $message = 'Bạn đã đặt hàng không thành công. vui lòng thực hiện lại';
+            // Giao dịch không thành công
+            $message = 'Bạn đã đặt hàng không thành công. Vui lòng thử lại.';
             return redirect()->route('cart')->with([
                 'message' => $message,
                 'status' => false

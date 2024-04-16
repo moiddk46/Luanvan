@@ -42,7 +42,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="d-flex gap-3 flex-column">
-                                                    <a href="#!" class="btn btn-md btn-outline-dark">
+                                                    <a href="#!" class="btn btn-md btn-outline-success">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-google"
                                                             viewBox="0 0 16 16">
@@ -85,8 +85,13 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="d-grid">
-                                                        <button class="btn btn-dark btn-md" type="submit">Đăng
+                                                        <button class="btn btn-success btn-md" type="submit">Đăng
                                                             nhập</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="d-grid">
+                                                        <a href="{{ route('index') }}" class="btn btn-secondary btn-md" type="submit">Quay lại</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,8 +103,6 @@
                                                     class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
                                                     <a href="{{ route('register') }}"
                                                         class="link-secondary text-decoration-none">Tạo tài khoản</a>
-                                                    <a href="#!" class="link-secondary text-decoration-none">Quên Mật
-                                                        khẩu</a>
                                                 </div>
                                             </div>
                                         </div>

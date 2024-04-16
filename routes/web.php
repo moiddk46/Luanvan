@@ -6,6 +6,8 @@ use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
+use App\Http\Controllers\staff\calenderStaffController;
+use App\Http\Controllers\staff\homeStaffController;
 use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
 use App\Http\Controllers\user\priceRequestController;
@@ -61,5 +63,12 @@ Route::prefix('user')->group(function () {
         Route::get('/detailCart/{data}', [orderUserController::class, 'detailOrder'])->name('detailCart');
         Route::post('/payment', [paymentController::class, 'payment'])->name('payment');
         Route::get('/statusPayment', [paymentController::class, 'statusPayment'])->name('statusPayment');
+        Route::get('/giveOrder/{data}', [orderUserController::class, 'giveOrder'])->name('giveOrder');
     });
 });
+
+Route::prefix('staff')->middleware('is_staff')->group(function () {
+    Route::get('/home', [homeStaffController::class, 'home'])->name('indexStaff');
+    Route::get('/calendar', [calenderStaffController::class, 'home'])->name('calenderStaff');
+});
+

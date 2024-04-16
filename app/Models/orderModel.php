@@ -139,7 +139,10 @@ class orderModel extends Model
      */
     public function insertOrder($formData): int
     {
+        $completeTime = $formData['completeTime'];
+        $date = Carbon::now();
         $nowDate = Carbon::now()->toDateString();
+        $futureDate = $date->addDays($completeTime)->toDateString();
         $count = 0;
 
         DB::beginTransaction();
@@ -174,7 +177,8 @@ class orderModel extends Model
                         'service_type_code' => $formData['serviceTypeCode'],
                         'quantity' => $formData['quantity'],
                         'unit_price' => $formData['sum'],
-                        'order_file_name' => $select->request_file
+                        'order_file_name' => $select->request_file,
+                        'complete_time' => $futureDate
                     ]);
                     if ($inserted > 0) {
                         $count1 = DB::table('receipts')
@@ -184,6 +188,7 @@ class orderModel extends Model
                                 'sum_price' => $formData['sum'],
                                 'status' => ($formData['statusReceipt'] == KCconst::DB_RECEIPT_WHEN_GIVE ? KCconst::DB_DONT_RECEIPT : KCconst::DB_DONE_RECEIPT),
                                 'method' => $formData['statusReceipt'],
+                                'receipt_date' => $nowDate
                             ]);
                         if ($count1 > 0) {
                             $count++;
@@ -227,7 +232,7 @@ class orderModel extends Model
             ->join('service_type as st', 'st.service_type_code', '=', 'od.service_type_code')
             ->join('order_master as om', 'om.order_id', '=', 'od.order_id')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
-            ->join('receipts as re', 're.id_order','=', 'od.order_id')
+            ->join('receipts as re', 're.id_order', '=', 'od.order_id')
             ->join('status_receipt as sr', 'sr.status_id', '=', 're.status')
             ->join('status_method as sd', 'sd.status_id', '=', 're.method')
             ->leftJoin('assign_master as am', function ($join) {
@@ -253,7 +258,7 @@ class orderModel extends Model
             ->join('service_type as st', 'st.service_type_code', '=', 'od.service_type_code')
             ->join('order_master as om', 'om.order_id', '=', 'od.order_id')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
-            ->join('receipts as re', 're.id_order','=', 'od.order_id')
+            ->join('receipts as re', 're.id_order', '=', 'od.order_id')
             ->join('status_receipt as sr', 'sr.status_id', '=', 're.status')
             ->join('status_method as sd', 'sd.status_id', '=', 're.method')
             ->leftJoin('assign_master as am', function ($join) {
@@ -265,5 +270,35 @@ class orderModel extends Model
             ->where('od.order_id', '=', $data)
             ->get()->toArray();
         return $select;
+    }
+
+    /**
+     * @return int
+     */
+    public function updateGiveOrder($data): int
+    {
+
+        $count = 0;
+        DB::beginTransaction();
+        $update = DB::table('order_master')
+            ->where('order_id', '=', $data)
+            ->update([
+                'give_flag' => '1',
+            ]);
+        if ($update > 0) {
+            $update = DB::table('receipts')
+                ->where('id_order', $data)
+                ->update([
+                    'status' => '2',
+                ]);
+            if ($update > 0) {
+                DB::commit();
+            } else {
+                DB::rollBack();
+            }
+        } else {
+            DB::rollBack();
+        }
+        return $update;
     }
 }

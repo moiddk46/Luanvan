@@ -46,6 +46,12 @@ class login extends Controller
                     'status' => true
                 ]);
             }
+            else if($user->position == 2){
+                return redirect()->route('indexStaff')->with([
+                    'message' => $messageLogin,
+                    'status' => true
+                ]);
+            }
         }
         return redirect()->back()->with([
             'message' => $messageFails,

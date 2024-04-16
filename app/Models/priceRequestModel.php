@@ -149,6 +149,7 @@ class priceRequestModel extends Model
                 'price' => $formData['price'],
                 'status' => $formData['status'],
                 'price_letter' => $formData['content'],
+                'complete_time' => $formData['completeTime']
             ]);
         return $count;
     }

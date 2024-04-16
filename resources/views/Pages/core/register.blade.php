@@ -88,7 +88,7 @@
                                                 <input type="hidden" name="position" value="2">
                                                 <div class="col-12">
                                                     <div class="d-grid">
-                                                        <button class="btn btn-dark btn-md" type="submit">Đăng
+                                                        <button class="btn btn-success btn-md" type="submit">Đăng
                                                             ký</button>
                                                     </div>
                                                 </div>
@@ -98,7 +98,7 @@
                                             <div class="col-12">
                                                 <p class="text-center mt-3 mb-3">Hoặc</p>
                                                 <div class="d-flex gap-3 flex-column">
-                                                    <a href="#!" class="btn btn-md btn-outline-dark">
+                                                    <a href="#!" class="btn btn-md btn-outline-success">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-google"
                                                             viewBox="0 0 16 16">

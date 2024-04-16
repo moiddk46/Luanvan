@@ -79,11 +79,31 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>Thời gian hoàn thành</th>
+                                    <td class="row">
+                                        <div class="col-3 row">
+                                            <div class="col">
+                                                <input type="text" id="complete_time" name="completeTime"
+                                                    class="form-control"
+                                                    value="{{ !empty($item->complete_time) ? $item->complete_time : '' }}">
+                                            </div>
+                                            <div class="col pt-2">
+                                                Ngày
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>Báo giá</th>
-                                    <td>
-                                        <div class="col-6">
-                                            <input type="text" id="price" name="price" class="form-control"
-                                                value="{{ !empty($item->price) ? $item->price : '' }}">
+                                    <td class="row">
+                                        <div class="col-6 row">
+                                            <div class="col">
+                                                <input type="text" id="price" name="price" class="form-control"
+                                                    value="{{ !empty($item->price) ? $item->price : '' }}">
+                                            </div>
+                                            <div class="col pt-2">
+                                                VND
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -92,10 +112,10 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-6">
-                                                <textarea class="form-control" id="reply" style="height: 160px" name="content">
-                                                    @if (!empty($item->price_letter))
-                                                    {{ $item->price_letter }}
-                                                    @endif
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="6">
+                                                @if (!empty($item->price_letter))
+{{ $item->price_letter }}
+@endif
                                                 </textarea>
                                             </div>
                                             <div class="col-4 align-content-center">

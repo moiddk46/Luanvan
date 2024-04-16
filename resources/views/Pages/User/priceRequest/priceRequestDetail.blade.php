@@ -16,7 +16,7 @@
             </div>
         @endif
         <div class="container-fluid">
-            <h5>Danh sách giỏ hàng</h5>
+            <h3 class="text-center fw-bold mt-5">Thông tin yêu cầu báo giá</h3>
             @if (isset($data) && !empty($data))
                 <form action="{{ route('order') }}" method="post" id="form_order">
                     @csrf
@@ -103,6 +103,15 @@ text-bg-success @endif
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>Thời gian hoàn thành</th>
+                                    <td >
+                                        <div class="col-4">
+                                            {{  $item->complete_time }} Ngày( Bắt đầu từ ngày đặt hàng)
+                                            <input type="hidden" name="completeTime" id="completeTime" value="{{  $item->complete_time }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>Báo giá</th>
                                     <td>
                                         <div class="col-8" id="currency">
@@ -175,6 +184,10 @@ text-bg-success @endif
                                     <div class="row ">
                                         <div class="col-4 py-3 bg-body-secondary">Số bản</div>
                                         <div class="col-8 p-3" id="quantity1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Thời gian hoàn thành</div>
+                                        <div class="col-8 p-3" id="completeTime1"></div>
                                     </div>
                                     <div class="row ">
                                         <div class="col-4 py-3 bg-body-secondary">Hình thức thanh toán</div>

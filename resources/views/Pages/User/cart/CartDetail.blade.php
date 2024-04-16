@@ -18,25 +18,48 @@
         <div class="container-fluid">
             <h3 class="text-center mt-5 mb-3 fw-bold">Chi tiết đơn hàng</h3>
             @if (isset($data) && !empty($data))
-                <div class="my-3">
-                    <h5 class="fw-bold mb-3">Tiến độ đơn hàng</h5>
-                    <div class="progress-stacked">
-                        <div class="progress" role="progressbar" aria-label="Segment one" aria-valuenow="15"
-                            aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                            <div class="progress-bar"></div>
-                        </div>
-                        <div class="progress" role="progressbar" aria-label="Segment two" aria-valuenow="30"
-                            aria-valuemin="0" aria-valuemax="100" style="width: 30%">
-                            <div class="progress-bar bg-success"></div>
-                        </div>
-                        <div class="progress" role="progressbar" aria-label="Segment three" aria-valuenow="20"
-                            aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                            <div class="progress-bar bg-info"></div>
-                        </div>
-                    </div>
-                </div>
                 <div class="mt-5 border border-danger">
                     @foreach ($data as $item)
+                        <div class="border rounded bg-secondary-subtle p-3">
+                            <h5 class="fw-bold mb-3">Tiến độ đơn hàng</h5>
+                            <div class="my-3 w-50 m-auto">
+                                <div class="progress-stacked">
+                                    <div class="progress" role="progressbar" aria-label="Segment one" aria-valuenow="15"
+                                        aria-valuemin="0" aria-valuemax="100"
+                                        style=" @if ($item->status_id == '1') width: 25%
+                                    @elseif($item->status_id == '2')
+                                        width: 50%
+                                    @elseif($item->status_id == '3')
+                                    width: 75%
+                                    @else
+                                    width: 100% @endif">
+                                        <div class="progress-bar progress-bar bg-success"></div>
+                                        <div class="bg-success">
+                                            <i class="bi bi-truck progress-icon fs-5 text-light me-1 mb-2"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 mx-2">
+                                    @if ($item->status_id == '1')
+                                        <span class="me-2 col-3 pt-2"> {{ $item->status }}</span>
+                                    @elseif($item->status_id == '2')
+                                        <span class="me-2 col-3 pt-2"> {{ $item->status }}</span>
+                                    @elseif($item->status_id == '3')
+                                        <span class="me-2 col-3 pt-2"> {{ $item->status }}</span>
+                                    @else
+                                        <a href="{{ route('giveOrder', ['data' => $item->order_id]) }}"
+                                            class="btn  me-2 col-4 @if ($item->give_flag == 1) disabled @endif"
+                                            style="background-color: rgb(247, 134, 14)">Đã nhận được
+                                            hàng</a>
+                                    @endif
+                                    <div class="col pt-2">
+                                        <span>Ngày nhận hàng dự kiến: </span>
+                                        <span id="date">{{ $item->complete_time }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="row mt-3 border-bottom">
                             <div class="col-4 py-3">Tên</div>
                             <div class="col-8 py-3">{{ $item->name }}</div>

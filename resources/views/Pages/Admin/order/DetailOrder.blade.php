@@ -46,6 +46,10 @@
                                     <td id="date">{{ $item->order_date }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Ngày hoàn thành dự kiến</th>
+                                    <td id="date">{{ $item->complete_time }} </td>
+                                </tr>
+                                <tr>
                                     <th>Số lượng</th>
                                     <td>{{ $item->quantity }} Bản</td>
                                 </tr>
@@ -60,36 +64,48 @@
                                 <tr>
                                     <th>Trạng thái</th>
                                     <td>
-                                        <select id="statusSelect" class="form-select form-select-md w-50"
-                                            aria-label="Small select example">
-                                            <option value="{{ $item->status_id }}">{{ $item->status }}</option>
-                                            @foreach ($status as $row)
-                                                <option value="{{ $row->status_id }}">{{ $row->status }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" id="statusValue" name="status" value="{{ isset($item->status_id) ? $item->status_id : '' }}">
+                                        @if ($item->status_id == '4')
+                                            <span
+                                                class="badge text-bg-success rounded-pill d-inline ">{{ $item->status }}</span>
+                                        @else
+                                            <select id="statusSelect" class="form-select form-select-md w-50"
+                                                aria-label="Small select example">
+                                                <option value="{{ $item->status_id }}">{{ $item->status }}</option>
+                                                @foreach ($status as $row)
+                                                    <option value="{{ $row->status_id }}">{{ $row->status }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="statusValue" name="status"
+                                                value="{{ isset($item->status_id) ? $item->status_id : '' }}">
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Phân công</th>
-                                    <td> <select id="staff" class="form-select form-select-md w-50"
-                                            aria-label="Small select example">
-                                            @if (isset($item->id))
-                                                {
-                                                <option value="{{ $item->id }}">{{ $item->nameStaff }}</option>
-                                                }
-                                            @else
-                                                <option selected>Chọn nhân viên</option>
-                                            @endif
-                                            @foreach ($listStaff as $row)
-                                                @if ($item->id == $row->id)
-                                                    continue;
+                                    <td>
+                                        @if ($item->status_id == '4')
+                                            {{ $item->nameStaff }}
+                                        @else
+                                            <select id="staff" class="form-select form-select-md w-50"
+                                                aria-label="Small select example">
+                                                @if (isset($item->id))
+                                                    {
+                                                    <option value="{{ $item->id }}">{{ $item->nameStaff }}</option>
+                                                    }
                                                 @else
-                                                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                                    <option selected>Chọn nhân viên</option>
                                                 @endif
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" id="staffValue" name="staff" value="{{ isset($item->id) ? $item->id : '' }}">
+                                                @foreach ($listStaff as $row)
+                                                    @if ($item->id == $row->id)
+                                                        continue;
+                                                    @else
+                                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="staffValue" name="staff"
+                                                value="{{ isset($item->id) ? $item->id : '' }}">
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -98,7 +114,9 @@
                     <div class="d-flex justify-content-center mt-3">
                         <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay
                             lại</a>
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @if ($item->status_id != '4')
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                        @endif
                     </div>
                 </form>
             @endif

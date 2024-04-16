@@ -17,7 +17,7 @@ class IsStaff
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if ($user->position == 2) {
+        if (isset($user->position) && ($user->position == 2)) {
             return $next($request);
         }
         return redirect()->route('login')->with('message', "Bạn phải đăng nhập với tài khoản nhân viên");

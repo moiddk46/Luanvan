@@ -31,5 +31,6 @@ class KCconst
 
     // hình thức thanh toán
     const DB_RECEIPT_WHEN_GIVE = 1; // Thanh toán khi nhận hàng
-    const DB_RECEIPT_ONLINE =2; // Thanh toán online
+    const DB_RECEIPT_ONLINE = 2; // Thanh toán online
+
 }

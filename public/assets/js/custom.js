@@ -173,13 +173,45 @@ $(document).ready(function () {
         updateValues();
     });
     var statusValue = $("#statusReceipt").val();
+
+    var completeTime = parseInt($("#completeTime").val());
+
+    // Lấy ngày hiện tại
+    var currentDate = new Date();
+
+    // Lấy ngày hiện tại đã cộng thêm 5 ngày
+    var futureDate = new Date();
+
+    // Định dạng ngày tháng năm cho ngày hiện tại
+    var dayOfWeek = currentDate.getDay();
+    if (dayOfWeek == 0) {
+        var otherDay = currentDate.getDate() + 1;
+    } else {
+        var otherDay = currentDate.getDate();
+    }
+    futureDate.setDate(otherDay + completeTime);
+    var currentDay = currentDate.getDate();
+    var currentMonth = currentDate.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0, nên cần cộng thêm 1
+    var currentYear = currentDate.getFullYear();
+
+    var futureDay = futureDate.getDate();
+    var futureMonth = futureDate.getMonth() + 1;
+    var futureYear = futureDate.getFullYear();
+
+    // Chuỗi biểu diễn ngày tháng năm cho ngày hiện tại
+    var formattedCurrentDate =
+        currentDay + "/" + currentMonth + "/" + currentYear;
+
+    // Chuỗi biểu diễn ngày tháng năm cho ngày hiện tại đã cộng thêm 5 ngày
+    var formattedFutureDate = futureDay + "/" + futureMonth + "/" + futureYear;
+
+    var completeText = formattedCurrentDate + "-" + formattedFutureDate;
     var statusReceipt = $("#statusReceipt option:selected").text();
     $("#statusReceipt").change(function () {
         statusReceipt = $(this).find("option:selected").text();
         statusValue = $(this).val();
         updateValues();
     });
-    console.log( $("#form_order").attr("action"));
 
     function updateValues() {
         var sum = $("#currency1").val() * quantity;
@@ -192,14 +224,70 @@ $(document).ready(function () {
         $("#statusReceipt1").text(statusReceipt);
         $("#sum").text(formatCurrency(sum));
         $("#sum1").val(sum);
+        $("#completeTime1").text(completeText);
         if (statusValue == 2) {
-            $("#form_order").attr("action", `http://127.0.0.1:8000/user/auth/payment`);
+            $("#form_order").attr(
+                "action",
+                `http://127.0.0.1:8000/user/auth/payment`
+            );
             $("#button").text("Thanh toán");
         } else {
-            $("#form_order").attr("action", `http://127.0.0.1:8000/user/auth/order`);
+            $("#form_order").attr(
+                "action",
+                `http://127.0.0.1:8000/user/auth/order`
+            );
             $("#button").text("Xác nhận");
         }
     }
     // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
     updateValues();
 });
+
+$(document).ready(function () {
+    var calendarEl = $("#calendar")[0]; // Lấy phần tử DOM bằng jQuery
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        themeSystem: 'bootstrap5',
+        headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: ""
+        },
+        buttonText: {
+            today: 'Hôm nay' // Đặt chữ cho nút 'today'
+        },
+        locale: "vi",
+        initialView: "dayGridMonth",
+        events: [
+            {
+                id: 1,
+                title: "8h - 10h",
+                start: "2024-04-15T08:00:00",
+                end: "2024-04-15T08:00:00",
+                color: "#eff5f9",
+                textColor: "#1a4862",
+                durationEditable: false,
+                className: "free",
+                additionalInfo: "A great event",
+            },
+        ],
+        selectable: true,
+        editable: true,
+        select: function(info) {
+            // Xử lý khi người dùng chọn một khoảng thời gian trên lịch
+            console.log('selected', info);
+            // Tạo sự kiện mới khi người dùng chọn một khoảng thời gian
+            calendar.addEvent({
+                title: 'Sự kiện mới',
+                start: info.startStr,
+                end: info.endStr,
+                allDay: info.allDay
+            });
+        },
+        eventClick: function(info) {
+            // Xử lý khi người dùng click vào một sự kiện trên lịch
+            console.log('event clicked', info);
+        }
+    });
+    calendar.render();
+});
+
