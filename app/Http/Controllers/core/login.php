@@ -15,7 +15,7 @@ class login extends Controller
     public function __construct()
     {
         $this->service = new ServiceMaster();
-        $this->title = 'Login';
+        $this->title = 'Đăng nhập';
     }
 
     public function login()

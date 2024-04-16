@@ -246,14 +246,14 @@ $(document).ready(function () {
 $(document).ready(function () {
     var calendarEl = $("#calendar")[0]; // Lấy phần tử DOM bằng jQuery
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        themeSystem: 'bootstrap5',
+        themeSystem: "bootstrap5",
         headerToolbar: {
             left: "prev,next today",
             center: "title",
-            right: ""
+            right: "",
         },
         buttonText: {
-            today: 'Hôm nay' // Đặt chữ cho nút 'today'
+            today: "Hôm nay", // Đặt chữ cho nút 'today'
         },
         locale: "vi",
         initialView: "dayGridMonth",
@@ -272,22 +272,80 @@ $(document).ready(function () {
         ],
         selectable: true,
         editable: true,
-        select: function(info) {
+        select: function (info) {
             // Xử lý khi người dùng chọn một khoảng thời gian trên lịch
-            console.log('selected', info);
+            console.log("selected", info);
             // Tạo sự kiện mới khi người dùng chọn một khoảng thời gian
             calendar.addEvent({
-                title: 'Sự kiện mới',
+                title: "Sự kiện mới",
                 start: info.startStr,
                 end: info.endStr,
-                allDay: info.allDay
+                allDay: info.allDay,
             });
         },
-        eventClick: function(info) {
+        eventClick: function (info) {
             // Xử lý khi người dùng click vào một sự kiện trên lịch
-            console.log('event clicked', info);
-        }
+            console.log("event clicked", info);
+        },
     });
     calendar.render();
 });
 
+var ctx = document.getElementById("myChart").getContext("2d");
+var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+        ],
+        datasets: [
+            {
+                label: "Data",
+                data: [65, 59, 80, 81, 56, 55, 40], // Dữ liệu cứng
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 1,
+            },
+        ],
+    },
+    options: {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                },
+            ],
+        },
+    },
+});
+
+// Fetch data from Laravel controller
+// fetch("/chart-data")
+//     .then((response) => response.json())
+//     .then((data) => {
+//         data.forEach((item) => {
+//             myChart.data.labels.push(item.label); // Assuming 'label' is one of the attributes in your data
+//             myChart.data.datasets[0].data.push(item.value); // Assuming 'value' is one of the attributes in your data
+//         });
+//         myChart.update();
+//     });
+
+$(document).ready(function() {
+    // Lấy tiêu đề của trang hiện tại
+    var currentTitle = document.title;
+
+    // Tìm liên kết có tiêu đề tương ứng với tiêu đề trang hiện tại và dánh dấu là active
+    $('.nav-link').each(function() {
+        if ($(this).text().trim() === currentTitle) {
+            $(this).addClass('active');
+        }
+    });
+});

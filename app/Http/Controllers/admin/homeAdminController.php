@@ -11,7 +11,7 @@ class homeAdminController extends Controller
     public $title;
     public function __construct() {
         $this->service = new ServiceMaster();
-        $this->title = 'Home | Admin';
+        $this->title = 'Trang chủ | Admin';
     }
 
     public function home(){

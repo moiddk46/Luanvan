@@ -15,7 +15,7 @@ class orderAdminController extends Controller
     public function __construct()
     {
         $this->service = new orderModel();
-        $this->title = 'Order | Admin';
+        $this->title = 'Đơn hàng | Admin';
     }
     public function order()
     {

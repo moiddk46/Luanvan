@@ -3,10 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Const\KCconst;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -33,7 +36,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
 
     /**
      * The attributes that should be cast.
@@ -44,4 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function listCustomer()
+    {
+        $select = DB::table('users')
+            ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
+            ->paginate(10);
+        return $select;
+    }
 }

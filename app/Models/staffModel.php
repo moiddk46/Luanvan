@@ -13,14 +13,14 @@ class staffModel extends Model
 
 
     /**
-     * @return array
+     * 
      */
-    public function getAllStaff(): array
+    public function getAllStaff()
     {
 
         $select = DB::table('users')
         ->where('position', '=', KCconst::DB_POSITION_STAFF)
-        ->get()->toArray();
+        ->paginate(10);
         return $select;
     }
 }

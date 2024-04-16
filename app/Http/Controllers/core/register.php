@@ -15,7 +15,7 @@ class register extends Controller
     public function __construct()
     {
         $this->service = new ServiceMaster();
-        $this->title = 'Register';
+        $this->title = 'Đăng ký';
     }
 
     public function register()

@@ -18,14 +18,14 @@ class orderModel extends Model
     /**
      * Undocumented function
      *
-     * @return array
+     * 
      */
-    public function getAllOrder(): array
+    public function getAllOrder()
     {
         $select  = DB::table('order_master as om')
             ->join('service_type as st', 'st.service_type_code', '=', 'om.service_type_code')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
-            ->get()->toArray();
+            ->paginate(10);
         return $select;
     }
 

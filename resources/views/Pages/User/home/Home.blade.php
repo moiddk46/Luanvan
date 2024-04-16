@@ -23,9 +23,6 @@
                         in ấn, photocopy, dịch thuật và dịch thuật công chứng. Đảm bảo chất lượng,
                         an toàn bảo mật thông tin cho khách hàng.
                     </p>
-                    <div class="mt-5">
-                        <x-form.quote :prop="$header" />
-                    </div>
                 </div>
             </div>
             <div class="col-5">

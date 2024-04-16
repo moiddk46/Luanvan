@@ -16,6 +16,19 @@ class ServiceModel extends Model
     /**
      * Undocumented function
      *
+     * 
+     */
+    public function getAllService()
+    {
+        $select = DB::table('laravel.service_type as tp')
+            ->join('service_master as sm', 'sm.service_code', '=', 'tp.service_code')
+            ->join('laravel.service_type_img as tm', 'tm.service_type_code', '=', 'tp.service_type_code')
+            ->paginate(10);
+        return $select;
+    }
+    /**
+     * Undocumented function
+     *
      * @return stdClass
      */
     public function getServiceName(string $data): stdClass

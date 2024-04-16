@@ -10,7 +10,7 @@ class homeStaffController extends Controller
     public $title;
     public function __construct()
     {
-        $this->title = 'Home';
+        $this->title = 'Trang chủ';
     }
 
     public function home()

@@ -74,15 +74,15 @@ class priceRequestModel extends Model
     /**
      * Undocumented function
      *
-     * @return array
+     *
      */
-    public function getAllPriceRequestAdmin(): array
+    public function getAllPriceRequestAdmin()
     {
         $select  = DB::table('price_request as pr')
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
             ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
-            ->get()->toArray();
+            ->paginate(10);
         return $select;
     }
 

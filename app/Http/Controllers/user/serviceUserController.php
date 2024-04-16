@@ -12,7 +12,7 @@ class serviceUserController extends Controller
     public function __construct()
     {
         $this->service = new ServiceModel();
-        $this->title = 'Service';
+        $this->title = 'Dịch vụ';
     }
 
     public function initService($data)

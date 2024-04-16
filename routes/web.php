@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\customerAdminController;
 use App\Http\Controllers\admin\homeAdminController;
 use App\Http\Controllers\admin\orderAdminController;
 use App\Http\Controllers\admin\priceRequestAdminController;
+use App\Http\Controllers\admin\serviceAdminController;
+use App\Http\Controllers\admin\staffAdminController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
@@ -48,6 +51,16 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/detailPriceRequest/{data}', [priceRequestAdminController::class, 'detailPriceRequest'])->name('detailPriceRequest');
         Route::get('/download/{data}', [priceRequestAdminController::class, 'getDownload'])->name('download');
         Route::post('/updateDetailRequest', [priceRequestAdminController::class, 'updateDetailRequest'])->name('updateDetailRequest');
+    });
+
+    Route::prefix('service')->group(function () {
+        Route::get('/allService', [serviceAdminController::class, 'getAllService'])->name('allService');
+    });
+    Route::prefix('customers')->group(function () {
+        Route::get('/allCustomer', [customerAdminController::class, 'getAllCustomer'])->name('allCustomer');
+    });
+    Route::prefix('staff')->group(function () {
+        Route::get('/allStaff', [staffAdminController::class, 'getAllStaff'])->name('allStaff');
     });
 });
 

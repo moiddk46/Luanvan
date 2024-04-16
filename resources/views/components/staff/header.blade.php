@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto nav-underline">
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="{{ route('indexStaff') }}" aria-current="page">Trang chủ</a>
+                    <a class="nav-link text-black display-4 active" href="{{ route('indexStaff') }}" aria-current="page">Trang chủ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-black display-4" href="#">Nhiệm vụ</a>

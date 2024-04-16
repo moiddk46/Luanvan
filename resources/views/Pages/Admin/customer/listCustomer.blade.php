@@ -20,10 +20,10 @@
                 <table class="table align-middle mb-0 bg-white mt-5 table-striped">
                     <thead class="bg-light">
                         <tr>
-                            <th>Mã báo giá</th>
-                            <th>Tên dịch vụ</th>
-                            <th>Ngày yêu cầu</th>
-                            <th>Trạng thái</th>
+                            <th>Mã khách hàng</th>
+                            <th>Tên khách hàng</th>
+                            <th>Email</th>
+                            <th>Ngày tham gia</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -32,26 +32,20 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>
-                                    {{ $item->request_id }}
+                                    {{ $item->id }}
                                 </td>
                                 <td>
-                                    {{ $item->service_type_name }}
+                                    {{ $item->name }}
+                                </td>
+                                <td>
+                                    {{ $item->email }}
                                 </td>
                                 <td id="date">
-                                    {{ $item->request_date }}
+                                    {{ $item->created_at }}
                                 </td>
                                 <td>
-                                    <span
-                                        class="badge  
-                                            @if ($item->status_id == '2') text-bg-warning
-                                            @else
-                                                text-bg-success @endif
-                                                rounded-pill d-inline">{{ $item->status }}</span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('detailPriceRequest', ['data' => $item->request_id]) }}"
-                                        class="btn btn-outline-dark">
-                                        Trả lời
+                                    <a href="" class="btn btn-outline-dark">
+                                        Chi tiết
                                     </a>
                                 </td>
                             </tr>
@@ -59,6 +53,7 @@
 
                     </tbody>
                 </table>
+
                 <div class="d-flex justify-content-center mt-3">
                     <ul class="pagination">
                         @if ($data->onFirstPage())
@@ -88,7 +83,7 @@
                     </ul>
                 </div>
             @else
-                <p>Chưa có yêu cầu nào.</p>
+                <p>Chưa dịch vụ nào.</p>
             @endif
 
         </div>
