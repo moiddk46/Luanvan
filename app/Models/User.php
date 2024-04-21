@@ -56,4 +56,10 @@ class User extends Authenticatable
             ->paginate(10);
         return $select;
     }
+    public function countCustomer(){
+        $count = DB::table('users')
+        ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
+        ->count();
+        return $count;
+    }
 }

@@ -1,8 +1,8 @@
-<nav class="col-md-2 d-md-block bg-light sidebar collapse" id="sidebar">
+<nav class=" d-md-block bg-light sidebar collapse position-fixed h-100 z-1" style="width: 20%" id="sidebar">
     <div class="sidebar-sticky mt-5">
         <ul class="nav flex-column nav-underline w-50 m-auto">
             <li class="nav-item mt-3">
-                <a class="nav-link text-black" href="{{ route('indexAdmin') }}"><i
+                <a class="nav-link text-black" href="{{ route('indexAdmin') }}" id="thongke"><i
                         class="bi bi-bar-chart-line-fill me-2"></i>Thống kê</a>
             </li>
             <li class="nav-item">

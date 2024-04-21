@@ -25,4 +25,5 @@ class ServiceMaster extends Model
         // dd($select);
         return $select;
     }
+
 }

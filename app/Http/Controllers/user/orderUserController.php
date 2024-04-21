@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Const\KCconst;
 use Illuminate\Http\Request;
 use App\Models\orderModel;
-use App\Models\staffModel;
 
 class orderUserController extends Controller
 {
@@ -21,7 +20,6 @@ class orderUserController extends Controller
     public function initOrder(Request $request)
     {
         $formData = $request->all();
-        dd($formData);
         if ($formData['status'] == KCconst::DB_STATUS_DONT_REPLY) {
             $message = 'Bạn không thể đặt hàng với yêu cầu báo giá chưa được trả lời';
             return redirect()->back()->with([

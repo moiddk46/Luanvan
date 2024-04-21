@@ -21,16 +21,16 @@
                     <div class="card-statistic-3 p-4">
                         <div class="card-icon card-icon-large"><i class="fas fa-shopping-cart"></i></div>
                         <div class="mb-4">
-                            <h5 class="card-title mb-0">New Orders</h5>
+                            <h5 class="card-title mb-0">Đơn hàng</h5>
                         </div>
                         <div class="row align-items-center mb-2 d-flex">
                             <div class="col-8">
                                 <h2 class="d-flex align-items-center mb-0">
-                                    3,243
+                                    {{ $countOrder }}
                                 </h2>
                             </div>
                             <div class="col-4 text-right">
-                                <span>12.5% <i class="bi bi-arrow-up"></i></span>
+                                <span>12.5%<i class="bi bi-arrow-up"></i></span>
                             </div>
                         </div>
                         <div class="progress mt-1 " data-height="8" style="height: 8px;">
@@ -45,12 +45,12 @@
                     <div class="card-statistic-3 p-4">
                         <div class="card-icon card-icon-large"><i class="fas fa-users"></i></div>
                         <div class="mb-4">
-                            <h5 class="card-title mb-0">Customers</h5>
+                            <h5 class="card-title mb-0">Khách hàng</h5>
                         </div>
                         <div class="row align-items-center mb-2 d-flex">
                             <div class="col-8">
                                 <h2 class="d-flex align-items-center mb-0">
-                                    15.07k
+                                    {{ $countCustomer }}
                                 </h2>
                             </div>
                             <div class="col-4 text-right">
@@ -69,12 +69,12 @@
                     <div class="card-statistic-3 p-4">
                         <div class="card-icon card-icon-large"><i class="fas fa-ticket-alt"></i></div>
                         <div class="mb-4">
-                            <h5 class="card-title mb-0">Ticket Resolved</h5>
+                            <h5 class="card-title mb-0">Nhân viên</h5>
                         </div>
                         <div class="row align-items-center mb-2 d-flex">
                             <div class="col-8">
                                 <h2 class="d-flex align-items-center mb-0">
-                                    578
+                                    {{ $countStaff }}
                                 </h2>
                             </div>
                             <div class="col-4 text-right">
@@ -93,12 +93,12 @@
                     <div class="card-statistic-3 p-4">
                         <div class="card-icon card-icon-large"><i class="fas fa-dollar-sign"></i></div>
                         <div class="mb-4">
-                            <h5 class="card-title mb-0">Revenue Today</h5>
+                            <h5 class="card-title mb-0">Doanh thu</h5>
                         </div>
                         <div class="row align-items-center mb-2 d-flex">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0">
-                                    $11.61k
+                                <h2 class="d-flex align-items-center mb-0" id="currency">
+                                    {{ $sumPrice }}
                                 </h2>
                             </div>
                             <div class="col-4 text-right">

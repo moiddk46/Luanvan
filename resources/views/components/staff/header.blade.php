@@ -14,7 +14,7 @@
                     <a class="nav-link text-black display-4 active" href="{{ route('indexStaff') }}" aria-current="page">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="#">Nhiệm vụ</a>
+                    <a class="nav-link text-black display-4" href="{{ route('task') }}">Nhiệm vụ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-black display-4" href="#">Đánh giá dịch vụ</a>

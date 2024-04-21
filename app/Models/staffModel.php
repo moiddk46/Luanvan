@@ -23,4 +23,11 @@ class staffModel extends Model
         ->paginate(10);
         return $select;
     }
+
+    public function countStaff(){
+        $count = DB::table('users')
+        ->where('position', '=', KCconst::DB_POSITION_STAFF)
+        ->count();
+        return $count;
+    }
 }

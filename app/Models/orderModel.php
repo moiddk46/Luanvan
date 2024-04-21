@@ -278,7 +278,6 @@ class orderModel extends Model
     public function updateGiveOrder($data): int
     {
 
-        $count = 0;
         DB::beginTransaction();
         $update = DB::table('order_master')
             ->where('order_id', '=', $data)
@@ -300,5 +299,18 @@ class orderModel extends Model
             DB::rollBack();
         }
         return $update;
+    }
+
+    public function sumPrice(): int
+    {
+        $sum = DB::table('order_detail')->sum('unit_price');
+        return $sum;
+    }
+
+    public function countOrder(): int
+    {
+        $count = DB::table('order_master')
+            ->count();
+        return $count;
     }
 }

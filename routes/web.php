@@ -11,6 +11,7 @@ use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
 use App\Http\Controllers\staff\calenderStaffController;
 use App\Http\Controllers\staff\homeStaffController;
+use App\Http\Controllers\staff\taskStaffController;
 use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
 use App\Http\Controllers\user\priceRequestController;
@@ -82,6 +83,7 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('staff')->middleware('is_staff')->group(function () {
     Route::get('/home', [homeStaffController::class, 'home'])->name('indexStaff');
+    Route::get('/task', [taskStaffController::class, 'index'])->name('task');
     Route::get('/calendar', [calenderStaffController::class, 'home'])->name('calenderStaff');
 });
 
