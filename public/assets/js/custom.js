@@ -16,69 +16,65 @@ $(document).ready(function () {
             },
         });
     });
-    var typingTimer;
-    var doneTypingInterval = 400; // milliseconds
+});
+// var typingTimer;
+// var doneTypingInterval = 400; // milliseconds
 
-    $("#lang").keyup(function () {
-        clearTimeout(typingTimer);
-        if ($(this).val()) {
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
-        } else {
-            $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
-        }
-    });
+// $("#lang").keyup(function () {
+//     clearTimeout(typingTimer);
+//     if ($(this).val()) {
+//         typingTimer = setTimeout(doneTyping, doneTypingInterval);
+//     } else {
+//         $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
+//     }
+// });
 
-    function doneTyping() {
-        var lang = $("#lang").val();
-        if (lang) {
-            // Hiển thị biểu tượng loading
-            $(".loading-spinner").show();
-            $.ajax({
-                url: "/api/translate",
-                type: "POST",
-                data: {
-                    lang: lang,
-                },
-                success: function (res) {
-                    var data = res;
-                    $("#langed").val(data); // Đặt dữ liệu trả về vào #langed
-                },
-                error: function () {
-                    $("#langed").val("Error occurred."); // Xử lý lỗi
-                },
-            });
-        } else {
-            $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
-        }
+// function doneTyping() {
+//     var lang = $("#lang").val();
+//     if (lang) {
+//         // Hiển thị biểu tượng loading
+//         $(".loading-spinner").show();
+//         $.ajax({
+//             url: "/api/translate",
+//             type: "POST",
+//             data: {
+//                 lang: lang,
+//             },
+//             success: function (res) {
+//                 var data = res;
+//                 $("#langed").val(data); // Đặt dữ liệu trả về vào #langed
+//             },
+//             error: function () {
+//                 $("#langed").val("Error occurred."); // Xử lý lỗi
+//             },
+//         });
+//     } else {
+//         $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
+//     }
+// }
+// $(".toast").toast("show"); // Hiển thị toast
+// setTimeout(function () {
+//     $(".toast").toast("hide"); // Ẩn toast sau 5 giây
+// }, 5000);
+
+// $("#loading").show(); // Hiển thị loading khi trang được load lần đầu tiên
+
+// // Ẩn loading sau 3 giây
+// setTimeout(function () {
+//     $("#loading").hide();
+// }, 3000);
+$(document).ready(function () {
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(amount);
     }
-});
-$(document).ready(function () {
-    $(".toast").toast("show"); // Hiển thị toast
-    setTimeout(function () {
-        $(".toast").toast("hide"); // Ẩn toast sau 5 giây
-    }, 5000);
-});
-
-$(document).ready(function () {
-    $("#loading").show(); // Hiển thị loading khi trang được load lần đầu tiên
-
-    // Ẩn loading sau 3 giây
-    setTimeout(function () {
-        $("#loading").hide();
-    }, 3000);
-});
-function formatCurrency(amount) {
-    return new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-    }).format(amount);
-}
-function formatDate(dateString) {
-    var date = new Date(dateString);
-    var formattedDate = date.toLocaleDateString("vi-VN");
-    return formattedDate;
-}
-$(document).ready(function () {
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var formattedDate = date.toLocaleDateString("vi-VN");
+        return formattedDate;
+    }
     // Định dạng số tiền cho tất cả các phần tử có ID "currency"
     $('[id="currency"]').each(function () {
         var currency = $(this).text();
@@ -94,8 +90,10 @@ $(document).ready(function () {
     });
 });
 
-$(".checkAll").click(function () {
-    $(".check").prop("checked", $(this).prop("checked"));
+$(document).ready(function () {
+    $(".checkAll").click(function () {
+        $(".check").prop("checked", $(this).prop("checked"));
+    });
 });
 
 $(document).ready(function () {
@@ -103,24 +101,18 @@ $(document).ready(function () {
         var selectedStatus = $(this).val();
         $("#statusValue").val(selectedStatus);
     });
-});
-$(document).ready(function () {
     $("#staff").change(function () {
         var selectedStaff = $(this).val();
         $("#staffValue").val(selectedStaff);
     });
-});
 
-$(document).ready(function () {
     $("#sample").click(function () {
         var name = $("#name").text();
         var service = $("#service").text();
         var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là {$money} ạ. `;
         $("#reply").val(sampleLetter);
     });
-});
 
-$(document).ready(function () {
     var name = $("#name").val();
     $("#name").on("input change", function () {
         name = $(this).val();
@@ -264,71 +256,372 @@ $(document).ready(function () {
     calendar.render();
 });
 
-var ctx = document.getElementById("myChart").getContext("2d");
-var myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-        labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-        ],
-        datasets: [
-            {
-                label: "Data",
-                data: [65, 59, 80, 81, 56, 55, 40], // Dữ liệu cứng
-                backgroundColor: "rgba(255, 99, 132, 0.2)",
-                borderColor: "rgba(255, 99, 132, 1)",
-                borderWidth: 1,
-            },
-        ],
-    },
-    options: {
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
+$(document).ready(function () {
+    var ctx = document.getElementById("myChart");
+    if (ctx) {
+        var canvas = ctx.getContext("2d");
+        var myChart = new Chart(canvas, {
+            type: "line",
+            data: {
+                labels: [
+                    "January",
+                    "February",
+                    "March",
+                    "April",
+                    "May",
+                    "June",
+                    "July",
+                ],
+                datasets: [
+                    {
+                        label: "Data",
+                        data: [65, 59, 80, 81, 56, 55, 40], // Dữ liệu cứng
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        borderWidth: 1,
                     },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
                 },
-            ],
-        },
-    },
+            },
+        });
+    } else {
+        console.log("Canvas element not found");
+    }
 });
 
-// Fetch data from Laravel controller
-// fetch("/chart-data")
-//     .then((response) => response.json())
-//     .then((data) => {
-//         data.forEach((item) => {
-//             myChart.data.labels.push(item.label); // Assuming 'label' is one of the attributes in your data
-//             myChart.data.datasets[0].data.push(item.value); // Assuming 'value' is one of the attributes in your data
-//         });
-//         myChart.update();
-//     });
-
-$(document).ready(function() {
-    // Lấy tiêu đề của trang hiện tại
-    var currentTitle = document.title;
-
-    // Tìm liên kết có tiêu đề tương ứng với tiêu đề trang hiện tại và dánh dấu là active
-    $('.nav-link').each(function() {
-        if ($(this).text().trim() === currentTitle) {
-            $(this).addClass('active');
-        }
+$(document).ready(function () {
+    $("#done").change(function () {
+        $.ajax({
+            url: `/staff/doneTask`,
+            type: "GET",
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
     });
-});
 
-$(document).ready(function(){
-    $('#done, #donot').change(function(){
-        if($(this).is(':checked')){
-            console.log('Đã chọn');
+    function updateTable(data) {
+        var tbody = $("#ordersTableBody");
+        var table = $("#table-task");
+        tbody.empty(); // Xóa dữ liệu hiện tại
+        if (data.data.length === 0) {
+            table.empty();
+            table.append(
+                '<p class="text-center">Chưa có nhiệm vụ đã hoàn thành nào.</p>'
+            );
         } else {
-            console.log('Chưa chọn');
+            $.each(data.data, function (index, item) {
+                var statusClass;
+                switch (item.status_id) {
+                    case 1:
+                        statusClass = "text-bg-warning";
+                        break;
+                    case 2:
+                        statusClass = "text-bg-primary";
+                        break;
+                    case 3:
+                        statusClass = "text-bg-secondary";
+                        break;
+                    default:
+                        statusClass = "text-bg-success";
+                        break;
+                }
+                tbody.append(`
+                    <tr>
+                        <td>${item.order_id}</td>
+                        <td>${item.service_type_name}</td>
+                        <td>${item.complete_time}</td>
+                        <td>${item.order_date}</td>
+                        <td>
+                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+                </td>
+                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                    </tr>
+                `);
+            });
         }
+    }
+
+    function updatePagination(data) {
+        var pagination = $(".pagination");
+        pagination.empty(); // Xóa phân trang hiện tại
+
+        if (data.total > 0) {
+            if (data.prev_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
+                );
+            }
+            // Tạo các nút cho mỗi trang
+            for (let page = 1; page <= data.last_page; page++) {
+                pagination.append(
+                    `<li class="page-item ${
+                        page === data.current_page ? "active" : ""
+                    }"><a href="#" class="page-link" onclick="fetchPage('${
+                        data.path
+                    }?page=${page}')">${page}</a></li>`
+                );
+            }
+            if (data.next_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
+                );
+            }
+        } else {
+            pagination.append(
+                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
+            );
+        }
+    }
+
+    window.fetchPage = function (url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    };
+});
+
+$(document).ready(function () {
+    $("#donot").change(function () {
+        $.ajax({
+            url: `/staff/doNotTask`,
+            type: "GET",
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
     });
+
+    function updateTable(data) {
+        var tbody = $("#ordersTableBody");
+        var table = $("#table-task");
+        tbody.empty(); // Xóa dữ liệu hiện tại
+        if (data.data.length === 0) {
+            table.empty();
+            table.append(
+                '<p class="text-center">Chưa có nhiệm vụ chưa hoàn thành nào.</p>'
+            );
+        } else {
+            $.each(data.data, function (index, item) {
+                var statusClass;
+                switch (item.status_id) {
+                    case 1:
+                        statusClass = "text-bg-warning";
+                        break;
+                    case 2:
+                        statusClass = "text-bg-primary";
+                        break;
+                    case 3:
+                        statusClass = "text-bg-secondary";
+                        break;
+                    default:
+                        statusClass = "text-bg-success";
+                        break;
+                }
+                tbody.append(`
+                    <tr>
+                        <td>${item.order_id}</td>
+                        <td>${item.service_type_name}</td>
+                        <td>${item.complete_time}</td>
+                        <td>${item.order_date}</td>
+                        <td>
+                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+                </td>
+                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                    </tr>
+                `);
+            });
+        }
+    }
+
+    function updatePagination(data) {
+        var pagination = $(".pagination");
+        pagination.empty(); // Xóa phân trang hiện tại
+
+        if (data.total > 0) {
+            if (data.prev_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
+                );
+            }
+            // Tạo các nút cho mỗi trang
+            for (let page = 1; page <= data.last_page; page++) {
+                pagination.append(
+                    `<li class="page-item ${
+                        page === data.current_page ? "active" : ""
+                    }"><a href="#" class="page-link" onclick="fetchPage('${
+                        data.path
+                    }?page=${page}')">${page}</a></li>`
+                );
+            }
+            if (data.next_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
+                );
+            }
+        } else {
+            pagination.append(
+                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
+            );
+        }
+    }
+
+    window.fetchPage = function (url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    };
+});
+
+$(document).ready(function () {
+    $("#allTask").change(function () {
+        $.ajax({
+            url: `/staff/allTask`,
+            type: "GET",
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    });
+
+    function updateTable(data) {
+        var tbody = $("#ordersTableBody");
+        var table = $("#table-task");
+        tbody.empty(); // Xóa dữ liệu hiện tại
+        if (data.data.length === 0) {
+            table.empty();
+            table.append(
+                '<p class="text-center">Chưa có nhiệm vụ nào.</p>'
+            );
+        } else {
+            $.each(data.data, function (index, item) {
+                var statusClass;
+                switch (item.status_id) {
+                    case 1:
+                        statusClass = "text-bg-warning";
+                        break;
+                    case 2:
+                        statusClass = "text-bg-primary";
+                        break;
+                    case 3:
+                        statusClass = "text-bg-secondary";
+                        break;
+                    default:
+                        statusClass = "text-bg-success";
+                        break;
+                }
+                tbody.append(`
+                    <tr>
+                        <td>${item.order_id}</td>
+                        <td>${item.service_type_name}</td>
+                        <td>${item.complete_time}</td>
+                        <td>${item.order_date}</td>
+                        <td>
+                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+                </td>
+                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                    </tr>
+                `);
+            });
+        }
+    }
+
+    function updatePagination(data) {
+        var pagination = $(".pagination");
+        pagination.empty(); // Xóa phân trang hiện tại
+
+        if (data.total > 0) {
+            if (data.prev_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
+                );
+            }
+            // Tạo các nút cho mỗi trang
+            for (let page = 1; page <= data.last_page; page++) {
+                pagination.append(
+                    `<li class="page-item ${
+                        page === data.current_page ? "active" : ""
+                    }"><a href="#" class="page-link" onclick="fetchPage('${
+                        data.path
+                    }?page=${page}')">${page}</a></li>`
+                );
+            }
+            if (data.next_page_url) {
+                pagination.append(
+                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
+                );
+            }
+        } else {
+            pagination.append(
+                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
+            );
+        }
+    }
+
+    window.fetchPage = function (url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    };
 });

@@ -18,17 +18,21 @@
         <div class="container-fluid pt-2">
             <h3 class="text-center mt-5 mb-3 fw-bold">Danh sách nhiệm vụ</h3>
             <div class="d-flex">
-                <div class="form-check form-switch form-check-reverse me-2">
-                    <input class="form-check-input" type="checkbox" id="done" checked>
-                    <label class="form-check-label" for="done">Chưa làm</label>
+                <div class="me-2">
+                    <input type="radio" class="btn-check" name="options-base" id="allTask" autocomplete="off" checked>
+                    <label class="btn" for="allTask">Tất cả</label>
                 </div>
-                <div class="form-check form-switch form-check-reverse">
-                    <input class="form-check-input" type="checkbox" id="donot">
-                    <label class="form-check-label" for="donot">Đã làm</label>
+                <div class="e-2">
+                    <input type="radio" class="btn-check" name="options-base" id="done" autocomplete="off">
+                    <label class="btn" for="done">Đã làm</label>
+                </div>
+                <div>
+                    <input type="radio" class="btn-check" name="options-base" id="donot" autocomplete="off">
+                    <label class="btn" for="donot">Chưa làm</label>
                 </div>
             </div>
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-5 table-striped">
+                <table class="table align-middle mb-0 bg-white mt-5 table-striped" id="table-task">
                     <thead class="bg-light">
                         <tr>
                             <th>Mã đơn hàng</th>
@@ -39,7 +43,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="ordersTableBody">
 
                         @foreach ($data as $item)
                             <tr>
@@ -107,7 +111,7 @@
                     </ul>
                 </div>
             @else
-                <p>Chưa dịch vụ nào.</p>
+                <p>Chưa nhiệm vụ nào.</p>
             @endif
 
         </div>

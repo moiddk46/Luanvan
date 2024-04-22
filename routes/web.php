@@ -84,6 +84,9 @@ Route::prefix('user')->group(function () {
 Route::prefix('staff')->middleware('is_staff')->group(function () {
     Route::get('/home', [homeStaffController::class, 'home'])->name('indexStaff');
     Route::get('/task', [taskStaffController::class, 'index'])->name('task');
+    Route::get('/doNotTask', [taskStaffController::class, 'doNotTask'])->name('taskDoNot');
+    Route::get('/doneTask', [taskStaffController::class, 'doneTask'])->name('taskDone');
+    Route::get('/allTask', [taskStaffController::class, 'allTask'])->name('allTask');
     Route::get('/calendar', [calenderStaffController::class, 'home'])->name('calenderStaff');
 });
 
