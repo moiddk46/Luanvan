@@ -5,6 +5,7 @@ namespace App\Http\Controllers\staff;
 use App\Http\Controllers\Controller;
 use App\Models\taskStaffModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class taskStaffController extends Controller
 {
@@ -42,15 +43,57 @@ class taskStaffController extends Controller
 
     public function detailTask(string $data)
     {
-        $title = $this->title;
-        $data = $this->service->getTask();
-        return view('Pages.Staff.Task', compact('title', 'data'));
+        $title = 'Chi tiết nhiệm vụ';
+        $data = $this->service->detailTask($data);
+        $status = $this->service->getStatus();
+        return view('Pages.Staff.TaskDetail', compact('title', 'data', 'status'));
     }
 
-    public function updateTask(string $data)
+    public function updateTask(Request $request)
     {
-        $title = $this->title;
-        $data = $this->service->getTask();
-        return view('Pages.Staff.Task', compact('title', 'data'));
+        $formData = $request->all();
+        $orderId = $formData['orderId'];
+        $status = $formData['status'];
+
+        $count = $this->service->updateStatus($orderId, $status);
+        $message = "Vui lòng chọn trạng thái để cập nhật";
+        if ($count > 0) {
+            $message = "Bạn đã cập nhật trạng thái đơn hàng thành công";
+            return redirect()->route('task')->with([
+                'message' => $message,
+                'status' => true
+            ]);
+        }
+        return redirect()->back()->with([
+            'message' => $message,
+            'status' => false
+        ]);
+    }
+
+    public function getDownload($data)
+    {
+
+        $data = $this->service->detailTask($data);
+        $fileName = '';
+        $taskId = '';
+        foreach ($data as $row) {
+            $fileName = $row->order_file_name;
+            $taskId = $row->order_id;
+        }
+        $path = config('app.pathFileOrder') . '/' . $taskId . '/' . $fileName;
+        $headers = array(
+            'Content-Type' => 'application/octet-stream'
+        );
+        $exists = Storage::disk('public')->exists($path);
+        if ($exists) {
+            return response()->download(storage_path('app/public/' . $path), $fileName, $headers);
+        } else {
+            // Nếu tệp không tồn tại, xử lý tương ứng (ví dụ: trả về thông báo lỗi)
+            $message = "Không thể download file";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
     }
 }

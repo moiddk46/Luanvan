@@ -35,7 +35,7 @@ class login extends Controller
         $messageFails = "Tài khoản hoặc mật khẩu không đúng";
         if (Auth::attempt($login)) {
             $user = Auth::user();
-            if ($user->position == 3) {
+            if ($user->position == 3) { 
                 return redirect()->route('index')->with([
                     'message' => $messageLogin,
                     'status' => true
@@ -45,8 +45,7 @@ class login extends Controller
                     'message' => $messageLogin,
                     'status' => true
                 ]);
-            }
-            else if($user->position == 2){
+            } else if ($user->position == 2) {
                 return redirect()->route('indexStaff')->with([
                     'message' => $messageLogin,
                     'status' => true

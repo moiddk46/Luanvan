@@ -55,7 +55,7 @@ class priceRequestAdminController extends Controller
         }
         $path = config('app.pathFilePriceRequest') . '/' . $requestId . '/' . $fileName;
         $headers = array(
-            'Content-Type: application/ocstream',
+            'Content-Type' => 'application/octet-stream'
         );
         $exists = Storage::disk('public')->exists($path);
         if ($exists) {

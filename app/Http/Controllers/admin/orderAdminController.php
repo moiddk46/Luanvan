@@ -7,6 +7,7 @@ use App\Http\Requests\order\orderAdminRequest;
 use App\Models\orderModel;
 use App\Models\staffModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class orderAdminController extends Controller
 {
@@ -68,8 +69,9 @@ class orderAdminController extends Controller
         $staff = new staffModel();
         $listStaff = $staff->getAllStaff();
         $status = $this->service->getStatus();
+        $statusReceipt = $this->service->getStatusReceipt();
 
-        return view('Pages.Admin.order.DetailOrder', compact('title', 'data', 'listStaff', 'status'));
+        return view('Pages.Admin.order.DetailOrder', compact('title', 'data', 'listStaff', 'status', 'statusReceipt'));
     }
 
     public function updateDetailOrder(Request $request)
@@ -77,12 +79,13 @@ class orderAdminController extends Controller
         $formData = $request->all();
         $orderId = $formData['orderId'];
         $status = $formData['status'];
+        $statusReceipt = $formData['statusReceipt'];
         $staff = $formData['staff'];
 
-        $count = $this->service->updateDetail($orderId, $status, $staff);
-        $message = "Vui lòng chọn nhân viên để hoàn thành đơn hàng";
+        $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt);
+        $message = "Thông tin đơn hàng không có thay đổi";
         if ($count > 0) {
-            $message = "Bạn đã cập nhật trạng thái và phân công đơn hàng thành công";
+            $message = "Bạn đã cập nhật thông tin đơn hàng thành công";
             return redirect()->route('orderAdmin')->with([
                 'message' => $message,
                 'status' => true
@@ -92,5 +95,32 @@ class orderAdminController extends Controller
             'message' => $message,
             'status' => false
         ]);
+    }
+
+    public function getDownload($data)
+    {
+
+        $data = $this->service->selectDetailOrder($data);
+        $fileName = '';
+        $taskId = '';
+        foreach ($data as $row) {
+            $fileName = $row->order_file_name;
+            $taskId = $row->order_id;
+        }
+        $path = config('app.pathFileOrder') . '/' . $taskId . '/' . $fileName;
+        $headers = array(
+            'Content-Type' => 'application/octet-stream'
+        );
+        $exists = Storage::disk('public')->exists($path);
+        if ($exists) {
+            return response()->download(storage_path('app/public/' . $path), $fileName, $headers);
+        } else {
+            // Nếu tệp không tồn tại, xử lý tương ứng (ví dụ: trả về thông báo lỗi)
+            $message = "Không thể download file";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
     }
 }

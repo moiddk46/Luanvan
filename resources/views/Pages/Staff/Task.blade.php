@@ -20,15 +20,15 @@
             <div class="d-flex">
                 <div class="me-2">
                     <input type="radio" class="btn-check" name="options-base" id="allTask" autocomplete="off" checked>
-                    <label class="btn" for="allTask">Tất cả</label>
+                    <label class="btn btn-outline-success" for="allTask">Tất cả</label>
                 </div>
-                <div class="e-2">
+                <div class="me-2">
                     <input type="radio" class="btn-check" name="options-base" id="done" autocomplete="off">
-                    <label class="btn" for="done">Đã làm</label>
+                    <label class="btn btn-outline-success" for="done">Đã làm</label>
                 </div>
                 <div>
                     <input type="radio" class="btn-check" name="options-base" id="donot" autocomplete="off">
-                    <label class="btn" for="donot">Chưa làm</label>
+                    <label class="btn btn-outline-success" for="donot">Chưa làm</label>
                 </div>
             </div>
             @if (isset($data))
@@ -72,7 +72,7 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-outline-dark">
+                                    <a href="{{ route('detailTask', ['data' => $item->order_id]) }}" class="btn btn-outline-dark">
                                         Chi tiết
                                     </a>
                                 </td>
@@ -84,14 +84,6 @@
 
                 <div class="d-flex justify-content-center mt-3">
                     <ul class="pagination">
-                        @if ($data->onFirstPage())
-                            <li class="page-item disabled"><span class="page-link prev"><i
-                                        class="bi bi-arrow-left-circle"></i></span></li>
-                        @else
-                            <li class="page-item"><a href="{{ $data->previousPageUrl() }}" class="page-link"
-                                    aria-label="Previous"><i class="bi bi-arrow-left-circle"></i></a></li>
-                        @endif
-
                         @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
                             @if ($page == $data->currentPage())
                                 <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
@@ -100,15 +92,6 @@
                                         class="page-link">{{ $page }}</a></li>
                             @endif
                         @endforeach
-
-                        @if ($data->hasMorePages())
-                            <li class="page-item"><a href="{{ $data->nextPageUrl() }}" class="page-link"
-                                    aria-label="Next"><i class="bi bi-arrow-right-circle"></i></a></li>
-                        @else
-                            <li class="page-item disabled"><span class="page-link"><i
-                                        class="bi bi-arrow-right-circle"></i></span></li>
-                        @endif
-                    </ul>
                 </div>
             @else
                 <p>Chưa nhiệm vụ nào.</p>

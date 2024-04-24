@@ -16,8 +16,11 @@
             </div>
         @endif
         <div class="row">
+            <div class="mt-5 ">
+                <a href="{{ route('addServiceAdmin') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm dịch vụ </a>
+            </div>
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-5 table-striped">
+                <table class="table align-middle mb-0 bg-white mt-2 table-striped">
                     <thead class="bg-light">
                         <tr>
                             <th>Mã dịch vụ</th>
@@ -40,7 +43,8 @@
                                     {{ $item->service_name }}
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-outline-dark">
+                                    <a href="{{ route('detailServiceAdmin', ['data' => $item->service_type_code]) }}"
+                                        class="btn btn-outline-dark">
                                         Chi tiết
                                     </a>
                                 </td>
@@ -52,13 +56,6 @@
 
                 <div class="d-flex justify-content-center mt-3">
                     <ul class="pagination">
-                        @if ($data->onFirstPage())
-                            <li class="page-item disabled"><span class="page-link prev"><i class="bi bi-arrow-left-circle"></i></span></li>
-                        @else
-                            <li class="page-item"><a href="{{ $data->previousPageUrl() }}" class="page-link"
-                                    aria-label="Previous"><i class="bi bi-arrow-left-circle"></i></a></li>
-                        @endif
-
                         @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
                             @if ($page == $data->currentPage())
                                 <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
@@ -67,19 +64,11 @@
                                         class="page-link">{{ $page }}</a></li>
                             @endif
                         @endforeach
-
-                        @if ($data->hasMorePages())
-                            <li class="page-item"><a href="{{ $data->nextPageUrl() }}" class="page-link"
-                                    aria-label="Next"><i class="bi bi-arrow-right-circle"></i></a></li>
-                        @else
-                            <li class="page-item disabled"><span class="page-link"><i class="bi bi-arrow-right-circle"></i></span></li>
-                        @endif
                     </ul>
                 </div>
             @else
                 <p>Chưa dịch vụ nào.</p>
             @endif
-
         </div>
     </div>
 @endsection

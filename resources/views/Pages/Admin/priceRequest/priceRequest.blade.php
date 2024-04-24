@@ -61,13 +61,6 @@
                 </table>
                 <div class="d-flex justify-content-center mt-3">
                     <ul class="pagination">
-                        @if ($data->onFirstPage())
-                            <li class="page-item disabled"><span class="page-link prev"><i
-                                        class="bi bi-arrow-left-circle"></i></span></li>
-                        @else
-                            <li class="page-item"><a href="{{ $data->previousPageUrl() }}" class="page-link"
-                                    aria-label="Previous"><i class="bi bi-arrow-left-circle"></i></a></li>
-                        @endif
 
                         @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
                             @if ($page == $data->currentPage())
@@ -78,13 +71,6 @@
                             @endif
                         @endforeach
 
-                        @if ($data->hasMorePages())
-                            <li class="page-item"><a href="{{ $data->nextPageUrl() }}" class="page-link"
-                                    aria-label="Next"><i class="bi bi-arrow-right-circle"></i></a></li>
-                        @else
-                            <li class="page-item disabled"><span class="page-link"><i
-                                        class="bi bi-arrow-right-circle"></i></span></li>
-                        @endif
                     </ul>
                 </div>
             @else

@@ -16,54 +16,12 @@ $(document).ready(function () {
             },
         });
     });
-});
-// var typingTimer;
-// var doneTypingInterval = 400; // milliseconds
 
-// $("#lang").keyup(function () {
-//     clearTimeout(typingTimer);
-//     if ($(this).val()) {
-//         typingTimer = setTimeout(doneTyping, doneTypingInterval);
-//     } else {
-//         $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
-//     }
-// });
+    $(".toast").toast("show"); // Hiển thị toast
+    setTimeout(function () {
+        $(".toast").toast("hide"); // Ẩn toast sau 5 giây
+    }, 5000);
 
-// function doneTyping() {
-//     var lang = $("#lang").val();
-//     if (lang) {
-//         // Hiển thị biểu tượng loading
-//         $(".loading-spinner").show();
-//         $.ajax({
-//             url: "/api/translate",
-//             type: "POST",
-//             data: {
-//                 lang: lang,
-//             },
-//             success: function (res) {
-//                 var data = res;
-//                 $("#langed").val(data); // Đặt dữ liệu trả về vào #langed
-//             },
-//             error: function () {
-//                 $("#langed").val("Error occurred."); // Xử lý lỗi
-//             },
-//         });
-//     } else {
-//         $("#langed").val(""); // Nếu giá trị của lang rỗng, langed sẽ trở về rỗng
-//     }
-// }
-// $(".toast").toast("show"); // Hiển thị toast
-// setTimeout(function () {
-//     $(".toast").toast("hide"); // Ẩn toast sau 5 giây
-// }, 5000);
-
-// $("#loading").show(); // Hiển thị loading khi trang được load lần đầu tiên
-
-// // Ẩn loading sau 3 giây
-// setTimeout(function () {
-//     $("#loading").hide();
-// }, 3000);
-$(document).ready(function () {
     function formatCurrency(amount) {
         return new Intl.NumberFormat("vi-VN", {
             style: "currency",
@@ -88,18 +46,18 @@ $(document).ready(function () {
         var formattedDate = formatDate(dateString);
         $(this).text(formattedDate);
     });
-});
 
-$(document).ready(function () {
     $(".checkAll").click(function () {
         $(".check").prop("checked", $(this).prop("checked"));
     });
-});
 
-$(document).ready(function () {
     $("#statusSelect").change(function () {
         var selectedStatus = $(this).val();
         $("#statusValue").val(selectedStatus);
+    });
+    $("#statusReceipt").change(function () {
+        var selectedStatus = $(this).val();
+        $("#statusReceiptValue").val(selectedStatus);
     });
     $("#staff").change(function () {
         var selectedStaff = $(this).val();
@@ -353,7 +311,7 @@ $(document).ready(function () {
                         <td>
                     <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
                 </td>
-                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
                     </tr>
                 `);
             });
@@ -365,11 +323,6 @@ $(document).ready(function () {
         pagination.empty(); // Xóa phân trang hiện tại
 
         if (data.total > 0) {
-            if (data.prev_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
-                );
-            }
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
                 pagination.append(
@@ -378,11 +331,6 @@ $(document).ready(function () {
                     }"><a href="#" class="page-link" onclick="fetchPage('${
                         data.path
                     }?page=${page}')">${page}</a></li>`
-                );
-            }
-            if (data.next_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
                 );
             }
         } else {
@@ -462,7 +410,7 @@ $(document).ready(function () {
                         <td>
                     <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
                 </td>
-                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
                     </tr>
                 `);
             });
@@ -474,11 +422,6 @@ $(document).ready(function () {
         pagination.empty(); // Xóa phân trang hiện tại
 
         if (data.total > 0) {
-            if (data.prev_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
-                );
-            }
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
                 pagination.append(
@@ -487,11 +430,6 @@ $(document).ready(function () {
                     }"><a href="#" class="page-link" onclick="fetchPage('${
                         data.path
                     }?page=${page}')">${page}</a></li>`
-                );
-            }
-            if (data.next_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
                 );
             }
         } else {
@@ -542,9 +480,7 @@ $(document).ready(function () {
         tbody.empty(); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
             table.empty();
-            table.append(
-                '<p class="text-center">Chưa có nhiệm vụ nào.</p>'
-            );
+            table.append('<p class="text-center">Chưa có nhiệm vụ nào.</p>');
         } else {
             $.each(data.data, function (index, item) {
                 var statusClass;
@@ -571,7 +507,7 @@ $(document).ready(function () {
                         <td>
                     <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
                 </td>
-                        <td><a href="" class="btn btn-outline-dark">Chi tiết</a></td>
+                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
                     </tr>
                 `);
             });
@@ -583,11 +519,6 @@ $(document).ready(function () {
         pagination.empty(); // Xóa phân trang hiện tại
 
         if (data.total > 0) {
-            if (data.prev_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.prev_page_url}')">Prev</a></li>`
-                );
-            }
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
                 pagination.append(
@@ -596,11 +527,6 @@ $(document).ready(function () {
                     }"><a href="#" class="page-link" onclick="fetchPage('${
                         data.path
                     }?page=${page}')">${page}</a></li>`
-                );
-            }
-            if (data.next_page_url) {
-                pagination.append(
-                    `<li class="page-item"><a href="#" class="page-link" onclick="fetchPage('${data.next_page_url}')">Next</a></li>`
                 );
             }
         } else {
@@ -625,3 +551,16 @@ $(document).ready(function () {
         });
     };
 });
+
+$(document).ready(function() {
+    $('#formFile').on('change', function() {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          $('#displayImage').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  });

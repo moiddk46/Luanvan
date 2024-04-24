@@ -1,4 +1,4 @@
-@extends('Layouts.Admin.MasterLayout')
+@extends('Layouts.Staff.MasterLayout')
 
 @section('content')
     <div class="border border-light px-5">
@@ -16,10 +16,11 @@
             </div>
         @endif
         <div class="row">
+            <h3 class="text-center mt-5 mb-3 fw-bold">Chi tiết nhiệm vụ</h3>
             @if (isset($data))
-                <form action="{{ route('updateDetailOrder') }}" method="post">
+                <form action="{{ route('updateTask') }}" method="post">
                     @csrf
-                    <table class="table align-middle mb-0 bg-white table-striped mt-5">
+                    <table class="table align-middle mb-0 bg-white table-striped mt-3">
                         <thead class="bg-light">
                             <tr>
                                 <th>Tiêu đề</th>
@@ -60,38 +61,11 @@
                                             {{ $item->order_file_name }}
                                         </span>
                                         <span class="col-4 align-content-center">
-                                            <a href="{{ route('downloadOrder', ['data' => $item->order_id]) }}"
+                                            <a href="{{ route('downloadTask', ['data' => $item->order_id]) }}"
                                                 class="btn btn-success">
                                                 Tải xuống
                                             </a>
                                         </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Hình thức thanh toán</th>
-                                    <td>{{ $item->sd_status }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Trạng thái thanh toán</th>
-                                    <td>
-                                        @if ($item->sr_status_id == '2')
-                                            <span
-                                                class="badge text-bg-success rounded-pill d-inline ">{{ $item->sr_status }}</span>
-                                        @else
-                                            <select id="statusReceipt" class="form-select form-select-md w-50"
-                                                aria-label="Small select example">
-                                                <option value="{{ $item->sr_status_id }}">{{ $item->sr_status }}</option>
-                                                @foreach ($statusReceipt as $row)
-                                                    @if ($item->sr_status_id == $row->status_id)
-                                                        continue;
-                                                    @else
-                                                        <option value="{{ $row->status_id }}">{{ $row->status }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <input type="hidden" id="statusReceiptValue" name="statusReceipt"
-                                                value="{{ isset($item->sr_status_id) ? $item->sr_status_id : '' }}">
-                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,36 +98,14 @@
                                 <tr>
                                     <th>Phân công</th>
                                     <td>
-                                        @if ($item->status_id == '4')
-                                            {{ $item->nameStaff }}
-                                        @else
-                                            <select id="staff" class="form-select form-select-md w-50"
-                                                aria-label="Small select example">
-                                                @if (isset($item->id))
-                                                    {
-                                                    <option value="{{ $item->id }}">{{ $item->nameStaff }}</option>
-                                                    }
-                                                @else
-                                                    <option selected>Chọn nhân viên</option>
-                                                @endif
-                                                @foreach ($listStaff as $row)
-                                                    @if ($item->id == $row->id)
-                                                        continue;
-                                                    @else
-                                                        <option value="{{ $row->id }}">{{ $row->name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            <input type="hidden" id="staffValue" name="staff"
-                                                value="{{ isset($item->id) ? $item->id : '' }}">
-                                        @endif
+                                        {{ $item->nameStaff }}
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay
+                        <a href="{{ route('task') }}" class="btn btn-secondary me-2">Quay
                             lại</a>
                         @if ($item->status_id != '4')
                             <button type="submit" class="btn btn-success">Cập nhật</button>

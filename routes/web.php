@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', [homeUserController::class, 'home'])->name('index');
 
 Route::prefix('core')->group(function () {
@@ -46,6 +47,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::post('/updateStatusOrder', [orderAdminController::class, 'updateStatus'])->name('updateStatus');
         Route::get('/detailOrder/{data}', [orderAdminController::class, 'detailOrder'])->name('detailOrder');
         Route::post('/updateDetailOrder', [orderAdminController::class, 'updateDetailOrder'])->name('updateDetailOrder');
+        Route::get('/download/{data}', [orderAdminController::class, 'getDownload'])->name('downloadOrder');
     });
     Route::prefix('priceRequest')->group(function () {
         Route::get('/priceRequest', [priceRequestAdminController::class, 'priceRequest'])->name('priceRequestAdmin');
@@ -56,6 +58,10 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
 
     Route::prefix('service')->group(function () {
         Route::get('/allService', [serviceAdminController::class, 'getAllService'])->name('allService');
+        Route::get('/detailService/{data}', [serviceAdminController::class, 'getDetailService'])->name('detailServiceAdmin');
+        Route::post('/updateDetailService', [serviceAdminController::class, 'updateDetailService'])->name('updateDetailServiceAdmin');
+        Route::get('/addService', [serviceAdminController::class, 'addService'])->name('addServiceAdmin');
+        Route::post('/insertService', [serviceAdminController::class, 'insertService'])->name('insertService');
     });
     Route::prefix('customers')->group(function () {
         Route::get('/allCustomer', [customerAdminController::class, 'getAllCustomer'])->name('allCustomer');
@@ -87,6 +93,8 @@ Route::prefix('staff')->middleware('is_staff')->group(function () {
     Route::get('/doNotTask', [taskStaffController::class, 'doNotTask'])->name('taskDoNot');
     Route::get('/doneTask', [taskStaffController::class, 'doneTask'])->name('taskDone');
     Route::get('/allTask', [taskStaffController::class, 'allTask'])->name('allTask');
+    Route::get('/detailTask/{data}', [taskStaffController::class, 'detailTask'])->name('detailTask');
+    Route::post('/updateTask', [taskStaffController::class, 'updateTask'])->name('updateTask');
+    Route::get('/download/{data}', [taskStaffController::class, 'getDownload'])->name('downloadTask');
     Route::get('/calendar', [calenderStaffController::class, 'home'])->name('calenderStaff');
 });
-

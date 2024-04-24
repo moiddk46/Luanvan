@@ -76,6 +76,18 @@ class orderModel extends Model
         return $select;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getStatusReceipt(): array
+    {
+        $select  = DB::table('status_receipt')
+            ->get()->toArray();
+        return $select;
+    }
+
 
     /**
      * @return int
@@ -104,33 +116,38 @@ class orderModel extends Model
     /**
      * @return int
      */
-    public function updateDetail($orderId, $status, $staff): int
+    public function updateDetail($orderId, $status, $staff, $statusReceipt): int
     {
-        $count  = DB::table('order_master')
+        $update  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
                 'status' => $status
+            ]);
+        $update = DB::table('receipts')
+            ->where('id_order', $orderId)
+            ->update([
+                'status' => $statusReceipt,
             ]);
         $select = DB::table('order_master as om')
             ->join('assign_master as am', 'am.order_id', '=', 'om.order_id')
             ->where('om.order_id', '=', $orderId)
             ->count();
         if ($select > 0) {
-            $count  = DB::table('assign_master')
+            $update  = DB::table('assign_master')
                 ->where('order_id', '=', $orderId)
                 ->update([
                     'status' => $status
                 ]);
         } else {
             if (isset($staff)) {
-                $count = DB::table('assign_master')->insert([
+                $update = DB::table('assign_master')->insert([
                     'staff_id' => $staff,
                     'order_id' => $orderId,
                     'status' => $status
                 ]);
             }
         }
-        return $count;
+        return $update;
     }
 
     /**
@@ -166,11 +183,15 @@ class orderModel extends Model
             if (!empty($select)) {
                 $pathPriceRequest = config('app.pathFilePriceRequest') . '/' . $select->request_id . '/' . $select->request_file;
                 $pathOrder = config('app.pathFileOrder') . '/' . $orderId . '/' . $select->request_file;
-                if (!Storage::disk('public')->exists($pathOrder)) {
-                    // Nếu không tồn tại, tạo thư mục đíchs
-                    Storage::disk('public')->makeDirectory(dirname($pathOrder), 0775, true, true);
+                if (Storage::disk('public')->exists($pathPriceRequest)) {
+                    if (!Storage::disk('public')->exists($pathOrder)) {
+                        // Nếu không tồn tại, tạo thư mục đíchs
+                        Storage::disk('public')->makeDirectory(dirname($pathOrder), 0775, true, true);
+                    }
                 }
-                $copyFile = Storage::disk('public')->put($pathOrder, $pathPriceRequest);
+                $fileContents = Storage::disk('public')->get($pathPriceRequest);
+                // Ghi nội dung vào file đích
+                $copyFile = Storage::disk('public')->put($pathOrder, $fileContents);
                 if ($copyFile) {
                     $inserted = DB::table('order_detail')->insert([
                         'order_id' => $orderId,
