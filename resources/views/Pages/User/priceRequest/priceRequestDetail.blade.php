@@ -104,10 +104,11 @@ text-bg-success @endif
                                 </tr>
                                 <tr>
                                     <th>Thời gian hoàn thành</th>
-                                    <td >
+                                    <td>
                                         <div class="col-4">
-                                            {{  $item->complete_time }} Ngày( Bắt đầu từ ngày đặt hàng)
-                                            <input type="hidden" name="completeTime" id="completeTime" value="{{  $item->complete_time }}">
+                                            {{ $item->complete_time }} Ngày( Bắt đầu từ ngày đặt hàng)
+                                            <input type="hidden" name="completeTime" id="completeTime"
+                                                value="{{ $item->complete_time }}">
                                         </div>
                                     </td>
                                 </tr>
@@ -139,7 +140,7 @@ text-bg-success @endif
                                         <div class="row">
                                             <div class="col-8">
                                                 @if (!empty($item->price_letter))
-                                                    {{ $item->price_letter }}
+                                                    {!! $item->price_letter !!}
                                                 @endif
                                             </div>
                                         </div>
@@ -201,7 +202,7 @@ text-bg-success @endif
                                 </div>
                                 <div class="modal-footer m-auto">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="submit" class="btn btn-success" name="redirect"  id="button">Xác
+                                    <button type="submit" class="btn btn-success" name="redirect" id="button">Xác
                                         nhận</button>
 
                                 </div>

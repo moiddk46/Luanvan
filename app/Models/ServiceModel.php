@@ -92,7 +92,8 @@ class ServiceModel extends Model
                 'tp.service_type_name',
                 'tp.service_type_detail',
                 'pt.price_id',
-                'pt.price'
+                'pt.price',
+                'pt.detail_price'
             )
             ->where('tp.service_type_code', '=', $data)
             ->join('laravel.price_service_type as pt', 'pt.service_type_code', '=', 'tp.service_type_code')
@@ -116,19 +117,22 @@ class ServiceModel extends Model
     {
         $result = false;
         if (isset($formData)) {
-            $fileName = time() . '_' . $formData['files']->getClientOriginalName();
-            $formData['files']->move(public_path('assets/images'), $fileName);
+            if (isset($formData['files'])) {
+                $fileName = time() . '_' . $formData['files']->getClientOriginalName();
+                $formData['files']->move(public_path('assets/images'), $fileName);
+                DB::table('service_type_img')
+                    ->where('service_type_code', $formData['serviceCode'])
+                    ->update([
+                        'img' => $fileName
+                    ]);
+            }
             DB::table('service_type')
                 ->where('service_type_code', $formData['serviceCode'])
                 ->update([
                     'service_type_detail' => $formData['detailService']
                 ]);
 
-            DB::table('service_type_img')
-                ->where('service_type_code', $formData['serviceCode'])
-                ->update([
-                    'img' => $fileName
-                ]);
+
 
             DB::table('price_service_type')
                 ->where('service_type_code', $formData['serviceCode'])

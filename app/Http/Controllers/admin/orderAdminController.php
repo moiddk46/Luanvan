@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\order\orderAdminRequest;
 use App\Models\orderModel;
-use App\Models\staffModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,7 +66,7 @@ class orderAdminController extends Controller
                 'status' => false
             ]);
         }
-        $staff = new staffModel();
+        $staff = new User();
         $listStaff = $staff->getAllStaff();
         $status = $this->service->getStatus();
         $statusReceipt = $this->service->getStatusReceipt();

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\orderModel;
 use App\Models\ServiceMaster;
-use App\Models\staffModel;
 use App\Models\User;
 
 class homeAdminController extends Controller
@@ -23,11 +22,10 @@ class homeAdminController extends Controller
         $title = $this->title;
         $service = $this->service;
         $order = new orderModel();
-        $staff = new staffModel();
         $user = new User();
         $countOrder = $order->countOrder();
         $sumPrice = $order->sumPrice();
-        $countStaff = $staff->countStaff();
+        $countStaff = $user->countStaff();
         $countCustomer = $user->countCustomer();
         return view('Pages.Admin.Home', compact('title', 'countOrder', 'countStaff', 'countCustomer', 'sumPrice'));
     }

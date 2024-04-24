@@ -65,10 +65,12 @@ $(document).ready(function () {
     });
 
     $("#sample").click(function () {
+        console.log("1");
         var name = $("#name").text();
         var service = $("#service").text();
-        var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là {$money} ạ. `;
-        $("#reply").val(sampleLetter);
+        var money = formatCurrency($("#price").val());
+        var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là ${money} ạ. `;
+        tinymce.get('mytext').setContent(sampleLetter)
     });
 
     var name = $("#name").val();
@@ -552,15 +554,182 @@ $(document).ready(function () {
     };
 });
 
-$(document).ready(function() {
-    $('#formFile').on('change', function() {
-      var file = this.files[0];
-      if (file) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          $('#displayImage').attr('src', e.target.result);
-        };
-        reader.readAsDataURL(file);
-      }
+$(document).ready(function () {
+    $("#formFile").on("change", function () {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#displayImage").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
     });
-  });
+});
+
+$(document).ready(function () {
+    // Kiểm tra nếu select có ID 'position' bị disabled
+    if ($("#position").is(":disabled")) {
+        $("#message_disable").text(
+            "Chức năng cập nhật quyền hạn bị vô hiệu hóa, do bạn đang đăng nhập bằng tài khoản này"
+        );
+    }
+});
+
+$(document).ready(function () {
+    $("#staff").change(function () {
+        $.ajax({
+            url: `getStaff`,
+            type: "GET",
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    });
+
+    function updateTable(data) {
+        var tbody = $("#ordersTableBody");
+        var table = $("#table-user");
+        tbody.empty(); // Xóa dữ liệu hiện tại
+        if (data.data.length === 0) {
+            table.empty();
+            table.append('<p class="text-center">Chưa có nhân viên nào.</p>');
+        } else {
+            $.each(data.data, function (index, item) {
+                tbody.append(`
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.email}</td>
+                        <td id="date">${item.created_at}</td>
+                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                    </tr>
+                `);
+            });
+        }
+    }
+
+    function updatePagination(data) {
+        var pagination = $(".pagination");
+        pagination.empty(); // Xóa phân trang hiện tại
+
+        if (data.total > 0) {
+            // Tạo các nút cho mỗi trang
+            for (let page = 1; page <= data.last_page; page++) {
+                pagination.append(
+                    `<li class="page-item ${
+                        page === data.current_page ? "active" : ""
+                    }"><a href="#" class="page-link" onclick="fetchPage('${
+                        data.path
+                    }?page=${page}')">${page}</a></li>`
+                );
+            }
+        } else {
+            pagination.append(
+                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
+            );
+        }
+    }
+
+    window.fetchPage = function (url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    };
+});
+
+$(document).ready(function () {
+    $("#customer").change(function () {
+        $.ajax({
+            url: `getCustomer`,
+            type: "GET",
+            dataType: "json",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    });
+
+    function updateTable(data) {
+        var tbody = $("#ordersTableBody");
+        var table = $("#table-user");
+        tbody.empty(); // Xóa dữ liệu hiện tại
+        if (data.data.length === 0) {
+            table.empty();
+            table.append('<p class="text-center">Chưa có khách hàng nào.</p>');
+        } else {
+            $.each(data.data, function (index, item) {
+                tbody.append(`
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.email}</td>
+                        <td id="date">${item.created_at}</td>
+                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                    </tr>
+                `);
+            });
+        }
+    }
+
+    function updatePagination(data) {
+        var pagination = $(".pagination");
+        pagination.empty(); // Xóa phân trang hiện tại
+
+        if (data.total > 0) {
+            // Tạo các nút cho mỗi trang
+            for (let page = 1; page <= data.last_page; page++) {
+                pagination.append(
+                    `<li class="page-item ${
+                        page === data.current_page ? "active" : ""
+                    }"><a href="#" class="page-link" onclick="fetchPage('${
+                        data.path
+                    }?page=${page}')">${page}</a></li>`
+                );
+            }
+        } else {
+            pagination.append(
+                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
+            );
+        }
+    }
+
+    window.fetchPage = function (url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                updateTable(data);
+                updatePagination(data);
+            },
+            error: function (error) {
+                console.error("Error:", error);
+            },
+        });
+    };
+});

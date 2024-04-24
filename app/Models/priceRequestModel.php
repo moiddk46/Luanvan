@@ -36,7 +36,8 @@ class priceRequestModel extends Model
             'address' =>  $formData['address'],
             'phone' =>  $formData['sdt'],
             'request_file' =>  $fileName,
-            'status' => KCconst::DB_STATUS_DONT_REPLY
+            'status' => KCconst::DB_STATUS_DONT_REPLY,
+            'complete_time'=> NULL,
         ]);
 
         if (!isset($count) || empty($count)) {

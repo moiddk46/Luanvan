@@ -23,7 +23,7 @@ class loginRequest extends FormRequest
     {
         return [
             'email' => 'required|email:rfc,dns',
-            'password' => 'required|min:8',
+            'password' => 'required|min:6',
         ];
     }
     public function messages(): array
@@ -32,7 +32,7 @@ class loginRequest extends FormRequest
             'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.email' => 'Địa chỉ email không hợp lệ.',
             'password.required' => 'Vui lòng nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
         ];
     }
 }

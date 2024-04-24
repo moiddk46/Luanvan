@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\orderAdminController;
 use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\admin\serviceAdminController;
 use App\Http\Controllers\admin\staffAdminController;
+use App\Http\Controllers\admin\userAdminController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
@@ -63,11 +64,14 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/addService', [serviceAdminController::class, 'addService'])->name('addServiceAdmin');
         Route::post('/insertService', [serviceAdminController::class, 'insertService'])->name('insertService');
     });
-    Route::prefix('customers')->group(function () {
-        Route::get('/allCustomer', [customerAdminController::class, 'getAllCustomer'])->name('allCustomer');
-    });
-    Route::prefix('staff')->group(function () {
-        Route::get('/allStaff', [staffAdminController::class, 'getAllStaff'])->name('allStaff');
+    Route::prefix('user')->group(function () {
+        Route::get('/allUser', [userAdminController::class, 'getAllStaff'])->name('allUser');
+        Route::get('/detailUser/{data}', [userAdminController::class, 'getDetailUser'])->name('detailUser');
+        Route::post('/updateUser', [userAdminController::class, 'updateUser'])->name('updateUser');
+        Route::get('/updateUser', [userAdminController::class, 'viewAddUser'])->name('viewAddUser');
+        Route::post('/addUser', [userAdminController::class, 'addUser'])->name('addUser');
+        Route::get('/getStaff', [userAdminController::class, 'getStaff'])->name('getStaff');
+        Route::get('/getCustomer', [userAdminController::class, 'getCustomer'])->name('getCustomer');
     });
 });
 

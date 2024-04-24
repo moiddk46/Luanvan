@@ -112,7 +112,7 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-6">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="6">
+                                                <textarea class="form-control" id="mytext" name="content">
                                                 @if (!empty($item->price_letter))
 {{ $item->price_letter }}
 @endif

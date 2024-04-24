@@ -15,10 +15,10 @@
             </div>
         @endif
         <div class="container-fluid">
-            <h5>Báo giá</h5>
+            <h3 class="text-center mt-5 mb-3 fw-bold">Báo giá</h3>
             @if (isset($detailService))
                 <div>
-                    {{ $detailService->price }}
+                    {!! $detailService->detail_price !!}
                 </div>
             @endif
             <div class="w-50 border border-light rounded bg-dark-subtle p-3 m-auto">

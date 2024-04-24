@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class User extends Authenticatable
 {
@@ -56,10 +57,36 @@ class User extends Authenticatable
             ->paginate(10);
         return $select;
     }
-    public function countCustomer(){
+    public function countCustomer()
+    {
         $count = DB::table('users')
-        ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
-        ->count();
+            ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
+            ->count();
         return $count;
+    }
+
+    public function getAllStaff()
+    {
+        $select = DB::table('users')
+            ->whereIn('position', [KCconst::DB_POSITION_STAFF, KCconst::DB_POSITION_ADMIN])
+            ->paginate(10);
+        return $select;
+    }
+
+    public function countStaff(): int
+    {
+        $count = DB::table('users')
+            ->whereIn('position', [KCconst::DB_POSITION_STAFF, KCconst::DB_POSITION_ADMIN])
+            ->count();
+        return $count;
+    }
+
+    public function detailUser(string $data): stdClass
+    {
+        $select = DB::table('users')
+            ->where('id', $data)
+            ->first();
+
+        return $select;
     }
 }

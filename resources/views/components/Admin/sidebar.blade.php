@@ -10,12 +10,12 @@
                     vụ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black" href="{{ route('allStaff') }}"><i
-                        class="bi bi-person-workspace me-2"></i>Nhân viên</a>
+                <a class="nav-link text-black" href="{{ route('allUser') }}"><i
+                        class="bi bi-person-workspace me-2"></i>Người dùng</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-black" href="{{ route('allCustomer') }}"> <i
-                        class="bi bi-person-video me-2"></i>Khách hàng</a>
+                <a class="nav-link text-black" href=""> <i
+                        class="bi bi-person-video me-2"></i>Đánh giá</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-black" href="{{ route('orderAdmin') }}"><i class="bi bi-card-list me-2"></i>Đơn

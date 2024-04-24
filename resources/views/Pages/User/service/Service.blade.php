@@ -19,14 +19,14 @@
                         </div>
                         <div class="col-7 px-5">
                             <h3 class="fw-bold mb-3">{{ $row->service_type_name }}</h3>
-                            <p>{{ $row->service_type_detail }}</p>
+                            <p>{!! $row->service_type_detail !!}</p>
                             <a class="btn btn-outline-primary"
                                 href="{{ route('detailService', ['data' => $row->service_type_code]) }}">Xem báo giá</a>
                         </div>
                     @else
                         <div class="col-7 px-5">
                             <h3 class="fw-bold mb-3">{{ $row->service_type_name }}</h3>
-                            <p>{{ $row->service_type_detail }}</p>
+                            <p>{!! $row->service_type_detail !!}</p>
                             <a class="btn btn-outline-primary"
                                 href="{{ route('detailService', ['data' => $row->service_type_code]) }}">Xem báo giá</a>
                         </div>

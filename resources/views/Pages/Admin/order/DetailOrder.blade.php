@@ -79,7 +79,7 @@
                                                 class="badge text-bg-success rounded-pill d-inline ">{{ $item->sr_status }}</span>
                                         @else
                                             <select id="statusReceipt" class="form-select form-select-md w-50"
-                                                aria-label="Small select example">
+                                                aria-label="Small select example" name="statusReceipt">
                                                 <option value="{{ $item->sr_status_id }}">{{ $item->sr_status }}</option>
                                                 @foreach ($statusReceipt as $row)
                                                     @if ($item->sr_status_id == $row->status_id)
@@ -89,9 +89,9 @@
                                                     @endif
                                                 @endforeach
                                             </select>
-                                            <input type="hidden" id="statusReceiptValue" name="statusReceipt"
-                                                value="{{ isset($item->sr_status_id) ? $item->sr_status_id : '' }}">
                                         @endif
+                                        <input type="hidden" id="statusReceiptValue" name="statusReceipt"
+                                                value="{{ $item->sr_status_id }}">
                                     </td>
                                 </tr>
                                 <tr>
