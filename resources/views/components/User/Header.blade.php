@@ -40,6 +40,11 @@
                     <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
                 </form>
                 <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2">
+                    <i class="bi bi-bell"></i> <span class="badge text-bg-danger">
+                        0
+                    </span>
+                </a>
+                <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2">
                     <i class="bi bi-cart4"></i> <span class="badge text-bg-danger">
                         @if (isset($order))
                             {{ $order }}

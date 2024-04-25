@@ -33,4 +33,7 @@ class KCconst
     const DB_RECEIPT_WHEN_GIVE = 1; // Thanh toán khi nhận hàng
     const DB_RECEIPT_ONLINE = 2; // Thanh toán online
 
+
+    const DB_FLASH_ON = 1; //FLASH ON
+    const DB_FLASH_OFF = 0; // FLASH OFF
 }

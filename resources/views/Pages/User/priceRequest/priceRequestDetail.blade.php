@@ -124,7 +124,7 @@ text-bg-success @endif
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Báo giá</th>
+                                    <th>Hình thức thanh toán</th>
                                     <td>
                                         <select class="form-select form-select-md w-50" aria-label="Small select example"
                                             name="statusReceipt" id="statusReceipt">

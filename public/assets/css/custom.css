@@ -405,13 +405,16 @@
     text-align: center;
   } */
 
-  .card {
+.card {
     background-color: #fff;
     border-radius: 10px;
     border: none;
     position: relative;
     margin-bottom: 30px;
-    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,0.1), 0 0.9375rem 1.40625rem rgba(90,97,105,0.1), 0 0.25rem 0.53125rem rgba(90,97,105,0.12), 0 0.125rem 0.1875rem rgba(90,97,105,0.1);
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1),
+        0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1),
+        0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12),
+        0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
 }
 .l-bg-cherry {
     background: linear-gradient(to right, #493240, #f09) !important;
@@ -433,7 +436,10 @@
     color: #fff;
 }
 
-.card .card-statistic-3 .card-icon-large .fas, .card .card-statistic-3 .card-icon-large .far, .card .card-statistic-3 .card-icon-large .fab, .card .card-statistic-3 .card-icon-large .fal {
+.card .card-statistic-3 .card-icon-large .fas,
+.card .card-statistic-3 .card-icon-large .far,
+.card .card-statistic-3 .card-icon-large .fab,
+.card .card-statistic-3 .card-icon-large .fal {
     font-size: 110px;
 }
 
@@ -468,10 +474,11 @@
     color: #fff;
 }
 
-pagination_rounded, .pagination_square {
+pagination_rounded,
+.pagination_square {
     display: inline-block;
-    margin-left:400px;
-    margin-top:300px;
+    margin-left: 400px;
+    margin-top: 300px;
 }
 
 .pagination_rounded ul {
@@ -496,7 +503,7 @@ pagination_rounded, .pagination_square {
 }
 
 a:link {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .pagination_rounded .prev {
@@ -506,7 +513,6 @@ a:link {
     height: 34px;
     line-height: 34px;
 }
-
 
 .pagination_rounded ul li a {
     float: left;
@@ -532,5 +538,9 @@ a:link {
 }
 
 .visible-xs {
-    display: none!important;
+    display: none !important;
+}
+
+.form-order {
+    border: #0cba4f solid 1px;
 }

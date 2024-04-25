@@ -93,10 +93,12 @@ class ServiceModel extends Model
                 'tp.service_type_detail',
                 'pt.price_id',
                 'pt.price',
-                'pt.detail_price'
+                'pt.detail_price',
+                'sm.service_code'
             )
             ->where('tp.service_type_code', '=', $data)
             ->join('laravel.price_service_type as pt', 'pt.service_type_code', '=', 'tp.service_type_code')
+            ->join('service_master as sm', 'sm.service_code', '=', 'tp.service_code')
             ->first();
         return $select;
     }
@@ -216,5 +218,17 @@ class ServiceModel extends Model
             DB::rollBack();
             return $sum;
         };
+    }
+
+     /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getStatusMethod(): array
+    {
+        $select  = DB::table('status_method')
+            ->get()->toArray();
+        return $select;
     }
 }

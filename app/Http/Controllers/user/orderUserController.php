@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Const\KCconst;
+use App\Http\Requests\priceRequest;
 use Illuminate\Http\Request;
 use App\Models\orderModel;
 
@@ -34,6 +35,28 @@ class orderUserController extends Controller
             ]);
         }
         $count = $this->service->insertOrder($formData);
+        if ($count > 0) {
+            $message = 'Bạn đã đặt hàng thành công';
+            return redirect()->route('cart')->with([
+                'message' => $message,
+                'status' => true
+            ]);
+        }
+    }
+
+    public function orderLive(Request $request)
+    {
+        $formData = $request->all();
+        if ($formData['deliveryOption'] == KCconst::DB_FLASH_OFF) {
+            if ($formData['name'] == null || $formData['address'] == null || $formData['sdt'] == null || !isset($formData['files'])) {
+                $message = 'Vui lòng điền thông tin nhận hàng và tài liệu';
+                return redirect()->back()->with([
+                    'message' => $message,
+                    'status' => false
+                ]);
+            }
+        }
+        $count = $this->service->insertOrderLive($formData);
         if ($count > 0) {
             $message = 'Bạn đã đặt hàng thành công';
             return redirect()->route('cart')->with([

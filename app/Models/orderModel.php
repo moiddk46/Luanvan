@@ -161,6 +161,7 @@ class orderModel extends Model
         $nowDate = Carbon::now()->toDateString();
         $futureDate = $date->addDays($completeTime)->toDateString();
         $count = 0;
+        $orderId = '';
 
         DB::beginTransaction();
         $orderId = DB::table('order_master')->insertGetId([
@@ -225,7 +226,79 @@ class orderModel extends Model
             DB::commit();
         }
 
-        return $count;
+        return $orderId;
+    }
+
+
+    public function updateOrderFail($orderId)
+    {
+        DB::table('receipts')
+            ->where('id_order', $orderId)
+            ->update([
+                'status' => KCconst::DB_DONT_RECEIPT,
+            ]);
+    }
+    /**
+     * 
+     * @return int
+     */
+    public function insertOrderLive($formData): int
+    {
+        $completeTime = $formData['completeTime'];
+        $date = Carbon::now();
+        $nowDate = Carbon::now()->toDateString();
+        $futureDate = $date->addDays($completeTime)->toDateString();
+        $count = 0;
+        $orderId = '';
+
+        DB::beginTransaction();
+        $orderId = DB::table('order_master')->insertGetId([
+            'order_date' => $nowDate,
+            'name' => $formData['name'],
+            'address' => $formData['address'],
+            'phone' => $formData['sdt'],
+            'id_user' => $formData['idUser'],
+            'service_type_code' => $formData['serviceTypeCode'],
+            'status' => KCconst::DB_STATUS_ORDER_HANDLING
+        ]);
+
+        if ($orderId > 0) {
+            $fileName = $formData['files']->getClientOriginalName();
+            $pathOrder = config('app.pathFileOrder') . '/' . $orderId . '/' . $fileName;
+            $file = $formData['files']->storeAs($pathOrder, $fileName, 'public');
+            if ($file) {
+                $inserted = DB::table('order_detail')->insert([
+                    'order_id' => $orderId,
+                    'service_type_code' => $formData['serviceTypeCode'],
+                    'quantity' => $formData['quantity'],
+                    'unit_price' => $formData['sum'],
+                    'order_file_name' => $fileName,
+                    'complete_time' => $futureDate
+                ]);
+                if ($inserted > 0) {
+                    $count1 = DB::table('receipts')
+                        ->insert([
+                            'id_order' => $orderId,
+                            'id_user' => $formData['idUser'],
+                            'sum_price' => $formData['sum'],
+                            'status' => ($formData['statusReceipt'] == KCconst::DB_RECEIPT_WHEN_GIVE ? KCconst::DB_DONT_RECEIPT : KCconst::DB_DONE_RECEIPT),
+                            'method' => $formData['statusReceipt'],
+                            'receipt_date' => $nowDate
+                        ]);
+                    if ($count1 > 0) {
+                        $count++;
+                    }
+                }
+            }
+        }
+
+        if ($count < 0) {
+            DB::rollBack();
+        } else {
+            DB::commit();
+        }
+
+        return $orderId;
     }
 
 

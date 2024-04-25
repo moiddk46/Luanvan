@@ -65,12 +65,11 @@ $(document).ready(function () {
     });
 
     $("#sample").click(function () {
-        console.log("1");
         var name = $("#name").text();
         var service = $("#service").text();
         var money = formatCurrency($("#price").val());
         var sampleLetter = `Xin chào ${name}! \nCông ty TranslateGroup xin gửi báo giá ${service} với tệp tài liệu bạn đã gửi là ${money} ạ. `;
-        tinymce.get('mytext').setContent(sampleLetter)
+        tinymce.get("mytext").setContent(sampleLetter);
     });
 
     var name = $("#name").val();
@@ -85,9 +84,21 @@ $(document).ready(function () {
         updateValues();
     });
 
+    var note = $("#content").val();
+    $("#content").on("input change", function () {
+        note = $(this).val();
+        updateValues();
+    });
+
     var sdt = $("#sdt").val();
     $("#sdt").on("input change", function () {
         sdt = $(this).val();
+        updateValues();
+    });
+
+    var serviceTypeName = $("#serviceTypeName").val();
+    $("#serviceTypeName").on("input change", function () {
+        serviceTypeName = $(this).val();
         updateValues();
     });
 
@@ -137,29 +148,59 @@ $(document).ready(function () {
         statusValue = $(this).val();
         updateValues();
     });
-
+    var give = $('input[type="radio"][name="deliveryOption"]').val();
+    $('input[type="radio"][name="deliveryOption"]').change(function () {
+        give = $(this).val();
+        if (give == 1) {
+            $("#inforComfirm").hide();
+            $("#addressCompanyConfirm").show();
+        }
+    });
+    if (give == 0) {
+        $("#inforComfirm").show();
+        $("#addressCompanyConfirm").hide();
+    }
+    $("#message").hide();
     function updateValues() {
         var sum = $("#currency1").val() * quantity;
+        if (sum < 10000 && statusValue == "2") {
+            $("#orderButton").attr("disabled", "disabled");
+            $("#message").show(); // Đúng cách vô hiệu hóa nút
+        } else {
+            $("#message").hide();
+            $("#orderButton").removeAttr("disabled"); // Kích hoạt lại nút nếu sum >= 10000
+        }
 
         $("#name1").text(name);
         $("#address1").text(address);
         $("#sdt1").text(sdt);
         $("#quantity1").text(quantity);
         $("#service1").text(service);
+        $("#service").text(serviceTypeName);
         $("#statusReceipt1").text(statusReceipt);
         $("#sum").text(formatCurrency(sum));
+        $("#sum2").text(formatCurrency(sum));
         $("#sum1").val(sum);
+        $("#note").text(note);
         $("#completeTime1").text(completeText);
         if (statusValue == 2) {
             $("#form_order").attr(
                 "action",
                 `http://127.0.0.1:8000/user/auth/payment`
             );
+            $("#form_order1").attr(
+                "action",
+                `http://127.0.0.1:8000/user/auth/paymentLive`
+            );
             $("#button").text("Thanh toán");
         } else {
             $("#form_order").attr(
                 "action",
                 `http://127.0.0.1:8000/user/auth/order`
+            );
+            $("#form_order1").attr(
+                "action",
+                `http://127.0.0.1:8000/user/auth/orderLive`
             );
             $("#button").text("Xác nhận");
         }
@@ -732,4 +773,22 @@ $(document).ready(function () {
             },
         });
     };
+});
+
+$(document).ready(function () {
+    if ($("#home").is(":checked")) {
+        $("#address-company").hide();
+    }
+    // Khi giá trị của radio button thay đổi
+    $('input[type="radio"][name="deliveryOption"]').change(function () {
+        if (this.id == "home") {
+            $("#infor").show();
+            $("#address-company").hide();
+            // Thực hiện các hành động khi lựa chọn giao hàng tận nơi
+        } else if (this.id == "give") {
+            $("#infor").hide();
+            $("#address-company").show();
+            // Thực hiện các hành động khi lựa chọn đến nhận hàng
+        }
+    });
 });

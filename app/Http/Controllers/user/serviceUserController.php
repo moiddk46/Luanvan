@@ -31,6 +31,7 @@ class serviceUserController extends Controller
         $serviceTypeName = $getServiceTypeName->service_type_name;
         $title = $this->title . ' | ' . $serviceTypeName;
         $detailService = $this->service->getDetailService($data);
-        return view('Pages.User.service.serviceDetail', compact('title', 'detailService', 'serviceTypeName'));
+        $statusReceipt = $this->service->getStatusMethod();
+        return view('Pages.User.service.serviceDetail', compact('title', 'detailService', 'serviceTypeName', 'statusReceipt'));
     }
 }

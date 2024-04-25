@@ -86,8 +86,10 @@ Route::prefix('user')->group(function () {
         Route::get('/detailPriceRequest/{data}', [priceRequestController::class, 'detailPriceRequest'])->name('detailPriceRequestUser');
         Route::get('/detailCart/{data}', [orderUserController::class, 'detailOrder'])->name('detailCart');
         Route::post('/payment', [paymentController::class, 'payment'])->name('payment');
-        Route::get('/statusPayment', [paymentController::class, 'statusPayment'])->name('statusPayment');
+        Route::post('/paymentLive', [paymentController::class, 'paymentLive'])->name('paymentLive');
+        Route::get('/statusPayment/{data}', [paymentController::class, 'statusPayment'])->name('statusPayment');
         Route::get('/giveOrder/{data}', [orderUserController::class, 'giveOrder'])->name('giveOrder');
+        Route::post('/orderLive', [orderUserController::class, 'orderLive'])->name('orderLive');
     });
 });
 
