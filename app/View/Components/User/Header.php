@@ -13,11 +13,13 @@ class Header extends Component
     public $title;
     public $order;
     public $priceRequest;
+    public $listNotice;
+    public $countNotice;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($prop, $title, $order = null, $priceRequest = null)
+    public function __construct($prop, $title, $order = null, $priceRequest = null, $listNotice = null, $countNotice = null)
     {
         $this->prop = $prop;
         $this->title = $title;
@@ -28,6 +30,12 @@ class Header extends Component
         }
         if ($priceRequest !== null) {
             $this->priceRequest = $priceRequest;
+        }
+        if ($listNotice !== null) {
+            $this->listNotice = $listNotice;
+        }
+        if ($countNotice !== null) {
+            $this->countNotice = $countNotice;
         }
     }
 

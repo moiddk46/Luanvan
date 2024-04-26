@@ -118,4 +118,10 @@ class orderUserController extends Controller
             ]);
         }
     }
+
+    public function updateClick($id)
+    {
+        $this->service->updateClick($id);
+        return redirect()->back();
+    }
 }

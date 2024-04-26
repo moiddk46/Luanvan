@@ -83,7 +83,8 @@
                                     <td>
                                         <input class="border border-dark check" type="checkbox" name="orderIds[]"
                                             {{ in_array($item->order_id, old('orderIds', [])) ? 'checked' : '' }}
-                                            {{ $item->status_id == '4' ? 'disabled' : '' }} value="{{ $item->order_id }}">
+                                            {{ $item->status_id == '4' ? 'disabled' : '' }}
+                                            value="{{ $item->order_id }}|{{ $item->id_user }}">
                                     </td>
                                     <td>
                                         {{ $item->order_id }}

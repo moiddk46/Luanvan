@@ -14,6 +14,7 @@ class shareData
 {
     private $order;
     private $priceRequest;
+    private $listNotice;
     /**
      * Handle an incoming request.
      *
@@ -27,6 +28,8 @@ class shareData
             $this->order = new orderModel();
             // Count all orders for the authenticated user
             $count['order'] = $this->order->countAllOrderUser();
+            $count['listNotice'] = $this->order->listNotice();
+            $count['countNotice'] = $this->order->countNotice();
 
             $this->priceRequest = new priceRequestModel();
 

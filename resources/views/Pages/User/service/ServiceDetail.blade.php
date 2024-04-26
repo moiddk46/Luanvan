@@ -55,19 +55,12 @@
                         @error('content')
                             <div class="form-text text-danger">{{ $message }}</div>
                         @enderror
-                        <div class="mb-3 row">
-                            <div class="col-8">
-                                <label for="formFile" class="form-label">Gửi tài liệu</label>
-                                <input class="form-control" type="file" id="formFile" name="files">
-                                @error('files')
-                                    <div class="form-text text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-4">
-                                <label for="quanlity" class="form-label">Số bản</label>
-                                <input class="form-control" type="number" id="quantity" min="1" value="1"
-                                    name="quantity">
-                            </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Gửi tài liệu</label>
+                            <input class="form-control" type="file" id="formFile" name="files">
+                            @error('files')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button class="btn btn-success">Yêu cầu báo giá</button>
@@ -167,7 +160,8 @@
                             <div class="col-8 fw-bold" id="sum2"> </div>
                             <input type="hidden" name="sum" id="sum1" value="">
                         </div>
-                        <div class="form-text text-danger" id="message">Nếu tổng thanh toán nhỏ hơn 10.000 đ, quý khách vui lòng chọn thanh toán khi nhận hàng.</div>
+                        <div class="form-text text-danger" id="message">Nếu tổng thanh toán nhỏ hơn 10.000 đ, quý khách
+                            vui lòng chọn thanh toán khi nhận hàng.</div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal" id="orderButton">

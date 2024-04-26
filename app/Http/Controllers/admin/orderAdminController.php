@@ -77,12 +77,13 @@ class orderAdminController extends Controller
     public function updateDetailOrder(Request $request)
     {
         $formData = $request->all();
+        $idUser = $formData['idUser'];
         $orderId = $formData['orderId'];
         $status = $formData['status'];
         $statusReceipt = $formData['statusReceipt'];
         $staff = $formData['staff'];
 
-        $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt);
+        $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt, $idUser);
         $message = "Thông tin đơn hàng không có thay đổi";
         if ($count > 0) {
             $message = "Bạn đã cập nhật thông tin đơn hàng thành công";

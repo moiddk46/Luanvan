@@ -76,6 +76,14 @@ class orderModel extends Model
         return $select;
     }
 
+    public function getStatusName($status)
+    {
+        $select = DB::table('status_master')
+            ->where('status_id', $status)
+            ->first();
+        return $select;
+    }
+
     /**
      * Undocumented function
      *
@@ -94,6 +102,20 @@ class orderModel extends Model
      */
     public function updateStatus($orderId, $status): int
     {
+        $user = Auth::user();
+        $statusName = $this->getStatusName($status);
+
+        list($orderId, $idUser) = explode('|', $orderId);
+        DB::table('notice')
+            ->where('type_id', $orderId)
+            ->where('id_user', $idUser)
+            ->where('flash_order', '1')
+            ->update(
+                [
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'click' => '0'
+                ]
+            );
         $update  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
@@ -116,18 +138,37 @@ class orderModel extends Model
     /**
      * @return int
      */
-    public function updateDetail($orderId, $status, $staff, $statusReceipt): int
+    public function updateDetail($orderId, $status, $staff, $statusReceipt, $idUser): int
     {
+        $statusName = $this->getStatusName($status);
+        $count = 0;
         $update  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
                 'status' => $status
             ]);
+        if ($update > 0) {
+            $count++;
+        }
+
+        DB::table('notice')
+            ->where('type_id', $orderId)
+            ->where('id_user', $idUser)
+            ->where('flash_order', '1')
+            ->update(
+                [
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'click' => '0',
+                ]
+            );
         $update = DB::table('receipts')
             ->where('id_order', $orderId)
             ->update([
                 'status' => $statusReceipt,
             ]);
+        if ($update > 0) {
+            $count++;
+        }
         $select = DB::table('order_master as om')
             ->join('assign_master as am', 'am.order_id', '=', 'om.order_id')
             ->where('om.order_id', '=', $orderId)
@@ -146,8 +187,11 @@ class orderModel extends Model
                     'status' => $status
                 ]);
             }
+            if ($update > 0) {
+                $count++;
+            }
         }
-        return $update;
+        return $count;
     }
 
     /**
@@ -173,6 +217,16 @@ class orderModel extends Model
             'service_type_code' => $formData['serviceTypeCode'],
             'status' => KCconst::DB_STATUS_ORDER_HANDLING
         ]);
+        $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
+        DB::table('notice')
+            ->insert(
+                [
+                    'type_id' => $orderId,
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'id_user' => $formData['idUser'],
+                    'flash_order' => '1',
+                ]
+            );
 
         if ($orderId > 0) {
             $select  = DB::table('price_request as pr')
@@ -261,6 +315,18 @@ class orderModel extends Model
             'service_type_code' => $formData['serviceTypeCode'],
             'status' => KCconst::DB_STATUS_ORDER_HANDLING
         ]);
+
+        $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
+        DB::table('notice')
+            ->insert(
+                [
+                    'type_id' => $orderId,
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'id_user' => $formData['idUser'],
+                    'flash_order' => '1',
+                ]
+            );
+
 
         if ($orderId > 0) {
             $fileName = $formData['files']->getClientOriginalName();
@@ -405,6 +471,39 @@ class orderModel extends Model
     {
         $count = DB::table('order_master')
             ->count();
+        return $count;
+    }
+
+    public function listNotice()
+    {
+        $user = Auth::user();
+        $select = DB::table('notice')
+            ->where('id_user', $user->id)
+            ->paginate(5);
+        return $select;
+    }
+
+    public function countNotice()
+    {
+        $user = Auth::user();
+        $select = DB::table('notice')
+            ->where('id_user', $user->id)
+            ->where('click', '0')
+            ->count();
+        return $select;
+    }
+
+    public function updateClick($id)
+    {
+        $user = Auth::user();
+        $count = DB::table('laravel.notice')
+            ->where('id', '=', $id)
+            ->where('id_user', $user->id)
+            ->update(
+                [
+                    'click' => '1',
+                ]
+            );
         return $count;
     }
 }

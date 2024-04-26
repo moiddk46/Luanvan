@@ -36,6 +36,7 @@
                                 <tr>
                                     <th>Tên khách hàng</th>
                                     <td>{{ $item->name }}</td>
+                                    <input type="hidden" value="{{ $item->id_user }}" name="idUser">
                                 </tr>
                                 <tr>
                                     <th>Loại dịch vụ</th>
@@ -91,7 +92,7 @@
                                             </select>
                                         @endif
                                         <input type="hidden" id="statusReceiptValue" name="statusReceipt"
-                                                value="{{ $item->sr_status_id }}">
+                                            value="{{ $item->sr_status_id }}">
                                     </td>
                                 </tr>
                                 <tr>

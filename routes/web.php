@@ -78,6 +78,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
 Route::prefix('user')->group(function () {
     Route::get('/service/{data}', [serviceUserController::class, 'initService'])->name('service');
     Route::get('/service/detail/{data}', [serviceUserController::class, 'detailService'])->name('detailService');
+    Route::get('/updateClick/{data}', [orderUserController::class, 'updateClick'])->name('updateClick');
     Route::prefix('auth')->middleware('is_customers')->group(function () {
         Route::post('/order', [orderUserController::class, 'initOrder'])->name('order');
         Route::get('/priceRequest', [priceRequestController::class, 'listPriceRequest'])->name('priceRequestUser');

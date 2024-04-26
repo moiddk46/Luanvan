@@ -39,12 +39,32 @@
                     <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
                     <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2">
-                    <i class="bi bi-bell"></i> <span class="badge text-bg-danger">
-                        0
-                    </span>
-                </a>
-                <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2">
+                <div class="dropdown">
+                    <a href="" class="btn btn-outline-dark me-2 dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-bell"></i> <span class="badge text-bg-danger">
+                            @if (isset($countNotice))
+                                {{ $countNotice }}
+                            @else
+                                0
+                            @endif
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if (isset($listNotice))
+                            @foreach ($listNotice as $row)
+                                <li><a class="dropdown-item {{ $row->click == '0' ? 'active' : '' }}"
+                                        href="{{ route('updateClick', ['data' => $row->id]) }}"
+                                        id="notice">{{ $row->detail }}</a></li>
+                            @endforeach
+                        @else
+                            <li>
+                                <p class="dropdown-item">Không có thông báo nào</p>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+                <a href="{{ route('cart') }}" class="btn btn-outline-dark me-2 ">
                     <i class="bi bi-cart4"></i> <span class="badge text-bg-danger">
                         @if (isset($order))
                             {{ $order }}

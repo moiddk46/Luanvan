@@ -27,6 +27,7 @@ class priceRequestModel extends Model
 
         $fileName = $formData['files']->getClientOriginalName();
 
+        $statusName = $this->getStatusName(KCconst::DB_STATUS_DONT_REPLY);
         $count = DB::table('price_request')->insertGetId([
             'request_date' => $nowDate,
             'request_comment' => $formData['content'],
@@ -37,8 +38,18 @@ class priceRequestModel extends Model
             'phone' =>  $formData['sdt'],
             'request_file' =>  $fileName,
             'status' => KCconst::DB_STATUS_DONT_REPLY,
-            'complete_time'=> NULL,
+            'complete_time' => NULL,
         ]);
+        DB::table('notice')
+            ->insert(
+                [
+                    'type_id' => $count,
+                    'detail' => 'Yêu cầu báo giá có mã ' . $count . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'id_user' => $user->id,
+                    'flash_order' => '0',
+                ]
+            );
+
 
         if (!isset($count) || empty($count)) {
             DB::rollback();
@@ -126,7 +137,7 @@ class priceRequestModel extends Model
         return $select;
     }
 
-     /**
+    /**
      * Undocumented function
      *
      * @return array
@@ -138,12 +149,30 @@ class priceRequestModel extends Model
         return $select;
     }
 
+    public function getStatusName($status)
+    {
+        $select = DB::table('status_reply')
+            ->where('status_id', $status)
+            ->first();
+        return $select;
+    }
 
     /**
      * @return int
      */
     public function updateDetailRequest($formData): int
     {
+        $statusName = $this->getStatusName($formData['status']);
+        DB::table('notice')
+            ->where('type_id',  $formData['requestId'])
+            ->where('id_user', $formData['idUser'])
+            ->where('flash_order', '0')
+            ->update(
+                [
+                    'detail' => 'Yêu cầu báo giá có mã ' . $formData['requestId'] . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'click' => '0'
+                ]
+            );
         $count  = DB::table('price_request')
             ->where('request_id', '=', $formData['requestId'])
             ->update([

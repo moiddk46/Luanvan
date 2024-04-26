@@ -36,6 +36,7 @@
                                 <tr>
                                     <th>Tên khách hàng</th>
                                     <td id="name">{{ $item->name }}</td>
+                                    <input type="hidden" value="{{ $item->id }}" name="idUser">
                                 </tr>
                                 <tr>
                                     <th>Loại dịch vụ</th>
