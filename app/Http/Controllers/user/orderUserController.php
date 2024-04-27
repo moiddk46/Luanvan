@@ -55,6 +55,21 @@ class orderUserController extends Controller
                     'status' => false
                 ]);
             }
+            $count = $this->service->insertOrderLive($formData);
+            if ($count > 0) {
+                $message = 'Bạn đã đặt hàng thành công';
+                return redirect()->route('cart')->with([
+                    'message' => $message,
+                    'status' => true
+                ]);
+            }
+        }
+        if (!isset($formData['files'])) {
+            $message = 'Vui lòng gửi tài liệu';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
         }
         $count = $this->service->insertOrderLive($formData);
         if ($count > 0) {
@@ -66,6 +81,24 @@ class orderUserController extends Controller
         }
     }
 
+    public function comfirmUser(Request $request)
+    {
+        $formData = $request->all();
+        $count = $this->service->comfirmUser($formData);
+        if ($count < 1) {
+            $message = 'Xác nhận đơn hàng không thành công. Vui lòng thử lại.';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $message = 'Bạn đã xác nhận đơn đặt hàng thành công';
+        return redirect()->route('cart')->with([
+            'message' => $message,
+            'status' => true
+        ]);
+    }
+
 
     public function detailOrder($data)
     {
@@ -73,6 +106,7 @@ class orderUserController extends Controller
         $service = $this->service;
 
         $data = $this->service->selectDetailOrderUser($data);
+        $statusReceipt = $this->service->getStatusMethod();
         if (empty($data)) {
             $message = "Không có chi tiết đơn hàng";
             return redirect()->back()->with([
@@ -82,7 +116,7 @@ class orderUserController extends Controller
         }
         $status = $this->service->getStatus();
 
-        return view('Pages.user.Cart.CartDetail', compact('title', 'data', 'status'));
+        return view('Pages.user.Cart.CartDetail', compact('title', 'data', 'status', 'statusReceipt'));
     }
 
     public function listOrder()

@@ -122,20 +122,13 @@ class paymentController extends Controller
     public function paymentLive(Request $request)
     {
         $formData = $request->all();
+        $orderId = $formData['orderId'];
         $this->service = new orderModel();
-        if ($formData['deliveryOption'] == KCconst::DB_FLASH_OFF) {
-            if ($formData['name'] == null || $formData['address'] == null || $formData['sdt'] == null || !isset($formData['files'])) {
-                $message = 'Vui lòng điền thông tin nhận hàng và tài liệu';
-                return redirect()->back()->with([
-                    'message' => $message,
-                    'status' => false
-                ]);
-            }
-        }
-        $orderId = $this->service->insertOrderLive($formData);
-        if (!isset($orderId) || empty($orderId)) {
-            $message = 'Bạn đã đặt hàng không thành công';
-            return redirect()->route('cart')->with([
+
+        $count = $this->service->comfirmUser($formData);
+        if ($count < 1) {
+            $message = 'Xác nhận đơn hàng không thành công. Vui lòng thử lại.';
+            return redirect()->back()->with([
                 'message' => $message,
                 'status' => false
             ]);
@@ -145,7 +138,7 @@ class paymentController extends Controller
         $vnp_TmnCode = "ER4E99U9"; //Mã website tại VNPAY 
         $vnp_HashSecret = "QRZAHUDJXSILAJAOEPTPAWNUSSWROXWN"; //Chuỗi bí mật
 
-        $vnp_TxnRef = md5(rand(10, 100)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = $orderId . md5(rand(10, 100)); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toan online";
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;

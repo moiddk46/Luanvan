@@ -95,6 +95,7 @@ Route::prefix('user')->group(function () {
         Route::get('/statusPayment/{data}', [paymentController::class, 'statusPayment'])->name('statusPayment');
         Route::get('/giveOrder/{data}', [orderUserController::class, 'giveOrder'])->name('giveOrder');
         Route::post('/orderLive', [orderUserController::class, 'orderLive'])->name('orderLive');
+        Route::post('/comfirmUser', [orderUserController::class, 'comfirmUser'])->name('comfirmUser');
     });
 });
 

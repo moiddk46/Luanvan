@@ -291,6 +291,12 @@ class orderModel extends Model
             ->update([
                 'status' => KCconst::DB_DONT_RECEIPT,
             ]);
+
+        DB::table('order_master')
+            ->where('order_id', $orderId)
+            ->update([
+                'comfirm_user' => '0',
+            ]);
     }
     /**
      * 
@@ -313,7 +319,9 @@ class orderModel extends Model
             'phone' => $formData['sdt'],
             'id_user' => $formData['idUser'],
             'service_type_code' => $formData['serviceTypeCode'],
-            'status' => KCconst::DB_STATUS_ORDER_HANDLING
+            'status' => KCconst::DB_STATUS_ORDER_HANDLING,
+            'delivery' => $formData['deliveryOption'] == KCconst::DB_FLASH_ON ? '1' : '0',
+            'comfirm_user' => '0',
         ]);
 
         $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
@@ -402,6 +410,17 @@ class orderModel extends Model
                 $join->on('am.staff_id', '=', 'us.id'); // Thay some_column bằng cột cần join
             })
             ->where('od.order_id', '=', $data)
+            ->get()->toArray();
+        return $select;
+    }
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getStatusMethod(): array
+    {
+        $select  = DB::table('status_method')
             ->get()->toArray();
         return $select;
     }
@@ -504,6 +523,32 @@ class orderModel extends Model
                     'click' => '1',
                 ]
             );
+        return $count;
+    }
+    /**
+     * @return int
+     */
+    public function comfirmUser($formData): int
+    {
+        $count = 0;
+        $update  = DB::table('order_master')
+            ->where('order_id', '=', $formData['orderId'])
+            ->update([
+                'comfirm_user' => '1',
+            ]);
+        if ($update > 0) {
+            $count++;
+        }
+
+        $update = DB::table('receipts')
+            ->where('id_order', $formData['orderId'])
+            ->update([
+                'method' => $formData['statusReceipt'],
+                'status' => ($formData['statusReceipt'] == KCconst::DB_RECEIPT_WHEN_GIVE ? KCconst::DB_DONT_RECEIPT : KCconst::DB_DONE_RECEIPT),
+            ]);
+        if ($update > 0) {
+            $count++;
+        }
         return $count;
     }
 }

@@ -159,6 +159,9 @@ $(document).ready(function () {
     if (give == 0) {
         $("#inforComfirm").show();
         $("#addressCompanyConfirm").hide();
+    } else {
+        $("#inforComfirm").hide();
+        $("#addressCompanyConfirm").show();
     }
     $("#message").hide();
     function updateValues() {
@@ -192,6 +195,7 @@ $(document).ready(function () {
                 "action",
                 `http://127.0.0.1:8000/user/auth/paymentLive`
             );
+            console.log($("#form_order1").attr('action'));
             $("#button").text("Thanh toán");
         } else {
             $("#form_order").attr(
@@ -200,13 +204,16 @@ $(document).ready(function () {
             );
             $("#form_order1").attr(
                 "action",
-                `http://127.0.0.1:8000/user/auth/orderLive`
+                `http://127.0.0.1:8000/user/auth/comfirmUser`
             );
+            console.log($("#form_order1").attr('action'));
             $("#button").text("Xác nhận");
         }
     }
     // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
     updateValues();
+
+    console.log($("#form_order1").attr('action'));
 });
 
 $(document).ready(function () {

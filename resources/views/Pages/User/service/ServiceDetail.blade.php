@@ -22,7 +22,7 @@
                 </div>
             @endif
             @if ($detailService->service_code == 'dichthuat')
-                <div class="w-50 form-order rounded bg-light p-3 m-auto">
+                <div class="w-50 form-order rounded bg-light p-3 m-auto mt-5">
                     <h5 class="text-center">Yêu cầu báo giá</h5>
                     <form method="post" action="{{ route('priceRequest') }}" enctype="multipart/form-data">
                         @csrf
@@ -62,6 +62,7 @@
                                 <div class="form-text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-text text-danger mb-3 fw-bold">Nếu Khách hàng sử dụng dịch vụ dịch thuật công chứng với tài liệu bản gốc, vui lòng liên hệ với chúng tôi thông qua zalo hoặc số điện thoại để chúng tôi có thể nhận tài liệu bản gốc. Xin lỗi vì sự bất tiện này. </div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button class="btn btn-success">Yêu cầu báo giá</button>
                         </div>
@@ -69,9 +70,9 @@
                     </form>
                 </div>
             @else
-                <div class="w-50 form-order rounded bg-light p-3 m-auto">
+                <div class="w-50 form-order rounded bg-light p-3 m-auto mt-5">
                     <h5 class="text-center">Đặt hàng</h5>
-                    <form method="post" action="{{ route('orderLive') }}" enctype="multipart/form-data" id="form_order1">
+                    <form method="post" action="{{ route('orderLive') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row justify-content-center mb-3">
                             <div class="form-check col-4">
@@ -92,6 +93,11 @@
                         <input type="hidden" name="serviceTypeCode" value="{{ $detailService->service_type_code }}">
                         <input type="hidden" name="serviceTypeName" value="{{ $detailService->service_type_name }}"
                             id="serviceTypeName">
+                        @foreach ($statusReceipt as $row)
+                            @if ($row->status_id == 1)
+                                <input type="hidden" name="statusReceipt" value="{{ $row->status_id }}">
+                            @endif
+                        @endforeach
                         <input type="hidden" name="currency1" value="{{ $detailService->price }}" id="currency1">
                         <input type="hidden" name="completeTime" value="2" id="completeTime">
                         <input type="hidden" name="idUser" value="{{ Auth::user()->id }}">
@@ -132,15 +138,6 @@
                         @error('content')
                             <div class="form-text text-danger">{{ $message }}</div>
                         @enderror
-                        <div class="mb-3">
-                            <label for="statusReceipt" class="form-label">Hình thức thanh toán</label>
-                            <select class="form-select" aria-label="Small select example" name="statusReceipt"
-                                id="statusReceipt">
-                                @foreach ($statusReceipt as $row)
-                                    <option value="{{ $row->status_id }}">{{ $row->status }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="mb-3 row">
                             <div class="col-8">
                                 <label for="formFile" class="form-label">Gửi tài liệu</label>
@@ -156,15 +153,16 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <div class="col-4">Tổng:</div>
+                            <div class="col-4">Tổng (Tạm tính):</div>
                             <div class="col-8 fw-bold" id="sum2"> </div>
                             <input type="hidden" name="sum" id="sum1" value="">
                         </div>
-                        <div class="form-text text-danger" id="message">Nếu tổng thanh toán nhỏ hơn 10.000 đ, quý khách
-                            vui lòng chọn thanh toán khi nhận hàng.</div>
+                        <div class="form-text text-danger mb-3 fw-bold">Chúng tôi phải xác nhận lại số trang trong tài liệu mà
+                            khách hàng gửi và báo lại trong chi tiết đơn hàng, để đảm bảo tính minh bạch. Mong quý khách
+                            thông cảm vì sự bất tiện này.</div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal" id="orderButton">
+                                data-bs-target="#exampleModal">
                                 Đặt hàng
                             </button>
                         </div>
@@ -214,12 +212,8 @@
                                             <div class="col-4 py-3 bg-body-secondary">Ghi chú</div>
                                             <div class="col-8 p-3" id="note"></div>
                                         </div>
-                                        <div class="row ">
-                                            <div class="col-4 py-3 bg-body-secondary">Hình thức thanh toán</div>
-                                            <div class="col-8 p-3" id="statusReceipt1"></div>
-                                        </div>
                                         <div class="row fw-bold ">
-                                            <div class="col-4 py-3 bg-body-secondary">Tổng</div>
+                                            <div class="col-4 py-3 bg-body-secondary">Tổng (Tạm tính):</div>
                                             <div class="col-8 p-3" id="sum"> </div>
                                         </div>
                                     </div>

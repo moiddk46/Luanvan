@@ -16,7 +16,6 @@
             </div>
         @endif
         <div class="row p-5">
-            <a href="https://zalo.me/0854172887" class="btn btn-primary" target="_blank">Liên hệ qua Zalo</a>
             <div class="row mb-3">
                 <div class="col-7 row align-items-center">
                     <div class="textcotent">

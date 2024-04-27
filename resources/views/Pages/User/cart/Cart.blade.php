@@ -54,10 +54,17 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailCart', ['data' => $item->order_id]) }}"
-                                        class="btn btn-outline-dark">
-                                        Chi tiết
-                                    </a>
+                                    @if ($item->comfirm_user == 1)
+                                        <a href="{{ route('detailCart', ['data' => $item->order_id]) }}"
+                                            class="btn btn-outline-dark">
+                                            Chi tiết
+                                        </a>
+                                    @else
+                                        <a href="{{ route('detailCart', ['data' => $item->order_id]) }}"
+                                            class="btn btn-outline-dark">
+                                            Hoàn thành
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
