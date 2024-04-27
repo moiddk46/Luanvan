@@ -544,3 +544,80 @@ a:link {
 .form-order {
     border: #0cba4f solid 1px;
 }
+
+/* Định nghĩa animation phóng to */
+@keyframes scale-up {
+    from {
+        transform: scale(0); /* Bắt đầu từ 0, tức là không hiển thị */
+        opacity: 0; /* Bắt đầu từ hoàn toàn trong suốt */
+    }
+    to {
+        transform: scale(
+            1
+        ); /* Kết thúc bằng cách phóng to tới kích thước bình thường */
+        opacity: 1; /* Kết thúc bằng cách hoàn toàn không trong suốt */
+    }
+}
+
+/* Áp dụng animation cho các thành phần có class animation-scale */
+.animation-scale {
+    animation-name: scale-up;
+    animation-duration: 2s; /* Thời gian chạy animation là 2 giây */
+    animation-timing-function: ease-out; /* Làm cho chuyển động chậm dần về cuối */
+    animation-fill-mode: both; /* Giữ trạng thái cuối của animation */
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+}
+
+.contact-buttons {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.zalo-button,
+.call-button {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 50%;
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+
+.zalo-button img,
+.call-button img {
+    width: 50px;
+}
+
+.zalo-button {
+    animation: shadowPulse 0.2s infinite alternate;
+}
+
+@keyframes shadowPulse {
+    0% {
+        box-shadow: none;
+    }
+    100% {
+        box-shadow: 0 0 30px 10px rgba(0, 128, 255, 0.7); /* Bóng đổ màu xanh cho Zalo */
+    }
+}
+
+.call-button {
+    animation: shadowPulseCall 0.2s infinite alternate;
+}
+
+@keyframes shadowPulseCall {
+    0% {
+        box-shadow: none;
+    }
+    100% {
+        box-shadow: 0 0 30px 10px rgba(244, 27, 27, 0.7); /* Bóng đổ màu xanh lá cho nút gọi điện */
+    }
+}

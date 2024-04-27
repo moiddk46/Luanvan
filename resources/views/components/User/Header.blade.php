@@ -8,14 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto nav-underline">
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4 active" href="{{ route('index') }}" aria-current="page"
+                    <a class="nav-link text-black display-4 {{ strpos(strtolower($title), 'trang chủ') !== false ? 'active' : '' }}" href="{{ route('index') }}" aria-current="page"
                         href="#">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="#">Về chúng tôi</a>
+                    <a class="nav-link text-black display-4  {{ strpos(strtolower($title), 'về chúng tôi') !== false ? 'active' : '' }}" href="{{ route('about') }}">Về chúng tôi</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link text-black display-4 dropdown-toggle  {{ $title == 'Service' ? 'active' : '' }}"
+                    <a class="nav-link text-black display-4 dropdown-toggle  {{ strpos(strtolower($title), 'dịch vụ') !== false ? 'active' : '' }}"
                         href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Dịch vụ
@@ -31,7 +31,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="#">Liên hệ</a>
+                    <a class="nav-link text-black display-4  {{ strpos(strtolower($title), 'liên hệ') !== false ? 'active' : '' }}" href="{{ route('contact') }}">Liên hệ</a>
                 </li>
             </ul>
             <div class="ms-auto d-flex align-items-center">

@@ -13,6 +13,8 @@ use App\Http\Controllers\pay\paymentController;
 use App\Http\Controllers\staff\calenderStaffController;
 use App\Http\Controllers\staff\homeStaffController;
 use App\Http\Controllers\staff\taskStaffController;
+use App\Http\Controllers\user\aboutController;
+use App\Http\Controllers\user\contactController;
 use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
 use App\Http\Controllers\user\priceRequestController;
@@ -79,6 +81,8 @@ Route::prefix('user')->group(function () {
     Route::get('/service/{data}', [serviceUserController::class, 'initService'])->name('service');
     Route::get('/service/detail/{data}', [serviceUserController::class, 'detailService'])->name('detailService');
     Route::get('/updateClick/{data}', [orderUserController::class, 'updateClick'])->name('updateClick');
+    Route::get('/about', [aboutController::class, 'index'])->name('about');
+    Route::get('/contact', [contactController::class, 'index'])->name('contact');
     Route::prefix('auth')->middleware('is_customers')->group(function () {
         Route::post('/order', [orderUserController::class, 'initOrder'])->name('order');
         Route::get('/priceRequest', [priceRequestController::class, 'listPriceRequest'])->name('priceRequestUser');

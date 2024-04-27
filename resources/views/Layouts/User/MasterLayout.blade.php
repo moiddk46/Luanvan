@@ -30,6 +30,16 @@
     <footer class="bg-secondary">
         <x-User.footer />
     </footer>
+    <div class="contact-buttons" style="position: fixed; right: 20px; bottom: 20px; z-index: 1000;">
+        <a href="https://zalo.me/0854172887" class="zalo-button" target="_blank">
+            <img class="img-zalo" src="{{ asset('assets/images/zalo_icon.png') }}" alt="Chat Zalo">
+        </a>
+        <a href="tel:+0854172887" class="call-button" target="_blank">
+            <img src="{{ asset('assets/images/phone_icon.png') }}" alt="Gọi điện">
+        </a>
+    </div>
+
+
 </body>
 <script src="{{ asset('assets/js/popper.js') }}"></script>
 <script src="{{ asset('assets/js/bootstap.js') }}"></script>
