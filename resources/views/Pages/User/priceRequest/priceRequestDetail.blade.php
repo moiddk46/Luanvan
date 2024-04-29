@@ -35,6 +35,27 @@
                                     <input type="hidden" name="requestId" value="{{ $item->request_id }}">
                                 </tr>
                                 <tr>
+                                    <th>Hình thức nhận hàng</th>
+                                    <td>
+                                        <div class="row mx-1">
+                                            <div class="form-check col-4">
+                                                <input class="form-check-input" type="radio" name="deliveryOption"
+                                                    id="home" value="0" checked>
+                                                <label class="form-check-label" for="home">
+                                                    Giao hàng tận nơi
+                                                </label>
+                                            </div>
+                                            <div class="form-check col-4">
+                                                <input class="form-check-input" type="radio" name="deliveryOption"
+                                                    id="give" value="1">
+                                                <label class="form-check-label" for="give">
+                                                    Đến nhận hàng
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="inforRequest">
                                     <th>Tên khách hàng</th>
                                     <td>
                                         <div class="col-8">
@@ -46,7 +67,7 @@
                                     <input type="hidden" name="price"
                                         value="{{ !empty($item->price) ? $item->price : '0' }}">
                                 </tr>
-                                <tr>
+                                <tr id="inforRequest1">
                                     <th>Địa chỉ</th>
                                     <td>
                                         <div class="col-8">
@@ -55,13 +76,22 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="inforRequest2">
                                     <th>Số điện thoại</th>
                                     <td>
                                         <div class="col-8">
                                             <input class="form-control" type="tel" name="sdt" id="sdt"
                                                 value="{{ $item->phone }}" pattern="[0-9]{10,11}"
                                                 title="Số điện thoại phải có từ 10 đến 11 chữ số">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="companyRequest" style="display:none;">
+                                    <th>Nhận hàng tại</th>
+                                    <td>
+                                        <div class="text-success p-3">
+                                            <p class="fw-bold">VĂN PHÒNG GIAO DỊCH:</p>
+                                            <p>125 Điện biên phủ, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -76,18 +106,40 @@
                                 </tr>
                                 <tr>
                                     <th>Số bản</th>
-                                    <td>
-                                        <div class="col-2">
+                                    <td class="row">
+                                        <div class="col-1">
                                             <input type="number" id="quantity" name="quantity" class="form-control"
                                                 value="1">
                                         </div>
+                                        <div class="col-1 align-content-center">Bản</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Số trang trong tài liệu</th>
+                                    <td class="row">
+                                        <div class="col-1">
+                                            {{ $item->page }} Trang
+                                            <input type="hidden" id="page" name="page" class="form-control"
+                                                value="{{ $item->page }}">
+                                        </div>
+                                        @if ($item->check_page == '1')
+                                            <div class="form-text text-danger fw-bold col-10">Số trang đã được đúng tôi kiểm
+                                                tra,
+                                                nếu không đúng vui lòng liên hệ lại với chúng tôi. </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Tài liệu</th>
                                     <td class="row">
-                                        <span class="col-8">
+                                        <span class="col-6">
                                             {{ $item->request_file }}</span>
+                                        <span class="col-4 align-content-center">
+                                            <a href="{{ route('getDownloadPrice', ['data' => $item->request_id]) }}"
+                                                class="btn btn-success">
+                                                Tải xuống
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -166,17 +218,26 @@ text-bg-success @endif
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <h5 class="text-center fw-bold">Thông tin đặt hàng</h5>
-                                    <div class="row mt-3 ">
-                                        <div class="col-4 py-3 bg-body-secondary">Tên</div>
-                                        <div class="col-8 p-3" id="name1"></div>
+                                    <div id="inforComfirm">
+                                        <div class="row mt-3 ">
+                                            <div class="col-4 py-3 bg-body-secondary">Tên</div>
+                                            <div class="col-8 p-3" id="name1"></div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-4 py-3 bg-body-secondary">Đia chỉ</div>
+                                            <div class="col-8 p-3" id="address1"></div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-4 py-3 bg-body-secondary">Số điện thoại</div>
+                                            <div class="col-8 p-3" id="sdt1"></div>
+                                        </div>
                                     </div>
-                                    <div class="row ">
-                                        <div class="col-4 py-3 bg-body-secondary">Đia chỉ</div>
-                                        <div class="col-8 p-3" id="address1"></div>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-4 py-3 bg-body-secondary">Số điện thoại</div>
-                                        <div class="col-8 p-3" id="sdt1"></div>
+                                    <div id="addressCompanyConfirm" class="row">
+                                        <div class="col-4 py-3 bg-body-secondary">Nhận hàng tại</div>
+                                        <div class="col-8 text-success p-3">
+                                            <p class="fw-bold">VĂN PHÒNG GIAO DỊCH:</p>
+                                            <p>125 Điện biên phủ, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh</p>
+                                        </div>
                                     </div>
                                     <div class="row ">
                                         <div class="col-4 py-3 bg-body-secondary">Loại dịch vụ</div>
@@ -185,6 +246,10 @@ text-bg-success @endif
                                     <div class="row ">
                                         <div class="col-4 py-3 bg-body-secondary">Số bản</div>
                                         <div class="col-8 p-3" id="quantity1"></div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-4 py-3 bg-body-secondary">Số trang trong tài liệu</div>
+                                        <div class="col-8 p-3" id="page1"></div>
                                     </div>
                                     <div class="row ">
                                         <div class="col-4 py-3 bg-body-secondary">Thời gian hoàn thành</div>

@@ -95,6 +95,21 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>Số trang trong tài liệu</th>
+                                    <td class="row">
+                                        <div class="col-3 row">
+                                            <div class="col">
+                                                <input type="text" id="page" name="page"
+                                                    class="form-control"
+                                                    value="{{ $item->page }}">
+                                            </div>
+                                            <div class="col pt-2">
+                                                Trang
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>Báo giá</th>
                                     <td class="row">
                                         <div class="col-6 row">

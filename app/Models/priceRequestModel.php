@@ -39,6 +39,7 @@ class priceRequestModel extends Model
             'request_file' =>  $fileName,
             'status' => KCconst::DB_STATUS_DONT_REPLY,
             'complete_time' => NULL,
+            'page' => $formData['page']
         ]);
         DB::table('notice')
             ->insert(
@@ -179,7 +180,9 @@ class priceRequestModel extends Model
                 'price' => $formData['price'],
                 'status' => $formData['status'],
                 'price_letter' => $formData['content'],
-                'complete_time' => $formData['completeTime']
+                'complete_time' => $formData['completeTime'],
+                'page' => $formData['page'],
+                'check_page' => '1'
             ]);
         return $count;
     }
@@ -199,5 +202,25 @@ class priceRequestModel extends Model
                 ->count();
         }
         return $select;
+    }
+
+
+    public function deletePriceRequest($data)
+    {
+        $delete = 0;
+        DB::beginTransaction();
+        $count = DB::table('price_request')->where('request_id', $data)->count();
+
+        if ($count > 0) {
+            $delete = DB::table('price_request')
+                ->where('request_id', $data)
+                ->delete();
+            DB::commit();
+            $delete++;
+            return $delete;
+        } else {
+            DB::rollBack();
+            return $delete;
+        }
     }
 }

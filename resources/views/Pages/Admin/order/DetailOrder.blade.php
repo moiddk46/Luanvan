@@ -33,11 +33,31 @@
                                     <td>{{ $item->order_id }}</td>
                                     <input type="hidden" value="{{ $item->order_id }}" name="orderId">
                                 </tr>
-                                <tr>
-                                    <th>Tên khách hàng</th>
-                                    <td>{{ $item->name }}</td>
-                                    <input type="hidden" value="{{ $item->id_user }}" name="idUser">
-                                </tr>
+                                @if ($item->delivery == '0')
+                                    <tr>
+                                        <th>Tên khách hàng</th>
+                                        <td>{{ $item->name }}</td>
+                                        <input type="hidden" value="{{ $item->id_user }}" name="idUser">
+                                    </tr>
+                                    <tr>
+                                        <th>Địa chỉ</th>
+                                        <td>{{ $item->address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số điện thoại</th>
+                                        <td>{{ $item->phone }}</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <th>Nhận hàng tại</th>
+                                        <td>
+                                            <div class="text-success p-3">
+                                                <p class="fw-bold">VĂN PHÒNG GIAO DỊCH:</p>
+                                                <p>125 Điện biên phủ, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <th>Loại dịch vụ</th>
                                     <td>{{ $item->service_type_name }}</td>
@@ -53,6 +73,20 @@
                                 <tr>
                                     <th>Số lượng</th>
                                     <td>{{ $item->quantity }} Bản</td>
+                                </tr>
+                                <tr>
+                                    <th>Số trang trong tài liệu</th>
+                                    <td class="row">
+                                        <div class="col-3 row">
+                                            <div class="col">
+                                                <input type="text" id="page" name="page" class="form-control"
+                                                    value="{{ $item->page }}">
+                                            </div>
+                                            <div class="col pt-2">
+                                                Trang
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Tài liệu</th>
@@ -103,6 +137,7 @@
                                     <th>Trạng thái</th>
                                     <td>
                                         @if ($item->status_id == '4')
+                                            <input type="hidden" name="status" value="{{ $item->status_id }}">
                                             <span
                                                 class="badge text-bg-success rounded-pill d-inline ">{{ $item->status }}</span>
                                         @else
@@ -127,6 +162,7 @@
                                     <td>
                                         @if ($item->status_id == '4')
                                             {{ $item->nameStaff }}
+                                            <input type="hidden" name="staff" value="{{ $item->staff_id }}">
                                         @else
                                             <select id="staff" class="form-select form-select-md w-50"
                                                 aria-label="Small select example">
@@ -156,7 +192,7 @@
                     <div class="d-flex justify-content-center mt-3">
                         <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay
                             lại</a>
-                        @if ($item->status_id != '4')
+                        @if ($item->status_id != '4' || $item->sr_status_id != '2')
                             <button type="submit" class="btn btn-success">Cập nhật</button>
                         @endif
                     </div>

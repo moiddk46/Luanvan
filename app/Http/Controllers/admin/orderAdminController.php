@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\order\orderAdminRequest;
 use App\Models\orderModel;
+use App\Models\ServiceModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -67,7 +68,7 @@ class orderAdminController extends Controller
             ]);
         }
         $staff = new User();
-        $listStaff = $staff->getAllStaff();
+        $listStaff = $staff->getAllStaffAssign();
         $status = $this->service->getStatus();
         $statusReceipt = $this->service->getStatusReceipt();
 
@@ -82,8 +83,9 @@ class orderAdminController extends Controller
         $status = $formData['status'];
         $statusReceipt = $formData['statusReceipt'];
         $staff = $formData['staff'];
+        $page = $formData['page'];
 
-        $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt, $idUser);
+        $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt, $idUser, $page);
         $message = "Thông tin đơn hàng không có thay đổi";
         if ($count > 0) {
             $message = "Bạn đã cập nhật thông tin đơn hàng thành công";
@@ -124,4 +126,19 @@ class orderAdminController extends Controller
             ]);
         }
     }
+
+    public function addOrder()
+    {
+        $title = "Thêm đơn hàng";
+
+        $service = new ServiceModel();
+        $serviceType = $service->getServiceType();
+
+        $statusReceipt = $this->service->getStatusMethod();
+
+        $priceService = $service->getPriceService();
+
+        return view('Pages.Admin.order.addOrder', compact('title', 'serviceType', 'statusReceipt', 'priceService'));
+    }
+
 }

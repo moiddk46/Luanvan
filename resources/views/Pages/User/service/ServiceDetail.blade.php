@@ -50,19 +50,31 @@
                         @enderror
                         <div class="mb-3">
                             <label for="content" class="form-label">Nội dung</label>
-                            <textarea class="form-control" id="content" style="height: 100px" name="content" id="content"></textarea>
+                            <textarea class="form-control" id="content" style="height: 100px" name="content" id="content" placeholder="Mẫu: Hãy báo giá dịch thuật tài liệu này giúp tôi,...."></textarea>
                         </div>
                         @error('content')
                             <div class="form-text text-danger">{{ $message }}</div>
                         @enderror
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Gửi tài liệu</label>
-                            <input class="form-control" type="file" id="formFile" name="files">
-                            @error('files')
-                                <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="mb-3 row">
+                            <div class="col-8">
+                                <label for="formFile" class="form-label">Gửi tài liệu</label>
+                                <input class="form-control" type="file" id="formFile" name="files" placeholder="Chọn file">
+                                @error('files')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="page" class="form-label">Số trang trong tài liệu</label>
+                                <input class="form-control" type="number" id="page" min="1" value="1"
+                                    name="page">
+                                @error('page')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-text text-danger mb-3 fw-bold">Nếu Khách hàng sử dụng dịch vụ dịch thuật công chứng với tài liệu bản gốc, vui lòng liên hệ với chúng tôi thông qua zalo hoặc số điện thoại để chúng tôi có thể nhận tài liệu bản gốc. Xin lỗi vì sự bất tiện này. </div>
+                        <div class="form-text text-danger mb-3 fw-bold">Nếu Khách hàng sử dụng dịch vụ dịch thuật công chứng
+                            với tài liệu bản gốc, vui lòng liên hệ với chúng tôi thông qua zalo hoặc số điện thoại để chúng
+                            tôi có thể nhận tài liệu bản gốc. Xin lỗi vì sự bất tiện này. </div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button class="btn btn-success">Yêu cầu báo giá</button>
                         </div>
@@ -139,7 +151,7 @@
                             <div class="form-text text-danger">{{ $message }}</div>
                         @enderror
                         <div class="mb-3 row">
-                            <div class="col-8">
+                            <div class="col-4">
                                 <label for="formFile" class="form-label">Gửi tài liệu</label>
                                 <input class="form-control" type="file" id="formFile" name="files">
                                 @error('files')
@@ -151,13 +163,22 @@
                                 <input class="form-control" type="number" id="quantity" min="1" value="1"
                                     name="quantity">
                             </div>
+                            <div class="col-4">
+                                <label for="page" class="form-label">Số trang trong tài liệu</label>
+                                <input class="form-control" type="number" id="page" min="1" value="1"
+                                    name="page">
+                                @error('page')
+                                    <div class="form-text text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="mb-3 row">
                             <div class="col-4">Tổng (Tạm tính):</div>
                             <div class="col-8 fw-bold" id="sum2"> </div>
                             <input type="hidden" name="sum" id="sum1" value="">
                         </div>
-                        <div class="form-text text-danger mb-3 fw-bold">Chúng tôi phải xác nhận lại số trang trong tài liệu mà
+                        <div class="form-text text-danger mb-3 fw-bold">Chúng tôi phải xác nhận lại số trang trong tài liệu
+                            mà
                             khách hàng gửi và báo lại trong chi tiết đơn hàng, để đảm bảo tính minh bạch. Mong quý khách
                             thông cảm vì sự bất tiện này.</div>
                         <div class="mb-3 d-flex justify-content-center">
@@ -203,6 +224,10 @@
                                         <div class="row ">
                                             <div class="col-4 py-3 bg-body-secondary">Số bản</div>
                                             <div class="col-8 p-3" id="quantity1"></div>
+                                        </div>
+                                        <div class="row ">
+                                            <div class="col-4 py-3 bg-body-secondary">Số trang trong tài liệu</div>
+                                            <div class="col-8 p-3" id="page1"></div>
                                         </div>
                                         <div class="row ">
                                             <div class="col-4 py-3 bg-body-secondary">Thời gian hoàn thành</div>

@@ -25,3 +25,4 @@ Route::get('/get-service-type', [ajaxServiceController::class, 'getServiceTypeAj
 
 Route::post('/translate', [ajaxTranslateController::class, 'translateLang']);
 Route::get('/translate', [ajaxTranslateController::class, 'translateLang']);
+Route::get('/getPrice', [ajaxServiceController::class, 'getPriceService']);

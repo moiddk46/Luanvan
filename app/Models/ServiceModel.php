@@ -220,7 +220,7 @@ class ServiceModel extends Model
         };
     }
 
-     /**
+    /**
      * Undocumented function
      *
      * @return array
@@ -228,6 +228,30 @@ class ServiceModel extends Model
     public function getStatusMethod(): array
     {
         $select  = DB::table('status_method')
+            ->get()->toArray();
+        return $select;
+    }
+
+    public function getServiceType()
+    {
+        $select  = DB::table('service_type')
+            ->get()->toArray();
+        return $select;
+    }
+
+    public function getPriceService()
+    {
+        $select = DB::table('price_service_type as pt')
+            ->join('service_type as st', 'st.service_type_code', '=', 'pt.service_type_code')
+            ->get()->toArray();
+        return $select;
+    }
+
+    public function getPriceServiceWhere($data)
+    {
+        $select = DB::table('price_service_type as pt')
+            ->join('service_type as st', 'st.service_type_code', '=', 'pt.service_type_code')
+            ->where('pt.service_type_code', $data)
             ->get()->toArray();
         return $select;
     }

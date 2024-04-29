@@ -22,9 +22,17 @@ class ajaxServiceModel extends Model
                 'service_type_code',
                 'service_type_name'
             )
-            ->where('service_code', '=', $servicecode )
+            ->where('service_code', '=', $servicecode)
             ->get()->toArray();
         // dd($select);
+        return $select;
+    }
+    public function getPriceServiceWhere($data)
+    {
+        $select = DB::table('price_service_type as pt')
+            ->join('service_type as st', 'st.service_type_code', '=', 'pt.service_type_code')
+            ->where('pt.service_type_code', $data)
+            ->get()->toArray();
         return $select;
     }
 }

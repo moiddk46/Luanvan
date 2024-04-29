@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\priceRequest;
 use App\Models\priceRequestModel;
+use App\Models\ServiceModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -86,6 +88,50 @@ class priceRequestAdminController extends Controller
         return redirect()->back()->with([
             'message' => $message,
             'status' => false
+        ]);
+    }
+
+    public function addPriceRequest()
+    {
+        $title = 'Thêm yêu cầu báo giá';
+        $service = new ServiceModel();
+        $serviceType = $service->getServiceType();
+        return view('Pages.Admin.priceRequest.addPriceRequest', compact('title', 'serviceType'));
+    }
+    public function initPriceRequest(priceRequest $request)
+    {
+        $formData = $request->all();
+        if (empty($formData)) {
+            $message = 'Bạn đã thêm yêu cầu báo giá thất bại.Kiểm tra lại';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $count = $this->service->insertRequest($formData);
+        if ($count) {
+            $message = 'Bạn đã yêu cầu báo giá thành công';
+            return redirect()->route('priceRequestAdmin')->with([
+                'message' => $message,
+                'status' => true
+            ]);
+        }
+    }
+
+    public function deletePriceRequest($data)
+    {
+        $delete = $this->service->deletePriceRequest($data);
+        if ($delete < 1) {
+            $message = 'Bạn đã xóa không thành công yêu cầu báo giá';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $message = 'Bạn đã xóa yêu cầu báo giá thành công';
+        return redirect()->route('priceRequestAdmin')->with([
+            'message' => $message,
+            'status' => true
         ]);
     }
 }

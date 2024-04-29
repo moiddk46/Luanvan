@@ -138,14 +138,23 @@ class orderModel extends Model
     /**
      * @return int
      */
-    public function updateDetail($orderId, $status, $staff, $statusReceipt, $idUser): int
+    public function updateDetail($orderId, $status, $staff, $statusReceipt, $idUser, $page): int
     {
         $statusName = $this->getStatusName($status);
         $count = 0;
         $update  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
-                'status' => $status
+                'status' => $status,
+                'check_page' => '1'
+            ]);
+        if ($update > 0) {
+            $count++;
+        }
+        $update  = DB::table('order_detail')
+            ->where('order_id', '=', $orderId)
+            ->update([
+                'page' => $page,
             ]);
         if ($update > 0) {
             $count++;
@@ -215,7 +224,9 @@ class orderModel extends Model
             'phone' => $formData['sdt'],
             'id_user' => $formData['idUser'],
             'service_type_code' => $formData['serviceTypeCode'],
-            'status' => KCconst::DB_STATUS_ORDER_HANDLING
+            'status' => KCconst::DB_STATUS_ORDER_HANDLING,
+            'delivery' => $formData['deliveryOption'] == KCconst::DB_FLASH_ON ? '1' : '0',
+            'comfirm_user' => '1',
         ]);
         $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
         DB::table('notice')
@@ -254,7 +265,8 @@ class orderModel extends Model
                         'quantity' => $formData['quantity'],
                         'unit_price' => $formData['sum'],
                         'order_file_name' => $select->request_file,
-                        'complete_time' => $futureDate
+                        'complete_time' => $futureDate,
+                        'page' => $formData['page'],
                     ]);
                     if ($inserted > 0) {
                         $count1 = DB::table('receipts')
@@ -338,7 +350,7 @@ class orderModel extends Model
 
         if ($orderId > 0) {
             $fileName = $formData['files']->getClientOriginalName();
-            $pathOrder = config('app.pathFileOrder') . '/' . $orderId . '/' . $fileName;
+            $pathOrder = config('app.pathFileOrder') . '/' . $orderId;
             $file = $formData['files']->storeAs($pathOrder, $fileName, 'public');
             if ($file) {
                 $inserted = DB::table('order_detail')->insert([
@@ -347,7 +359,8 @@ class orderModel extends Model
                     'quantity' => $formData['quantity'],
                     'unit_price' => $formData['sum'],
                     'order_file_name' => $fileName,
-                    'complete_time' => $futureDate
+                    'complete_time' => $futureDate,
+                    'page' => $formData['page'],
                 ]);
                 if ($inserted > 0) {
                     $count1 = DB::table('receipts')
@@ -464,16 +477,7 @@ class orderModel extends Model
                 'give_flag' => '1',
             ]);
         if ($update > 0) {
-            $update = DB::table('receipts')
-                ->where('id_order', $data)
-                ->update([
-                    'status' => '2',
-                ]);
-            if ($update > 0) {
-                DB::commit();
-            } else {
-                DB::rollBack();
-            }
+            DB::commit();
         } else {
             DB::rollBack();
         }
@@ -498,7 +502,7 @@ class orderModel extends Model
         $user = Auth::user();
         $select = DB::table('notice')
             ->where('id_user', $user->id)
-            ->paginate(5);
+            ->get()->toArray();
         return $select;
     }
 

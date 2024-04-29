@@ -46,8 +46,8 @@
             @if (isset($data))
                 <form action="{{ route('updateStatus') }}" method="post">
                     @csrf
-                    <div class="col-6 row mt-5 mb-3">
-                        <div class="col-6">
+                    <div class="col-8 row mt-5 mb-3">
+                        <div class="col-4">
                             <select id="statusSelect" class="form-select form-select-md" aria-label="Small select example">
                                 <option selected>Chọn trạng thái đơn hàng</option>
                                 @foreach ($status as $row)
@@ -57,9 +57,13 @@
 
                             <input type="hidden" id="statusValue" name="status" value="">
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <button type="submit" class="btn btn-success">Xác nhận đơn hàng</button>
                         </div>
+                    </div>
+                    <div class="col-4 mb-2">
+                        <a href="{{ route('addOrder') }}" class="btn btn-success"><i
+                                class="bi bi-plus-lg me-2"></i>Thêm đơn hàng </a>
                     </div>
                     <table class="table align-middle mb-0 bg-white table-striped">
                         <thead class="bg-light">

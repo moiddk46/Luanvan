@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\admin\serviceAdminController;
 use App\Http\Controllers\admin\staffAdminController;
 use App\Http\Controllers\admin\userAdminController;
+use App\Http\Controllers\common\downloadController;
 use App\Http\Controllers\core\login;
 use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
@@ -35,6 +36,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [homeUserController::class, 'home'])->name('index');
 
+Route::get('/downloadFilePrice/{data}', [downloadController::class, 'getDownloadPrice'])->name('getDownloadPrice');
+Route::get('/downloadFileOrder/{data}', [downloadController::class, 'getDownloadOrder'])->name('getDownloadOrder');
+
 Route::prefix('core')->group(function () {
     Route::get('/login', [login::class, 'login'])->name('login');
     Route::get('/register', [register::class, 'register'])->name('register');
@@ -51,12 +55,16 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/detailOrder/{data}', [orderAdminController::class, 'detailOrder'])->name('detailOrder');
         Route::post('/updateDetailOrder', [orderAdminController::class, 'updateDetailOrder'])->name('updateDetailOrder');
         Route::get('/download/{data}', [orderAdminController::class, 'getDownload'])->name('downloadOrder');
+        Route::get('/addOrder', [orderAdminController::class, 'addOrder'])->name('addOrder');
     });
     Route::prefix('priceRequest')->group(function () {
         Route::get('/priceRequest', [priceRequestAdminController::class, 'priceRequest'])->name('priceRequestAdmin');
         Route::get('/detailPriceRequest/{data}', [priceRequestAdminController::class, 'detailPriceRequest'])->name('detailPriceRequest');
         Route::get('/download/{data}', [priceRequestAdminController::class, 'getDownload'])->name('download');
         Route::post('/updateDetailRequest', [priceRequestAdminController::class, 'updateDetailRequest'])->name('updateDetailRequest');
+        Route::get('/addPriceRequest', [priceRequestAdminController::class, 'addPriceRequest'])->name('addPriceRequest');
+        Route::post('/initPriceRequest', [priceRequestAdminController::class, 'initPriceRequest'])->name('initPriceRequest');
+        Route::get('/deletePriceRequest/{data}', [priceRequestAdminController::class, 'deletePriceRequest'])->name('deletePriceRequest');
     });
 
     Route::prefix('service')->group(function () {

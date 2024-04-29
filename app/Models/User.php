@@ -72,6 +72,13 @@ class User extends Authenticatable
             ->paginate(10);
         return $select;
     }
+    public function getAllStaffAssign()
+    {
+        $select = DB::table('users')
+            ->where('position', KCconst::DB_POSITION_STAFF)
+            ->get()->toArray();
+        return $select;
+    }
 
     public function countStaff(): int
     {

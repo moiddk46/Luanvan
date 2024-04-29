@@ -16,8 +16,12 @@
             </div>
         @endif
         <div class="row">
+            <div class="mt-5 ">
+                <a href="{{ route('addPriceRequest') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm yêu
+                    cầu báo giá </a>
+            </div>
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-5 table-striped">
+                <table class="table align-middle mb-0 bg-white mt-2 table-striped">
                     <thead class="bg-light">
                         <tr>
                             <th>Mã báo giá</th>
@@ -49,10 +53,21 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
+                                    <!-- Liên kết kích hoạt modal -->
+                                    <!-- Nút Trả lời -->
                                     <a href="{{ route('detailPriceRequest', ['data' => $item->request_id]) }}"
                                         class="btn btn-outline-dark">
                                         Trả lời
                                     </a>
+
+                                    <!-- Nút Xóa -->
+                                    <a href="{{ route('deletePriceRequest', ['data' => $item->request_id]) }}"
+                                        class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-action="delete"
+                                        data-request-id="{{ $item->request_id }}">
+                                        Xóa
+                                    </a>
+
                                 </td>
                             </tr>
                         @endforeach

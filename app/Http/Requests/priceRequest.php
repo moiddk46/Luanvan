@@ -27,6 +27,7 @@ class priceRequest extends FormRequest
             'sdt' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             'content' => 'required|min:20',
             'files' => 'required|mimes:doc,docx,mpeng,mp4',
+            'page'=> "required|min:1",
         ];
     }
 
@@ -43,6 +44,8 @@ class priceRequest extends FormRequest
             'content.min' => 'Nội dung quá ngắn.',
             'files.required' => 'Vui lòng chọn tệp',
             'files.mimes' => 'Tệp không phải dạng doc, docx, mpeng hoặc mp4.',
+            'page.required'=>" Vui lòng nhập số trang",
+            'page.min'=> 'Số trang phải lớn hơn hoặc bằng 1'
         ];
     }
 }

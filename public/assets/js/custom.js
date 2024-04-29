@@ -16,6 +16,26 @@ $(document).ready(function () {
             },
         });
     });
+    $("#serviceTypeCode").change(function () {
+        var serviceTypeCode = $(this).val(); // Lấy giá trị được chọn
+
+        // Gửi yêu cầu AJAX
+        $.ajax({
+            url: `/api/getPrice?serviceTypeCode=${serviceTypeCode}`, // Thay thế 'your-url-here' bằng URL bạn cần gửi yêu cầu
+            type: "GET",
+            success: function (response) {
+                response.map((row) => {
+                    var price = row.price;
+                    $('#currency1').val(price);
+                    updateValues();
+                });
+            },
+            error: function (xhr, status, error) {
+                // Xử lý khi có lỗi xảy ra
+                console.error("Error:", error);
+            },  
+        });
+    });
 
     $(".toast").toast("show"); // Hiển thị toast
     setTimeout(function () {
@@ -28,23 +48,11 @@ $(document).ready(function () {
             currency: "VND",
         }).format(amount);
     }
-    function formatDate(dateString) {
-        var date = new Date(dateString);
-        var formattedDate = date.toLocaleDateString("vi-VN");
-        return formattedDate;
-    }
     // Định dạng số tiền cho tất cả các phần tử có ID "currency"
     $('[id="currency"]').each(function () {
         var currency = $(this).text();
         var formattedCurrency = formatCurrency(currency);
         $(this).text(formattedCurrency);
-    });
-
-    // Định dạng ngày cho tất cả các phần tử có ID "date"
-    $('[id="date"]').each(function () {
-        var dateString = $(this).text();
-        var formattedDate = formatDate(dateString);
-        $(this).text(formattedDate);
     });
 
     $(".checkAll").click(function () {
@@ -64,6 +72,10 @@ $(document).ready(function () {
         $("#staffValue").val(selectedStaff);
     });
 
+    $('#currency1').change(function(){
+        $('#currency1').val();
+        updateValues();
+    })
     $("#sample").click(function () {
         var name = $("#name").text();
         var service = $("#service").text();
@@ -108,6 +120,12 @@ $(document).ready(function () {
         quantity = $(this).val();
         updateValues();
     });
+
+    var page = $("#page").val();
+    $("#page").on("input change", function () {
+        page = $(this).val();
+        updateValues();
+    });
     var statusValue = $("#statusReceipt").val();
 
     var completeTime = parseInt($("#completeTime").val());
@@ -148,6 +166,13 @@ $(document).ready(function () {
         statusValue = $(this).val();
         updateValues();
     });
+    var serviceTypeCode = $("#serviceTypeCode option:selected").text();
+    $("#serviceTypeCode").change(function () {
+        serviceTypeCode = $(this).find("option:selected").text();
+        updateValues();
+    });
+
+
     var give = $('input[type="radio"][name="deliveryOption"]').val();
     $('input[type="radio"][name="deliveryOption"]').change(function () {
         give = $(this).val();
@@ -165,7 +190,7 @@ $(document).ready(function () {
     }
     $("#message").hide();
     function updateValues() {
-        var sum = $("#currency1").val() * quantity;
+        var sum = page * $("#currency1").val() * quantity;
         if (sum < 10000 && statusValue == "2") {
             $("#orderButton").attr("disabled", "disabled");
             $("#message").show(); // Đúng cách vô hiệu hóa nút
@@ -177,8 +202,10 @@ $(document).ready(function () {
         $("#name1").text(name);
         $("#address1").text(address);
         $("#sdt1").text(sdt);
-        $("#quantity1").text(quantity);
+        $("#quantity1").text(quantity + " Bản");
+        $("#page1").text(page + " Trang");
         $("#service1").text(service);
+        $("#service2").text(serviceTypeCode);
         $("#service").text(serviceTypeName);
         $("#statusReceipt1").text(statusReceipt);
         $("#sum").text(formatCurrency(sum));
@@ -195,7 +222,6 @@ $(document).ready(function () {
                 "action",
                 `http://127.0.0.1:8000/user/auth/paymentLive`
             );
-            console.log($("#form_order1").attr('action'));
             $("#button").text("Thanh toán");
         } else {
             $("#form_order").attr(
@@ -206,14 +232,11 @@ $(document).ready(function () {
                 "action",
                 `http://127.0.0.1:8000/user/auth/comfirmUser`
             );
-            console.log($("#form_order1").attr('action'));
             $("#button").text("Xác nhận");
         }
     }
     // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
     updateValues();
-
-    console.log($("#form_order1").attr('action'));
 });
 
 $(document).ready(function () {
@@ -302,8 +325,6 @@ $(document).ready(function () {
                 },
             },
         });
-    } else {
-        console.log("Canvas element not found");
     }
 });
 
@@ -333,9 +354,12 @@ $(document).ready(function () {
         if (data.data.length === 0) {
             table.empty();
             table.append(
-                '<p class="text-center">Chưa có nhiệm vụ đã hoàn thành nào.</p>'
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ đã hoàn thành nào.</p>'
             );
         } else {
+            if ($("#messageTask").text) {
+                $(this).hide;
+            }
             $.each(data.data, function (index, item) {
                 var statusClass;
                 switch (item.status_id) {
@@ -383,10 +407,6 @@ $(document).ready(function () {
                     }?page=${page}')">${page}</a></li>`
                 );
             }
-        } else {
-            pagination.append(
-                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
-            );
         }
     }
 
@@ -432,9 +452,12 @@ $(document).ready(function () {
         if (data.data.length === 0) {
             table.empty();
             table.append(
-                '<p class="text-center">Chưa có nhiệm vụ chưa hoàn thành nào.</p>'
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ chưa hoàn thành nào.</p>'
             );
         } else {
+            if ($("#messageTask").text) {
+                $(this).hide;
+            }
             $.each(data.data, function (index, item) {
                 var statusClass;
                 switch (item.status_id) {
@@ -482,10 +505,6 @@ $(document).ready(function () {
                     }?page=${page}')">${page}</a></li>`
                 );
             }
-        } else {
-            pagination.append(
-                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
-            );
         }
     }
 
@@ -530,8 +549,13 @@ $(document).ready(function () {
         tbody.empty(); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
             table.empty();
-            table.append('<p class="text-center">Chưa có nhiệm vụ nào.</p>');
+            table.append(
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ nào.</p>'
+            );
         } else {
+            if ($("#messageTask").text) {
+                $(this).hide;
+            }
             $.each(data.data, function (index, item) {
                 var statusClass;
                 switch (item.status_id) {
@@ -579,10 +603,6 @@ $(document).ready(function () {
                     }?page=${page}')">${page}</a></li>`
                 );
             }
-        } else {
-            pagination.append(
-                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
-            );
         }
     }
 
@@ -680,10 +700,6 @@ $(document).ready(function () {
                     }?page=${page}')">${page}</a></li>`
                 );
             }
-        } else {
-            pagination.append(
-                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
-            );
         }
     }
 
@@ -759,10 +775,6 @@ $(document).ready(function () {
                     }?page=${page}')">${page}</a></li>`
                 );
             }
-        } else {
-            pagination.append(
-                '<li class="page-item disabled"><span class="page-link">Không có trang để hiển thị</span></li>'
-            );
         }
     }
 
@@ -791,11 +803,44 @@ $(document).ready(function () {
         if (this.id == "home") {
             $("#infor").show();
             $("#address-company").hide();
+            $("#inforRequest").css("display", "");
+            $("#inforRequest1").css("display", "");
+            $("#inforRequest2").css("display", "");
+            $("#companyRequest").css("display", "none");
             // Thực hiện các hành động khi lựa chọn giao hàng tận nơi
         } else if (this.id == "give") {
             $("#infor").hide();
             $("#address-company").show();
+            $("#inforRequest").css("display", "none");
+            $("#inforRequest1").css("display", "none");
+            $("#inforRequest2").css("display", "none");
+            $("#companyRequest").css("display", "");
             // Thực hiện các hành động khi lựa chọn đến nhận hàng
         }
+    });
+});
+$(document).ready(function () {
+    $(".modalTrigger").on("click", function (event) {
+        event.preventDefault(); // Ngăn không cho thẻ a thực hiện hành động mặc định
+
+        var action = $(this).data("action"); // Lấy hành động (trả lời hoặc xóa)
+        var requestId = $(this).data("request-id"); // Lấy ID yêu cầu
+        var href = $(this).attr("href"); // Lấy href (URL)
+
+        // Cập nhật tiêu đề và nội dung của modal dựa trên hành động
+        if (action === "detail") {
+            $("#exampleModalLabel").text("Trả lời Yêu Cầu");
+            $(".modal-body").text("Bạn có chắc muốn tiếp tục ?");
+        } else if (action === "delete") {
+            $("#exampleModalLabel").text("Xác Nhận Xóa Yêu Cầu");
+            $(".modal-body").text("Bạn có chắc chắn muốn xóa yêu cầu ?");
+        }
+
+        // Cập nhật nút hành động trong modal
+        $("#modalActionBtn")
+            .off("click")
+            .on("click", function () {
+                window.location.href = href; // Chuyển hướng theo URL của nút
+            });
     });
 });

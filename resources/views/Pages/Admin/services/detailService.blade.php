@@ -69,7 +69,7 @@
                                 <tr>
                                     <th>Giá</th>
                                     <td class="row">
-                                        <div class="col-2">
+                                        <div class="col-lg-2 col-md-4 col-sm-4">
                                             <input class="form-control" type="number" id="price" name="price"
                                                 value="{{ $item->price }}">
                                         </div>

@@ -208,13 +208,34 @@
                                 @if (!is_null($item->order_file_name))
                                     <div class="row border-bottom">
                                         <div class="col-4 py-3">Tệp đính kèm</div>
-                                        <div class="col-8 py-3">{{ $item->order_file_name }}</div>
+                                        <div class="col-8 py-3 row">
+                                            <div class="col-6">{{ $item->order_file_name }}
+                                            </div>
+                                            <span class="col-4 align-content-center">
+                                                <a href="{{ route('getDownloadOrder', ['data' => $item->order_id]) }}"
+                                                    class="btn btn-success">
+                                                    Tải xuống
+                                                </a>
+                                            </span>
+                                        </div>
                                     </div>
                                 @endif
                                 <div class="row border-bottom">
                                     <div class="col-4 py-3">Số bản</div>
                                     <div class="col-8 py-3"> {{ $item->quantity }} Bản</div>
                                     <input type="hidden" name="quantity" value="{{ $item->quantity }}" id="quantity">
+                                </div>
+                                <div class="row border-bottom">
+                                    <div class="col-4 py-3">Số trang trong tài liệu</div>
+                                    <div class="col-8 py-3"> {{ $item->page }} Trang @if ($item->check_page == '1')
+                                            <div class="form-text text-danger fw-bold col-10">Số trang đã được đúng tôi
+                                                kiểm
+                                                tra,
+                                                nếu không đúng vui lòng liên hệ lại với chúng tôi. </div>
+                                        @endif
+                                    </div>
+
+                                    <input type="hidden" name="page" value="{{ $item->page }}" id="page">
                                 </div>
                                 <div class="row border-bottom">
                                     <div class="col-4 py-3">Trạng thái đơn hàng</div>
@@ -281,7 +302,8 @@
                                             value="{{ $item->unit_price }}">
                                         <p id="currency">{{ $item->unit_price }}</p>
                                         @if ($item->unit_price < 10000)
-                                            <div class="form-text text-danger fw-bold">Do tổng thanh toán nhỏ hơn 10.000 đ, quý
+                                            <div class="form-text text-danger fw-bold">Do tổng thanh toán nhỏ hơn 10.000 đ,
+                                                quý
                                                 khách
                                                 vui lòng chọn thanh toán khi nhận hàng.</div>
                                         @endif
@@ -332,7 +354,11 @@
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-4 py-3 bg-body-secondary">Số bản</div>
-                                                    <div class="col-8 p-3">{{ $item->quantity }}</div>
+                                                    <div class="col-8 p-3">{{ $item->quantity }} Bản</div>
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="col-4 py-3 bg-body-secondary">Số trang trong tài liệu</div>
+                                                    <div class="col-8 p-3">{{ $item->page }} Trang</div>
                                                 </div>
                                                 <div class="row ">
                                                     <div class="col-4 py-3 bg-body-secondary">Thời gian hoàn thành</div>
@@ -404,13 +430,34 @@
                             @if (!is_null($item->order_file_name))
                                 <div class="row border-bottom">
                                     <div class="col-4 py-3">Tệp đính kèm</div>
-                                    <div class="col-8 py-3">{{ $item->order_file_name }}</div>
+                                    <div class="col-8 py-3 row">
+                                        <div class="col-6">{{ $item->order_file_name }}
+                                        </div>
+                                        <span class="col-4 align-content-center">
+                                            <a href="{{ route('getDownloadOrder', ['data' => $item->order_id]) }}"
+                                                class="btn btn-success">
+                                                Tải xuống
+                                            </a>
+                                        </span>
+                                    </div>
                                 </div>
                             @endif
                             <div class="row border-bottom">
                                 <div class="col-4 py-3">Số bản</div>
                                 <div class="col-8 py-3"> {{ $item->quantity }} Bản</div>
                                 <input type="hidden" name="quantity" value="{{ $item->quantity }}" id="quantity">
+                            </div>
+                            <div class="row border-bottom">
+                                <div class="col-4 py-3">Số trang trong tài liệu</div>
+                                <div class="col-8 py-3"> {{ $item->page }} Trang @if ($item->check_page == '1')
+                                        <div class="form-text text-danger fw-bold col-10">Số trang đã được đúng tôi
+                                            kiểm
+                                            tra,
+                                            nếu không đúng vui lòng liên hệ lại với chúng tôi. </div>
+                                    @endif
+                                </div>
+
+                                <input type="hidden" name="page" value="{{ $item->page }}" id="page">
                             </div>
                             <div class="row border-bottom">
                                 <div class="col-4 py-3">Trạng thái đơn hàng</div>

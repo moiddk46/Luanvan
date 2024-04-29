@@ -15,8 +15,15 @@ class ajaxServiceController extends Controller
     }
     public function getServiceTypeAjax(Request $request): array
     {
-        $servicecode=$request->all();
+        $servicecode = $request->all();
         $data = $this->service->getServiceType($servicecode['service_code']);
         return $data;
+    }
+
+    public function getPriceService(Request $request)
+    {
+        $formData = $request->all();
+        $data = $this->service->getPriceServiceWhere($formData['serviceTypeCode']);
+        return response()->json($data);
     }
 }
