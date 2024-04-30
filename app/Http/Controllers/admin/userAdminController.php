@@ -99,4 +99,29 @@ class userAdminController extends Controller
             );
         }
     }
+
+    public function deleteUser($data)
+    {
+        try {
+            $user = User::findOrFail($data);
+            $user->display = '0';
+            $user->updated_at = now();
+            $user->save();
+            $message = 'Xóa người dùng thành công.';
+            return redirect()->route('allUser')->with(
+                [
+                    'message' => $message,
+                    'status' => true,
+                ]
+            );
+        } catch (Exception $e) {
+            $message = 'Xóa người dùng không thành công.';
+            return redirect()->back()->with(
+                [
+                    'message' => $message,
+                    'status' => false,
+                ]
+            );
+        }
+    }
 }

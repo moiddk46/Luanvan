@@ -30,12 +30,13 @@ class login extends Controller
         $login = [
             "email" => $request->email,
             "password" => $request->password,
+            "display" => "1"
         ];
         $messageLogin = "Bạn đã đăng nhập thành công";
         $messageFails = "Tài khoản hoặc mật khẩu không đúng";
         if (Auth::attempt($login)) {
             $user = Auth::user();
-            if ($user->position == 3) { 
+            if ($user->position == 3) {
                 return redirect()->route('index')->with([
                     'message' => $messageLogin,
                     'status' => true

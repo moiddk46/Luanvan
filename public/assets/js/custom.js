@@ -26,14 +26,14 @@ $(document).ready(function () {
             success: function (response) {
                 response.map((row) => {
                     var price = row.price;
-                    $('#currency1').val(price);
+                    $("#currency1").val(price);
                     updateValues();
                 });
             },
             error: function (xhr, status, error) {
                 // Xử lý khi có lỗi xảy ra
                 console.error("Error:", error);
-            },  
+            },
         });
     });
 
@@ -72,10 +72,10 @@ $(document).ready(function () {
         $("#staffValue").val(selectedStaff);
     });
 
-    $('#currency1').change(function(){
-        $('#currency1').val();
+    $("#currency1").change(function () {
+        $("#currency1").val();
         updateValues();
-    })
+    });
     $("#sample").click(function () {
         var name = $("#name").text();
         var service = $("#service").text();
@@ -172,7 +172,6 @@ $(document).ready(function () {
         updateValues();
     });
 
-
     var give = $('input[type="radio"][name="deliveryOption"]').val();
     $('input[type="radio"][name="deliveryOption"]').change(function () {
         give = $(this).val();
@@ -222,6 +221,10 @@ $(document).ready(function () {
                 "action",
                 `http://127.0.0.1:8000/user/auth/paymentLive`
             );
+            $("#form_order3").attr(
+                "action",
+                `http://127.0.0.1:8000/admin/order/paymentAdmin`
+            );
             $("#button").text("Thanh toán");
         } else {
             $("#form_order").attr(
@@ -231,6 +234,10 @@ $(document).ready(function () {
             $("#form_order1").attr(
                 "action",
                 `http://127.0.0.1:8000/user/auth/comfirmUser`
+            );
+            $("#form_order3").attr(
+                "action",
+                `http://127.0.0.1:8000/admin/order/addOrderAdmin`
             );
             $("#button").text("Xác nhận");
         }
@@ -678,7 +685,11 @@ $(document).ready(function () {
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
-                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
+                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" data-action="delete">
+                                        Xóa
+                                    </a></td>
                     </tr>
                 `);
             });
@@ -753,7 +764,11 @@ $(document).ready(function () {
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
-                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
+                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" data-action="delete">
+                                        Xóa
+                                    </a></td>
                     </tr>
                 `);
             });

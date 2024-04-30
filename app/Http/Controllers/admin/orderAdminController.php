@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Const\KCconst;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\order\orderAdminRequest;
 use App\Models\orderModel;
@@ -141,4 +142,23 @@ class orderAdminController extends Controller
         return view('Pages.Admin.order.addOrder', compact('title', 'serviceType', 'statusReceipt', 'priceService'));
     }
 
+    public function addOrderAdmin(Request $request)
+    {
+        $formData = $request->all();
+        if ($formData['name'] == null || $formData['address'] == null || $formData['sdt'] == null || !isset($formData['files'])) {
+            $message = 'Vui lòng điền thông tin nhận hàng và tài liệu';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $count = $this->service->insertOrderAdmin($formData);
+        if ($count > 0) {
+            $message = 'Bạn đã thêm đơn hàng thành công';
+            return redirect()->route('orderAdmin')->with([
+                'message' => $message,
+                'status' => true
+            ]);
+        }
+    }
 }

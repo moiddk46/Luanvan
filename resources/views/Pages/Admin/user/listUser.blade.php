@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <a href="{{ route('viewAddUser') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm
-                        nhân viên</a>
+                        người dùng</a>
                 </div>
             </div>
             @if (isset($data))
@@ -59,9 +59,13 @@
                                     {{ $item->created_at }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailUser', ['data' => $item->id]) }}"
-                                        class="btn btn-outline-dark">
+                                    <a href="{{ route('detailUser', ['data' => $item->id]) }}" class="btn btn-outline-dark">
                                         Chi tiết
+                                    </a>
+                                    <a href="{{ route('deleteUser', ['data' => $item->id]) }}"
+                                        class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-action="delete">
+                                        Xóa
                                     </a>
                                 </td>
                             </tr>

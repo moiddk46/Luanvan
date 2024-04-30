@@ -142,6 +142,7 @@ class orderModel extends Model
     {
         $statusName = $this->getStatusName($status);
         $count = 0;
+        $date = Carbon::now();
         $update  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
@@ -174,6 +175,7 @@ class orderModel extends Model
             ->where('id_order', $orderId)
             ->update([
                 'status' => $statusReceipt,
+                'receipt_date' => $date,
             ]);
         if ($update > 0) {
             $count++;
@@ -227,6 +229,7 @@ class orderModel extends Model
             'status' => KCconst::DB_STATUS_ORDER_HANDLING,
             'delivery' => $formData['deliveryOption'] == KCconst::DB_FLASH_ON ? '1' : '0',
             'comfirm_user' => '1',
+            'check_page' => '1'
         ]);
         $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
         DB::table('notice')
@@ -367,6 +370,86 @@ class orderModel extends Model
                         ->insert([
                             'id_order' => $orderId,
                             'id_user' => $formData['idUser'],
+                            'sum_price' => $formData['sum'],
+                            'status' => ($formData['statusReceipt'] == KCconst::DB_RECEIPT_WHEN_GIVE ? KCconst::DB_DONT_RECEIPT : KCconst::DB_DONE_RECEIPT),
+                            'method' => $formData['statusReceipt'],
+                            'receipt_date' => $nowDate
+                        ]);
+                    if ($count1 > 0) {
+                        $count++;
+                    }
+                }
+            }
+        }
+
+        if ($count < 0) {
+            DB::rollBack();
+        } else {
+            DB::commit();
+        }
+
+        return $orderId;
+    }
+
+    /**
+     * 
+     * @return int
+     */
+    public function insertOrderAdmin($formData): int
+    {
+        $completeTime = $formData['completeTime'];
+        $date = Carbon::now();
+        $user = Auth::user();
+        $nowDate = Carbon::now()->toDateString();
+        $futureDate = $date->addDays($completeTime)->toDateString();
+        $count = 0;
+        $orderId = '';
+
+        DB::beginTransaction();
+        $orderId = DB::table('order_master')->insertGetId([
+            'order_date' => $nowDate,
+            'name' => $formData['name'],
+            'address' => $formData['address'],
+            'phone' => $formData['sdt'],
+            'id_user' => $user->id,
+            'service_type_code' => $formData['serviceTypeCode'],
+            'status' => KCconst::DB_STATUS_ORDER_HANDLING,
+            'delivery' => '0',
+            'comfirm_user' => '1',
+            'check_page' => '1'
+        ]);
+
+        $statusName = $this->getStatusName(KCconst::DB_STATUS_ORDER_HANDLING);
+        DB::table('notice')
+            ->insert(
+                [
+                    'type_id' => $orderId,
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'id_user' => $user->id,
+                    'flash_order' => '1',
+                ]
+            );
+
+
+        if ($orderId > 0) {
+            $fileName = $formData['files']->getClientOriginalName();
+            $pathOrder = config('app.pathFileOrder') . '/' . $orderId;
+            $file = $formData['files']->storeAs($pathOrder, $fileName, 'public');
+            if ($file) {
+                $inserted = DB::table('order_detail')->insert([
+                    'order_id' => $orderId,
+                    'service_type_code' => $formData['serviceTypeCode'],
+                    'quantity' => $formData['quantity'],
+                    'unit_price' => $formData['sum'],
+                    'order_file_name' => $fileName,
+                    'complete_time' => $futureDate,
+                    'page' => $formData['page'],
+                ]);
+                if ($inserted > 0) {
+                    $count1 = DB::table('receipts')
+                        ->insert([
+                            'id_order' => $orderId,
+                            'id_user' => $user->id,
                             'sum_price' => $formData['sum'],
                             'status' => ($formData['statusReceipt'] == KCconst::DB_RECEIPT_WHEN_GIVE ? KCconst::DB_DONT_RECEIPT : KCconst::DB_DONE_RECEIPT),
                             'method' => $formData['statusReceipt'],
@@ -554,5 +637,14 @@ class orderModel extends Model
             $count++;
         }
         return $count;
+    }
+
+    public function updateReceipt($data)
+    {
+        DB::table('receipts')
+            ->where('id_order', $data)
+            ->update([
+                'status' => KCconst::DB_DONE_RECEIPT,
+            ]);
     }
 }

@@ -55,7 +55,11 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/detailOrder/{data}', [orderAdminController::class, 'detailOrder'])->name('detailOrder');
         Route::post('/updateDetailOrder', [orderAdminController::class, 'updateDetailOrder'])->name('updateDetailOrder');
         Route::get('/download/{data}', [orderAdminController::class, 'getDownload'])->name('downloadOrder');
+        Route::get('/paymentOrderAdmin', [paymentController::class, 'paymentOrderAdmin'])->name('paymentOrderAdmin');
         Route::get('/addOrder', [orderAdminController::class, 'addOrder'])->name('addOrder');
+        Route::post('/addOrderAdmin', [orderAdminController::class, 'addOrderAdmin'])->name('addOrderAdmin');
+        Route::post('/paymentAdmin', [paymentController::class, 'paymentAdmin'])->name('paymentAdmin');
+        Route::get('/statusPaymentAdmin/{data}', [paymentController::class, 'statusPaymentAdmin'])->name('statusPaymentAdmin');
     });
     Route::prefix('priceRequest')->group(function () {
         Route::get('/priceRequest', [priceRequestAdminController::class, 'priceRequest'])->name('priceRequestAdmin');
@@ -82,6 +86,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::post('/addUser', [userAdminController::class, 'addUser'])->name('addUser');
         Route::get('/getStaff', [userAdminController::class, 'getStaff'])->name('getStaff');
         Route::get('/getCustomer', [userAdminController::class, 'getCustomer'])->name('getCustomer');
+        Route::get('/deleteUser/{data}', [userAdminController::class, 'deleteUser'])->name('deleteUser');
     });
 });
 

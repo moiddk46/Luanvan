@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: laravel
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.28-MariaDB
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `assign_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assign_master` (
-  `idassign_master_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `staff_id` bigint(20) NOT NULL,
-  `order_id` bigint(20) NOT NULL,
-  `status` bigint(20) NOT NULL,
+  `idassign_master_id` bigint NOT NULL AUTO_INCREMENT,
+  `staff_id` bigint NOT NULL,
+  `order_id` bigint NOT NULL,
+  `status` bigint NOT NULL,
   PRIMARY KEY (`idassign_master_id`),
   KEY `order_id_idx` (`order_id`),
   KEY `staff_id_idx` (`staff_id`),
@@ -55,16 +55,16 @@ DROP TABLE IF EXISTS `notice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notice` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `type_id` bigint(20) NOT NULL,
-  `id_user` bigint(20) NOT NULL,
-  `detail` text NOT NULL,
-  `flash_order` enum('0','1') NOT NULL,
-  `click` enum('0','1') NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `type_id` bigint NOT NULL,
+  `id_user` bigint NOT NULL,
+  `detail` text COLLATE utf8mb4_general_ci NOT NULL,
+  `flash_order` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
+  `click` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (11,23,4,'Yêu cầu báo giá có mã 23 của bạn đang ở trạng thái Đã trả lời','0','0'),(13,77,4,'Đơn hàng có mã 77 của bạn đang ở trạng thái Đang xử lý','1','1'),(14,78,4,'Đơn hàng có mã 78 của bạn đang ở trạng thái Đang xử lý','1','1'),(15,79,4,'Đơn hàng có mã 79 của bạn đang ở trạng thái Đang xử lý','1','1'),(16,80,4,'Đơn hàng có mã 80 của bạn đang ở trạng thái Đã xác nhận','1','0'),(17,81,4,'Đơn hàng có mã 81 của bạn đang ở trạng thái Đang xử lý','1','0'),(18,82,4,'Đơn hàng có mã 82 của bạn đang ở trạng thái Đang xử lý','1','0'),(19,24,7,'Yêu cầu báo giá có mã 24 của bạn đang ở trạng thái Chưa trả lời','0','0');
+INSERT INTO `notice` VALUES (11,23,4,'Yêu cầu báo giá có mã 23 của bạn đang ở trạng thái Đã trả lời','0','0'),(13,77,4,'Đơn hàng có mã 77 của bạn đang ở trạng thái Đang xử lý','1','1'),(14,78,4,'Đơn hàng có mã 78 của bạn đang ở trạng thái Đang xử lý','1','1'),(15,79,4,'Đơn hàng có mã 79 của bạn đang ở trạng thái Đang xử lý','1','1'),(16,80,4,'Đơn hàng có mã 80 của bạn đang ở trạng thái Đã xác nhận','1','0'),(17,81,4,'Đơn hàng có mã 81 của bạn đang ở trạng thái Đang xử lý','1','0'),(18,82,4,'Đơn hàng có mã 82 của bạn đang ở trạng thái Đang xử lý','1','0'),(19,24,7,'Yêu cầu báo giá có mã 24 của bạn đang ở trạng thái Chưa trả lời','0','0'),(20,83,7,'Đơn hàng có mã 83 của bạn đang ở trạng thái Đang xử lý','1','0'),(21,84,7,'Đơn hàng có mã 84 của bạn đang ở trạng thái Đang xử lý','1','0');
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,20 +85,20 @@ DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_detail` (
-  `order_detail_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `order_id` bigint(20) NOT NULL,
-  `service_type_code` varchar(100) NOT NULL,
-  `quantity` int(10) NOT NULL,
-  `unit_price` varchar(100) NOT NULL,
-  `order_file_name` varchar(255) DEFAULT NULL,
-  `page` int(11) DEFAULT NULL,
+  `order_detail_id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` bigint NOT NULL,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity` int NOT NULL,
+  `unit_price` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `order_file_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `page` int DEFAULT NULL,
   `complete_time` date DEFAULT NULL,
   PRIMARY KEY (`order_detail_id`),
   KEY `order_id` (`order_id`),
   KEY `service_type_code` (`service_type_code`),
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_master` (`order_id`),
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-INSERT INTO `order_detail` VALUES (31,77,'inantrangden',1,'5000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-01'),(32,78,'inantrangden',1,'5000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-01'),(33,79,'inantrangden',1,'25000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',5,'2024-05-01'),(34,80,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',3,'2024-05-05'),(35,81,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-05'),(36,82,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-05');
+INSERT INTO `order_detail` VALUES (31,77,'inantrangden',1,'5000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-01'),(32,78,'inantrangden',1,'5000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-01'),(33,79,'inantrangden',1,'25000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',5,'2024-05-01'),(34,80,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',3,'2024-05-05'),(35,81,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-05'),(36,82,'dichthuatcongchung',1,'300000','BaoCaoTTTT_B2014760_TranThanhMoi.doc',1,'2024-05-05'),(37,83,'dichthuatthongthuong',2,'200000','04-Phiếu nhận SV.doc',1,'2024-05-05'),(38,84,'inantrangden',5,'25000','CV_Lập trình viên website_Tran Thanh Moi.pdf',1,'2024-05-03');
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,18 +119,18 @@ DROP TABLE IF EXISTS `order_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_master` (
-  `order_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL,
-  `phone` varchar(11) DEFAULT NULL,
+  `order_id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(11) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `order_date` date NOT NULL,
-  `id_user` bigint(20) NOT NULL,
-  `service_type_code` varchar(100) NOT NULL,
-  `status` bigint(20) NOT NULL,
-  `give_flag` enum('0','1') NOT NULL,
-  `delivery` enum('0','1') NOT NULL,
-  `comfirm_user` enum('1','0') NOT NULL,
-  `check_page` enum('0','1') NOT NULL,
+  `id_user` bigint NOT NULL,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` bigint NOT NULL,
+  `give_flag` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
+  `delivery` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
+  `comfirm_user` enum('1','0') COLLATE utf8mb4_general_ci NOT NULL,
+  `check_page` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `status` (`status`),
   KEY `service_type_code` (`service_type_code`),
@@ -138,7 +138,7 @@ CREATE TABLE `order_master` (
   CONSTRAINT `order_master_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status_master` (`status_id`),
   CONSTRAINT `order_master_ibfk_2` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`),
   CONSTRAINT `order_master_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +147,7 @@ CREATE TABLE `order_master` (
 
 LOCK TABLES `order_master` WRITE;
 /*!40000 ALTER TABLE `order_master` DISABLE KEYS */;
-INSERT INTO `order_master` VALUES (77,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(78,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(79,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(80,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',2,'0','1','1','1'),(81,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','1','1','0'),(82,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','0','1','0');
+INSERT INTO `order_master` VALUES (77,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(78,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(79,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(80,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',2,'0','1','1','1'),(81,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','1','1','0'),(82,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','0','1','0'),(83,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'dichthuatthongthuong',1,'0','0','1','1'),(84,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'inantrangden',1,'0','0','0','1');
 /*!40000 ALTER TABLE `order_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,8 +159,8 @@ DROP TABLE IF EXISTS `position-info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `position-info` (
-  `position_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `position` varchar(100) NOT NULL,
+  `position_id` bigint NOT NULL AUTO_INCREMENT,
+  `position` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`position_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -183,21 +183,21 @@ DROP TABLE IF EXISTS `price_request`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `price_request` (
-  `request_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `request_id` bigint NOT NULL AUTO_INCREMENT,
   `request_date` date NOT NULL,
-  `request_comment` varchar(255) NOT NULL,
-  `service_type_code` varchar(100) NOT NULL,
-  `id_user` bigint(20) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `phone` varchar(11) NOT NULL,
-  `price` varchar(100) DEFAULT NULL,
-  `request_file` varchar(255) NOT NULL,
-  `status` bigint(20) NOT NULL,
-  `price_letter` varchar(255) DEFAULT NULL,
-  `complete_time` int(11) DEFAULT NULL,
-  `page` int(11) DEFAULT NULL,
-  `check_page` enum('0','1') NOT NULL,
+  `request_comment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_user` bigint NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
+  `price` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `request_file` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` bigint NOT NULL,
+  `price_letter` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `complete_time` int DEFAULT NULL,
+  `page` int DEFAULT NULL,
+  `check_page` enum('0','1') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`request_id`),
   KEY `service_type_code` (`service_type_code`),
   KEY `id_user` (`id_user`),
@@ -226,10 +226,10 @@ DROP TABLE IF EXISTS `price_service_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `price_service_type` (
-  `price_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `service_type_code` varchar(100) NOT NULL,
+  `price_id` bigint NOT NULL AUTO_INCREMENT,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `price` float NOT NULL,
-  `detail_price` longtext DEFAULT NULL,
+  `detail_price` longtext COLLATE utf8mb4_general_ci,
   PRIMARY KEY (`price_id`),
   KEY `service_type_code` (`service_type_code`),
   CONSTRAINT `price_service_type_ibfk_1` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`)
@@ -254,12 +254,12 @@ DROP TABLE IF EXISTS `receipts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receipts` (
-  `id_ receipts` bigint(20) NOT NULL AUTO_INCREMENT,
-  `id_order` bigint(20) NOT NULL,
-  `id_user` bigint(20) NOT NULL,
-  `sum_price` varchar(100) NOT NULL,
-  `status` bigint(20) NOT NULL,
-  `method` bigint(20) NOT NULL,
+  `id_ receipts` bigint NOT NULL AUTO_INCREMENT,
+  `id_order` bigint NOT NULL,
+  `id_user` bigint NOT NULL,
+  `sum_price` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` bigint NOT NULL,
+  `method` bigint NOT NULL,
   `receipt_date` date DEFAULT NULL,
   PRIMARY KEY (`id_ receipts`),
   KEY `receipts_ibfk_1` (`status`),
@@ -270,7 +270,7 @@ CREATE TABLE `receipts` (
   CONSTRAINT `receipts_ibfk_2` FOREIGN KEY (`method`) REFERENCES `status_method` (`status_id`),
   CONSTRAINT `receipts_ibfk_3` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
   CONSTRAINT `receipts_ibfk_4` FOREIGN KEY (`id_order`) REFERENCES `order_master` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `receipts` (
 
 LOCK TABLES `receipts` WRITE;
 /*!40000 ALTER TABLE `receipts` DISABLE KEYS */;
-INSERT INTO `receipts` VALUES (10,77,4,'5000',1,1,'2024-04-29'),(11,78,4,'5000',1,1,'2024-04-29'),(12,79,4,'25000',2,2,'2024-04-29'),(13,80,4,'300000',1,1,'2024-04-29'),(14,81,4,'300000',1,1,'2024-04-29'),(15,82,4,'300000',1,1,'2024-04-29');
+INSERT INTO `receipts` VALUES (10,77,4,'5000',1,1,'2024-04-29'),(11,78,4,'5000',1,1,'2024-04-29'),(12,79,4,'25000',2,2,'2024-04-29'),(13,80,4,'300000',1,1,'2024-04-29'),(14,81,4,'300000',1,1,'2024-04-29'),(15,82,4,'300000',1,1,'2024-04-29'),(16,83,7,'200000',1,1,'2024-04-30'),(17,84,7,'25000',2,2,'2024-04-30');
 /*!40000 ALTER TABLE `receipts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,8 +291,8 @@ DROP TABLE IF EXISTS `service_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service_master` (
-  `service_code` varchar(255) NOT NULL,
-  `service_name` varchar(255) NOT NULL,
+  `service_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `service_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`service_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -315,10 +315,10 @@ DROP TABLE IF EXISTS `service_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service_type` (
-  `service_type_code` varchar(100) NOT NULL,
-  `service_type_name` varchar(100) NOT NULL,
-  `service_code` varchar(100) NOT NULL,
-  `service_type_detail` varchar(500) DEFAULT NULL,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `service_type_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `service_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `service_type_detail` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`service_type_code`),
   KEY `service_code` (`service_code`),
   CONSTRAINT `service_type_ibfk_1` FOREIGN KEY (`service_code`) REFERENCES `service_master` (`service_code`)
@@ -343,10 +343,10 @@ DROP TABLE IF EXISTS `service_type_img`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service_type_img` (
-  `service_type_code` varchar(100) NOT NULL,
-  `img` varchar(100) DEFAULT NULL,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `img` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`service_type_code`),
-  CONSTRAINT `service_type_code` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `service_type_code` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -368,8 +368,8 @@ DROP TABLE IF EXISTS `status_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status_master` (
-  `status_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(100) NOT NULL,
+  `status_id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -392,8 +392,8 @@ DROP TABLE IF EXISTS `status_method`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status_method` (
-  `status_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(100) NOT NULL,
+  `status_id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -416,8 +416,8 @@ DROP TABLE IF EXISTS `status_receipt`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status_receipt` (
-  `status_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(100) NOT NULL,
+  `status_id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -440,8 +440,8 @@ DROP TABLE IF EXISTS `status_reply`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `status_reply` (
-  `status_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(100) NOT NULL,
+  `status_id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -464,20 +464,19 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `position` bigint(20) NOT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `position` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `display` enum('1','0') COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `position` (`position`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`position`) REFERENCES `position-info` (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,7 +485,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (4,'Trần Thanh Mới','thanhmoivip123456@gmail.com',NULL,'$2y$12$iLn5rOyFu9mgN7CArhC/B.A3/TjiLQ9A/0XWciGLUo5bxJeL.YMZ2',3,NULL,'2024-03-10 07:08:58','2024-03-10 07:08:58'),(5,'Trần Trung Tính','tinh@gmail.com',NULL,'$2y$12$hqSByHxcbLdCO1hjApEjjualhIq.8OKuxUuP64oPXps4MX5tYYPne',3,NULL,'2024-03-16 21:29:06','2024-03-16 21:29:06'),(6,'Dương Hãi Băng','bang123@gmail.com',NULL,'$2y$12$noFcOCqXGtqiX3wL7PD4O.KgFlB3nrBfVVFhqCW3V4negaQvT4Xoa',3,NULL,'2024-03-19 09:59:34','2024-03-19 09:59:34'),(7,'Trần Thanh Mới','moi123@gmail.com',NULL,'$2y$12$Oqv5gx68FfgR.u3OKOQlLORoOd0yhBL/03QeNsFBnQ0P6QPWLVsWa',1,NULL,'2024-03-19 10:04:41','2024-03-19 10:04:41'),(8,'Trần Thanh Mới','thanh@gmail.com',NULL,'$2y$12$fFp0uJc/OtgevjwZqsEuTukBsnW4qUPA65BtejubzC1islEOEtONW',2,NULL,'2024-03-19 10:05:19','2024-03-19 10:05:19');
+INSERT INTO `users` VALUES (4,'Trần Thanh Mới','thanhmoivip123456@gmail.com','$2y$12$iLn5rOyFu9mgN7CArhC/B.A3/TjiLQ9A/0XWciGLUo5bxJeL.YMZ2',3,'2024-03-10 07:08:58','2024-03-10 07:08:58','1'),(5,'Trần Trung Tính','tinh@gmail.com','$2y$12$hqSByHxcbLdCO1hjApEjjualhIq.8OKuxUuP64oPXps4MX5tYYPne',3,'2024-03-16 21:29:06','2024-03-16 21:29:06','1'),(6,'Dương Hãi Băng','bang123@gmail.com','$2y$12$noFcOCqXGtqiX3wL7PD4O.KgFlB3nrBfVVFhqCW3V4negaQvT4Xoa',3,'2024-03-19 09:59:34','2024-03-19 09:59:34','1'),(7,'Trần Thanh Mới','moi123@gmail.com','$2y$12$Oqv5gx68FfgR.u3OKOQlLORoOd0yhBL/03QeNsFBnQ0P6QPWLVsWa',1,'2024-03-19 10:04:41','2024-03-19 10:04:41','1'),(8,'Trần Thanh Mới','thanh@gmail.com','$2y$12$fFp0uJc/OtgevjwZqsEuTukBsnW4qUPA65BtejubzC1islEOEtONW',2,'2024-03-19 10:05:19','2024-04-30 08:03:12','0'),(9,'Lê Hữu Đức','duc@gmail.com','$2y$12$MVjzmCd58hLH8GVzO8GE/u3z2MiFg0n88JI9.K.xqkfNRAbU8bbDC',3,'2024-04-30 07:51:07','2024-04-30 07:51:07','1');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -499,4 +498,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-30  0:36:36
+-- Dump completed on 2024-04-30 15:58:38

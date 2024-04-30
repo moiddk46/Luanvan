@@ -108,22 +108,34 @@
                                 </tr>
                                 <tr>
                                     <th>Trạng thái thanh toán</th>
-                                    <td>
-                                        @if ($item->sr_status_id == '2')
-                                            <span
-                                                class="badge text-bg-success rounded-pill d-inline ">{{ $item->sr_status }}</span>
-                                        @else
-                                            <select id="statusReceipt" class="form-select form-select-md w-50"
-                                                aria-label="Small select example" name="statusReceipt">
-                                                <option value="{{ $item->sr_status_id }}">{{ $item->sr_status }}</option>
-                                                @foreach ($statusReceipt as $row)
-                                                    @if ($item->sr_status_id == $row->status_id)
-                                                        continue;
-                                                    @else
-                                                        <option value="{{ $row->status_id }}">{{ $row->status }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                    <td class="row">
+                                        <span class="col-4">
+                                            @if ($item->sr_status_id == '2')
+                                                <span
+                                                    class="badge text-bg-success rounded-pill d-inline ">{{ $item->sr_status }}</span>
+                                            @else
+                                                <select id="statusReceipt" class="form-select form-select-md"
+                                                    aria-label="Small select example" name="statusReceipt">
+                                                    <option value="{{ $item->sr_status_id }}">{{ $item->sr_status }}
+                                                    </option>
+                                                    @foreach ($statusReceipt as $row)
+                                                        @if ($item->sr_status_id == $row->status_id)
+                                                            continue;
+                                                        @else
+                                                            <option value="{{ $row->status_id }}">{{ $row->status }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            @endif
+                                        </span>
+                                        @if ($item->sd_status_id == '2' && $item->sr_status_id == '1')
+                                            <span class="col-3 align-content-center">
+                                                <a href="{{ route('paymentOrderAdmin', ['orderId' => $item->order_id, 'sum' => $item->unit_price]) }}"
+                                                    class="btn btn-success" name="redirect">
+                                                    Thanh toán
+                                                </a>
+                                            </span>
                                         @endif
                                         <input type="hidden" id="statusReceiptValue" name="statusReceipt"
                                             value="{{ $item->sr_status_id }}">
