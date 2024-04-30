@@ -29,7 +29,8 @@ class serviceAdminController extends Controller
     {
         $title = 'Chi tiết dịch vụ | Admin';
         $data = $this->service->getDetailServiceAdmin($data);
-        return view('Pages.Admin.services.detailService', compact('title', 'data'));
+        $serviceMaster = $this->service->getService();
+        return view('Pages.Admin.services.detailService', compact('title', 'data', 'serviceMaster'));
     }
 
     public function updateDetailService(Request $request)
@@ -107,6 +108,29 @@ class serviceAdminController extends Controller
                     );
                 }
             }
+        }
+    }
+
+
+    public function deleteService($data)
+    {
+        $count = $this->service->deleteService($data);
+        if ($count > 0) {
+            $message = 'Dịch vụ đã được xóa thành công';
+            return redirect()->route('allService')->with(
+                [
+                    'message' => $message,
+                    'status' => true,
+                ]
+            );
+        } else {
+            $message = 'Dịch vụ không được xóa thành công (Dịch vụ hiện đang có đơn hàng)';
+            return redirect()->route('allService')->with(
+                [
+                    'message' => $message,
+                    'status' => false,
+                ]
+            );
         }
     }
 }

@@ -647,4 +647,39 @@ class orderModel extends Model
                 'status' => KCconst::DB_DONE_RECEIPT,
             ]);
     }
+    public function orderComplete()
+    {
+        $count = DB::table('order_master')
+            ->where('status', KCconst::DB_STATUS_ORDER_FINISHED)
+            ->count();
+        return $count;
+    }
+    public function receiptComplete()
+    {
+        $count = DB::table('receipts')
+            ->where('status', KCconst::DB_DONE_RECEIPT)
+            ->count();
+        return $count;
+    }
+
+    public function userOrder()
+    {
+        $count = DB::table('order_master')
+            ->distinct()
+            ->count('id_user');
+        return $count;
+    }
+
+    public function checkTask($formData)
+    {
+        $select = DB::table('assign_master as am')
+            ->join('order_master as om', 'om.order_id', '=', 'am.order_id')
+            ->join('order_detail as od', 'od.order_id', '=', 'om.order_id') 
+            ->whereNot('am.status', KCconst::DB_STATUS_ORDER_FINISHED)
+            ->where('staff_id', $formData['staff'])
+            ->where('om.order_date', '<=', $formData['completeTime'])
+            ->where('od.complete_time', '>=', $formData['completeTime'])
+            ->count();
+        return $select;
+    }
 }

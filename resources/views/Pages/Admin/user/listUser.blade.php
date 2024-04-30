@@ -39,6 +39,7 @@
                             <th>Tên người dùng</th>
                             <th>Email</th>
                             <th>Ngày tham gia</th>
+                            <th>Ngày cập nhật</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -57,6 +58,9 @@
                                 </td>
                                 <td>
                                     {{ $item->created_at }}
+                                </td>
+                                <td>
+                                    {{ $item->updated_at }}
                                 </td>
                                 <td>
                                     <a href="{{ route('detailUser', ['data' => $item->id]) }}" class="btn btn-outline-dark">

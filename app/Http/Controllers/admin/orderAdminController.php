@@ -86,6 +86,15 @@ class orderAdminController extends Controller
         $staff = $formData['staff'];
         $page = $formData['page'];
 
+        $checkTask = $this->service->checkTask($formData);
+        if ($checkTask > 0) {
+            $message = "Nhân viên đã có nhiệm vụ trong khoản thời gian này.";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+
         $count = $this->service->updateDetail($orderId, $status, $staff, $statusReceipt, $idUser, $page);
         $message = "Thông tin đơn hàng không có thay đổi";
         if ($count > 0) {

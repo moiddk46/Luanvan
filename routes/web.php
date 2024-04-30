@@ -77,6 +77,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::post('/updateDetailService', [serviceAdminController::class, 'updateDetailService'])->name('updateDetailServiceAdmin');
         Route::get('/addService', [serviceAdminController::class, 'addService'])->name('addServiceAdmin');
         Route::post('/insertService', [serviceAdminController::class, 'insertService'])->name('insertService');
+        Route::get('/deleteService/{data}', [serviceAdminController::class, 'deleteService'])->name('deleteService');
     });
     Route::prefix('user')->group(function () {
         Route::get('/allUser', [userAdminController::class, 'getAllStaff'])->name('allUser');

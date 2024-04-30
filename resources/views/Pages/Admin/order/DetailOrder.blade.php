@@ -33,16 +33,16 @@
                                     <td>{{ $item->order_id }}</td>
                                     <input type="hidden" value="{{ $item->order_id }}" name="orderId">
                                 </tr>
+                                <input type="hidden" value="{{ $item->id_user }}" name="idUser">
                                 @if ($item->delivery == '0')
                                     <tr>
                                         <th>Tên khách hàng</th>
                                         <td>{{ $item->name }}</td>
-                                        <input type="hidden" value="{{ $item->id_user }}" name="idUser">
                                     </tr>
                                     <tr>
                                         <th>Địa chỉ</th>
                                         <td>{{ $item->address }}</td>
-                                    </tr>
+                                    </tr>   
                                     <tr>
                                         <th>Số điện thoại</th>
                                         <td>{{ $item->phone }}</td>
@@ -69,6 +69,7 @@
                                 <tr>
                                     <th>Ngày hoàn thành dự kiến</th>
                                     <td id="date">{{ $item->complete_time }} </td>
+                                    <input type="hidden" name="completeTime" value="{{ $item->complete_time  }}">
                                 </tr>
                                 <tr>
                                     <th>Số lượng</th>

@@ -35,4 +35,15 @@ class ajaxServiceModel extends Model
             ->get()->toArray();
         return $select;
     }
+
+    public function sumPricesByMonth($data)
+    {
+        $sumPricesByMonth = DB::table('receipts')
+            ->select(DB::raw('MONTH(receipt_date) as month'), DB::raw('SUM(sum_price) as total_sum_price'))
+            ->whereYear('receipt_date', $data)
+            ->groupBy(DB::raw('MONTH(receipt_date)'))
+            ->orderBy('month')
+            ->get()->toArray();
+        return $sumPricesByMonth;
+    }
 }

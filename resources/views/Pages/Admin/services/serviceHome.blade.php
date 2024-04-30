@@ -17,7 +17,8 @@
         @endif
         <div class="row">
             <div class="mt-5 ">
-                <a href="{{ route('addServiceAdmin') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm dịch vụ </a>
+                <a href="{{ route('addServiceAdmin') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm dịch
+                    vụ </a>
             </div>
             @if (isset($data))
                 <table class="table align-middle mb-0 bg-white mt-2 table-striped">
@@ -46,6 +47,11 @@
                                     <a href="{{ route('detailServiceAdmin', ['data' => $item->service_type_code]) }}"
                                         class="btn btn-outline-dark">
                                         Chi tiết
+                                    </a>
+                                    <a href="{{ route('deleteService', ['data' => $item->service_type_code]) }}"
+                                        class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-action="delete">
+                                        Xóa
                                     </a>
                                 </td>
                             </tr>

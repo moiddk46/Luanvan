@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\homeAdminController;
 use App\Http\Controllers\ajax\ajaxServiceController;
 use App\Http\Controllers\ajax\ajaxTranslateController;
 use App\Http\Controllers\user\orderUserController;
@@ -21,8 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get-service-type', [ajaxServiceController::class, 'getServiceTypeAjax']);
-
-Route::post('/translate', [ajaxTranslateController::class, 'translateLang']);
-Route::get('/translate', [ajaxTranslateController::class, 'translateLang']);
 Route::get('/getPrice', [ajaxServiceController::class, 'getPriceService']);
+
+Route::get('/getSumYear', [ajaxServiceController::class, 'getSumYear']);
+
+Route::get('/static', [homeAdminController::class, 'static']);

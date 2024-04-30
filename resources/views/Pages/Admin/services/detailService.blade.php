@@ -30,16 +30,35 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <th>Mã dịch vụ</th>
-                                    <td>{{ $item->service_type_code }}</td>
-                                    <input type="hidden" value="{{ $item->service_type_code }}" name="serviceCode">
+                                    <td>{{ $item->service_type_code }}
+                                        <input class="form-control" type="hidden" name="serviceTypeCode"
+                                            value="{{ $item->service_type_code }}">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Tên dịch vụ</th>
-                                    <td>{{ $item->service_type_name }}</td>
+                                    <td>
+                                        <input class="form-control" type="text" name="serviceTypeName"
+                                            value="{{ $item->service_type_name }}">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Loại dịch vụ</th>
-                                    <td>{{ $item->service_name }}</td>
+                                    <td>
+                                        <select id="serviceCode" class="form-select form-select-md"
+                                            aria-label="Small select example" name="serviceCode">
+                                            <option value="{{ $item->service_code }}">{{ $item->service_name }}
+                                            </option>
+                                            @foreach ($serviceMaster as $row)
+                                                @if ($item->service_code == $row->service_code)
+                                                    continue
+                                                @else
+                                                    <option value="{{ $row->service_code }}">{{ $row->service_name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Thông tin dịch vụ</th>

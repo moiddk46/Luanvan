@@ -103,17 +103,26 @@ class userAdminController extends Controller
     public function deleteUser($data)
     {
         try {
-            $user = User::findOrFail($data);
-            $user->display = '0';
-            $user->updated_at = now();
-            $user->save();
-            $message = 'Xóa người dùng thành công.';
-            return redirect()->route('allUser')->with(
-                [
-                    'message' => $message,
-                    'status' => true,
-                ]
-            );
+            $check = $this->service->checkDelete($data);
+            if ($check > 0) {
+                $message = 'Người dùng vẫn có hoạt động trên hệ thống.';
+                return redirect()->back()->with(
+                    [
+                        'message' => $message,
+                        'status' => false,
+                    ]
+                );
+            } else {
+                $user = User::findOrFail($data);
+                $user->delete();
+                $message = 'Xóa người dùng thành công.';
+                return redirect()->route('allUser')->with(
+                    [
+                        'message' => $message,
+                        'status' => true,
+                    ]
+                );
+            }
         } catch (Exception $e) {
             $message = 'Xóa người dùng không thành công.';
             return redirect()->back()->with(

@@ -54,7 +54,6 @@ class User extends Authenticatable
     {
         $select = DB::table('users')
             ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
-            ->where('display', '1')
             ->paginate(10);
         return $select;
     }
@@ -62,7 +61,6 @@ class User extends Authenticatable
     {
         $count = DB::table('users')
             ->where('position', '=', KCconst::DB_POSITION_CUSTOMER)
-            ->where('display', '1')
             ->count();
         return $count;
     }
@@ -71,7 +69,6 @@ class User extends Authenticatable
     {
         $select = DB::table('users')
             ->whereIn('position', [KCconst::DB_POSITION_STAFF, KCconst::DB_POSITION_ADMIN])
-            ->where('display', '1')
             ->paginate(10);
         return $select;
     }
@@ -79,7 +76,6 @@ class User extends Authenticatable
     {
         $select = DB::table('users')
             ->where('position', KCconst::DB_POSITION_STAFF)
-            ->where('display', '1')
             ->get()->toArray();
         return $select;
     }
@@ -88,7 +84,6 @@ class User extends Authenticatable
     {
         $count = DB::table('users')
             ->whereIn('position', [KCconst::DB_POSITION_STAFF, KCconst::DB_POSITION_ADMIN])
-            ->where('display', '1')
             ->count();
         return $count;
     }
@@ -97,10 +92,43 @@ class User extends Authenticatable
     {
         $select = DB::table('users')
             ->where('id', $data)
-            ->where('display', '1')
             ->first();
-
         return $select;
     }
 
+    public function checkDelete($data)
+    {
+        $count = 0;
+        $select = DB::table('receipts')
+            ->where('id_user', $data)
+            ->count();
+        if ($select > 0) {
+            $count++;
+        }
+        $select = DB::table('price_request')
+            ->where('id_user', $data)
+            ->count();
+        if ($select > 0) {
+            $count++;
+        }
+        $select = DB::table('order_master')
+            ->where('id_user', $data)
+            ->count();
+        if ($select > 0) {
+            $count++;
+        }
+        $select = DB::table('notice')
+            ->where('id_user', $data)
+            ->count();
+        if ($select > 0) {
+            $count++;
+        }
+        $select = DB::table('assign_master')
+            ->where('staff_id', $data)
+            ->count();
+        if ($select > 0) {
+            $count++;
+        }
+        return $count;
+    }
 }

@@ -75,15 +75,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            name="remember_me" id="remember_me">
-                                                        <label class="form-check-label text-secondary" for="remember_me">
-                                                            Ghi nhớ
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
                                                     <div class="d-grid">
                                                         <button class="btn btn-success btn-md" type="submit">Đăng
                                                             nhập</button>
@@ -91,7 +82,8 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="d-grid">
-                                                        <a href="{{ route('index') }}" class="btn btn-secondary btn-md" type="submit">Quay lại</a>
+                                                        <a href="{{ route('index') }}" class="btn btn-secondary btn-md"
+                                                            type="submit">Quay lại</a>
                                                     </div>
                                                 </div>
                                             </div>

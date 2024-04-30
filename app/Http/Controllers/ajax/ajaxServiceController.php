@@ -26,4 +26,11 @@ class ajaxServiceController extends Controller
         $data = $this->service->getPriceServiceWhere($formData['serviceTypeCode']);
         return response()->json($data);
     }
+
+    public function getSumYear(Request $request)
+    {
+        $formData = $request->all();
+        $data = $this->service->sumPricesByMonth($formData['year']);
+        return response()->json($data);
+    }
 }

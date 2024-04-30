@@ -1,21 +1,111 @@
 $(document).ready(function () {
-    $("#dichvu").click(function () {
-        var service = $(this).val();
+    $.ajax({
+        url: `/api/static`,
+        type: "GET",
+        success: function (res) {
+            $("#taskComplete").text(res.taskComplete);
+            $("#countStaff").text(res.countStaff);
+            $("#userOrder").text(res.userOrder);
+            $("#orderComplete").text(res.orderComplete);
+            $("#countCustomer").text(res.countCustomer);
+            $("#countOrder").text(res.countOrder);
+            $("#receiptComplete").text(res.receiptComplete);
+            $("#sumPrice").text(res.sumPrice);
+        },
+    });
+    var year = $("#year").val();
+    var myChart = null; // Biến toàn cục để lưu biểu đồ
+
+    $("#year").change(function () {
+        year = $(this).val();
+        updateYear();
+    });
+
+    function updateYear() {
         $.ajax({
-            url: `/api/get-service-type?service_code=${service}`,
+            url: `/api/getSumYear?year=${year}`,
             type: "GET",
             success: function (res) {
-                var data = res;
-                var typeservice = "<option selected>--Chọn dịch vụ--</option>";
-                data.map((row) => {
-                    typeservice += `
-                    <option value="${row.service_type_code}">${row.service_type_name}</option>
-                    `;
+                var data = new Array(12).fill(0);
+                res.map((row) => {
+                    var monthIndex = parseInt(row.month) - 1;
+                    data[monthIndex] = row.total_sum_price;
                 });
-                $("#loaidichvu").html(typeservice);
+
+                var ctx = document.getElementById("myChart");
+                if (ctx) {
+                    if (myChart) {
+                        myChart.destroy(); // Hủy biểu đồ cũ trước khi tạo mới
+                    }
+                    var canvas = ctx.getContext("2d");
+                    myChart = new Chart(canvas, {
+                        type: "line",
+                        data: {
+                            labels: [
+                                "Tháng 1",
+                                "Tháng 2",
+                                "Tháng 3",
+                                "Tháng 4",
+                                "Tháng 5",
+                                "Tháng 6",
+                                "Tháng 7",
+                                "Tháng 8",
+                                "Tháng 9",
+                                "Tháng 10",
+                                "Tháng 11",
+                                "Tháng 12",
+                            ],
+                            datasets: [
+                                {
+                                    label: "Doanh thu theo tháng",
+                                    data: data,
+                                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                                    borderColor: "rgba(75, 192, 192, 1)",
+                                    borderWidth: 1,
+                                },
+                            ],
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                },
+                            },
+                        },
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: " + error);
             },
         });
+    }
+    $("#exportDataBtn").click(function () {
+        var BOM = "\uFEFF"; // BOM cho UTF-8
+        var csvContent = "data:text/csv;charset=utf-8," + BOM;
+
+        var data = myChart.data.datasets[0].data;
+        var labels = myChart.data.labels;
+
+        // Thêm labels (tháng) vào dòng đầu tiên
+        var labelRow = labels.join(",") + "\n";
+        csvContent += labelRow;
+
+        // Thêm giá trị doanh thu vào dòng thứ hai
+        var dataRow = data.join(",") + "\n";
+        csvContent += dataRow;
+
+        // Tạo liên kết để tải xuống CSV
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "doanhthu.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
+
+    updateYear(); // Khởi tạo biểu đồ khi tải trang
     $("#serviceTypeCode").change(function () {
         var serviceTypeCode = $(this).val(); // Lấy giá trị được chọn
 
@@ -244,95 +334,6 @@ $(document).ready(function () {
     }
     // Gọi hàm updateValues lần đầu để cập nhật giá trị ban đầu
     updateValues();
-});
-
-$(document).ready(function () {
-    var calendarEl = $("#calendar")[0]; // Lấy phần tử DOM bằng jQuery
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        themeSystem: "bootstrap5",
-        headerToolbar: {
-            left: "prev,next today",
-            center: "title",
-            right: "",
-        },
-        buttonText: {
-            today: "Hôm nay", // Đặt chữ cho nút 'today'
-        },
-        locale: "vi",
-        initialView: "dayGridMonth",
-        events: [
-            {
-                id: 1,
-                title: "8h - 10h",
-                start: "2024-04-15T08:00:00",
-                end: "2024-04-15T08:00:00",
-                color: "#eff5f9",
-                textColor: "#1a4862",
-                durationEditable: false,
-                className: "free",
-                additionalInfo: "A great event",
-            },
-        ],
-        selectable: true,
-        editable: true,
-        select: function (info) {
-            // Xử lý khi người dùng chọn một khoảng thời gian trên lịch
-            console.log("selected", info);
-            // Tạo sự kiện mới khi người dùng chọn một khoảng thời gian
-            calendar.addEvent({
-                title: "Sự kiện mới",
-                start: info.startStr,
-                end: info.endStr,
-                allDay: info.allDay,
-            });
-        },
-        eventClick: function (info) {
-            // Xử lý khi người dùng click vào một sự kiện trên lịch
-            console.log("event clicked", info);
-        },
-    });
-    calendar.render();
-});
-
-$(document).ready(function () {
-    var ctx = document.getElementById("myChart");
-    if (ctx) {
-        var canvas = ctx.getContext("2d");
-        var myChart = new Chart(canvas, {
-            type: "line",
-            data: {
-                labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                ],
-                datasets: [
-                    {
-                        label: "Data",
-                        data: [65, 59, 80, 81, 56, 55, 40], // Dữ liệu cứng
-                        backgroundColor: "rgba(255, 99, 132, 0.2)",
-                        borderColor: "rgba(255, 99, 132, 1)",
-                        borderWidth: 1,
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
-                        },
-                    ],
-                },
-            },
-        });
-    }
 });
 
 $(document).ready(function () {
@@ -685,13 +686,33 @@ $(document).ready(function () {
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
-                        <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
-                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" data-action="delete">
+                        <td>
+                        <a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
+                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="delete">
                                         Xóa
-                                    </a></td>
+                                    </a>
+                                    </td>
                     </tr>
                 `);
+                $(".modalTrigger").on("click", function (event) {
+                    event.preventDefault(); // Ngăn không cho thẻ a thực hiện hành động mặc định
+
+                    var action = $(this).data("action"); // Lấy hành động (trả lời hoặc xóa)
+                    var href = $(this).attr("href");
+                    // Lấy href (URL)
+
+                    if (action === "delete") {
+                        $("#exampleModalLabel").text("Xác Nhận Xóa");
+                        $(".modal-body").text("Bạn có chắc chắn muốn xóa?");
+                    }
+
+                    // Cập nhật nút hành động trong modal
+                    $("#modalActionBtn")
+                        .off("click")
+                        .on("click", function () {
+                            window.location.href = href; // Chuyển hướng theo URL của nút
+                        });
+                });
             });
         }
     }
@@ -765,12 +786,31 @@ $(document).ready(function () {
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
                         <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
-                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" data-action="delete">
+                        <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="delete">
                                         Xóa
-                                    </a></td>
+                                    </a>
+                                    </td>
                     </tr>
                 `);
+                $(".modalTrigger").on("click", function (event) {
+                    event.preventDefault(); // Ngăn không cho thẻ a thực hiện hành động mặc định
+
+                    var action = $(this).data("action"); // Lấy hành động (trả lời hoặc xóa)
+                    var href = $(this).attr("href");
+                    // Lấy href (URL)
+
+                    if (action === "delete") {
+                        $("#exampleModalLabel").text("Xác Nhận Xóa");
+                        $(".modal-body").text("Bạn có chắc chắn muốn xóa?");
+                    }
+
+                    // Cập nhật nút hành động trong modal
+                    $("#modalActionBtn")
+                        .off("click")
+                        .on("click", function () {
+                            window.location.href = href; // Chuyển hướng theo URL của nút
+                        });
+                });
             });
         }
     }
@@ -836,25 +876,23 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     $(".modalTrigger").on("click", function (event) {
+        console.log("1");
         event.preventDefault(); // Ngăn không cho thẻ a thực hiện hành động mặc định
 
         var action = $(this).data("action"); // Lấy hành động (trả lời hoặc xóa)
-        var requestId = $(this).data("request-id"); // Lấy ID yêu cầu
-        var href = $(this).attr("href"); // Lấy href (URL)
+        var href = $(this).attr("href");
+        // Lấy href (URL)
 
-        // Cập nhật tiêu đề và nội dung của modal dựa trên hành động
-        if (action === "detail") {
-            $("#exampleModalLabel").text("Trả lời Yêu Cầu");
-            $(".modal-body").text("Bạn có chắc muốn tiếp tục ?");
-        } else if (action === "delete") {
-            $("#exampleModalLabel").text("Xác Nhận Xóa Yêu Cầu");
-            $(".modal-body").text("Bạn có chắc chắn muốn xóa yêu cầu ?");
+        if (action === "delete") {
+            $("#exampleModalLabel").text("Xác Nhận Xóa");
+            $(".modal-body").text("Bạn có chắc chắn muốn xóa?");
         }
 
         // Cập nhật nút hành động trong modal
         $("#modalActionBtn")
             .off("click")
             .on("click", function () {
+                console.log("1");
                 window.location.href = href; // Chuyển hướng theo URL của nút
             });
     });

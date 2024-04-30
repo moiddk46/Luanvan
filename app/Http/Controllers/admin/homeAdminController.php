@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\orderModel;
 use App\Models\ServiceMaster;
+use App\Models\taskStaffModel;
 use App\Models\User;
 
 class homeAdminController extends Controller
@@ -21,12 +22,24 @@ class homeAdminController extends Controller
     {
         $title = $this->title;
         $service = $this->service;
+
+        return view('Pages.Admin.Home', compact('title'));
+    }
+
+    public function static()
+    {
         $order = new orderModel();
         $user = new User();
-        $countOrder = $order->countOrder();
-        $sumPrice = $order->sumPrice();
-        $countStaff = $user->countStaff();
-        $countCustomer = $user->countCustomer();
-        return view('Pages.Admin.Home', compact('title', 'countOrder', 'countStaff', 'countCustomer', 'sumPrice'));
+        $task = new taskStaffModel();
+        $data = [];
+        $data['countOrder'] = $order->countOrder();
+        $data['orderComplete'] = $order->orderComplete();
+        $data['receiptComplete'] = $order->receiptComplete();
+        $data['userOrder'] = $order->userOrder();
+        $data['taskComplete'] = $task->taskComplete();
+        $data['sumPrice'] = $order->sumPrice();
+        $data['countStaff'] = $user->countStaff();
+        $data['countCustomer'] = $user->countCustomer();
+        return response()->json($data);
     }
 }

@@ -121,4 +121,13 @@ class taskStaffModel extends Model
 
         return $count;
     }
+
+    public function taskComplete()
+    {
+        $count = DB::table('assign_master')
+            ->where('status', KCconst::DB_STATUS_ORDER_FINISHED)
+            ->distinct()
+            ->count('staff_id');
+        return $count;
+    }
 }

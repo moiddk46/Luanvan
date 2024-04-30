@@ -123,21 +123,23 @@ class ServiceModel extends Model
                 $fileName = time() . '_' . $formData['files']->getClientOriginalName();
                 $formData['files']->move(public_path('assets/images'), $fileName);
                 DB::table('service_type_img')
-                    ->where('service_type_code', $formData['serviceCode'])
+                    ->where('service_type_code', $formData['serviceTypeCode'])
                     ->update([
                         'img' => $fileName
                     ]);
             }
             DB::table('service_type')
-                ->where('service_type_code', $formData['serviceCode'])
+                ->where('service_type_code', $formData['serviceTypeCode'])
                 ->update([
+                    'service_code' => $formData['serviceCode'],
+                    'service_type_name' => $formData['serviceTypeName'],
                     'service_type_detail' => $formData['detailService']
                 ]);
 
 
 
             DB::table('price_service_type')
-                ->where('service_type_code', $formData['serviceCode'])
+                ->where('service_type_code', $formData['serviceTypeCode'])
                 ->update([
                     'detail_price' => $formData['detailPrice'],
                     'price' => $formData['price']
@@ -254,5 +256,34 @@ class ServiceModel extends Model
             ->where('pt.service_type_code', $data)
             ->get()->toArray();
         return $select;
+    }
+
+    public function deleteService($data)
+    {
+        $count = 0;
+        $check = DB::table('order_master')
+            ->where('service_type_code', $data)
+            ->count();
+        if ($check < 1) {
+            $delete = DB::table('service_type_img')
+                ->where('service_type_code', $data)
+                ->delete();
+            if ($delete > 0) {
+                $count++;
+            }
+            $delete = DB::table('price_service_type')
+                ->where('service_type_code', $data)
+                ->delete();
+            if ($delete > 0) {
+                $count++;
+            }
+            $delete = DB::table('service_type')
+                ->where('service_type_code', $data)
+                ->delete();
+            if ($delete > 0) {
+                $count++;
+            }
+        }
+        return $count;
     }
 }
