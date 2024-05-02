@@ -21,6 +21,114 @@
                     {!! $detailService->detail_price !!}
                 </div>
             @endif
+            <div>
+                <h5>Đánh giá dịch vụ</h5>
+                <p>{{ $detailService->rate }}/5
+                    <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                    <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                    <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                    <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                    <i class="bi bi-star-half " style="color: rgb(255, 152, 18);"></i>
+                </p>
+                <div class="row">
+                    <div class="row m-auto mb-2  justify-content-center">
+                        <div class="col-2">
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                        </div>
+                        <div class="col-6">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" id="star1" data-value="{{ $countRating['count1'] }}">
+                                    {{ $countRating['count1'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-auto mb-2  justify-content-center">
+                        <div class="col-2">
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                        </div>
+                        <div class="col-6">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" id="star2" data-value="{{ $countRating['count2'] }}">
+                                    {{ $countRating['count2'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-auto mb-2  justify-content-center">
+                        <div class="col-2">
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                        </div>
+                        <div class="col-6">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" id="star3" data-value="{{ $countRating['count3'] }}">
+                                    {{ $countRating['count3'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-auto mb-2  justify-content-center">
+                        <div class="col-2">
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                        </div>
+                        <div class="col-6">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" id="star4" data-value="{{ $countRating['count4'] }}">
+                                    {{ $countRating['count4'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-auto mb-2  justify-content-center">
+                        <div class="col-2">
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                        </div>
+                        <div class="col-6">
+                            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar" id="star5" data-value="{{ $countRating['count5'] }}">
+                                    {{ $countRating['count5'] }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <ul class="list-group list-group-flush mt-4 ">
+                        @foreach ($listRating as $row)
+                            <li class="list-group-item">
+                                <p class="fw-bold">{{ $row->email }}</p>
+                                <div class="row">
+                                    <p class="col-8">{{ $row->detail_rate }}</p>
+                                    <p class="col-4">
+                                        @for ($i = 1; $i <= $row->rate; $i++)
+                                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                                        @endfor
+                                        {{ $row->rate }}
+                                    </p>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="row mt-3">
+                        <a class="text-center text-decoration-none cursor-pointer" id="showAllButton">Xem tất cả <i
+                                class="bi bi-arrow-bar-down"></i></a>
+                        <a class="text-center text-decoration-none cursor-pointer" id="hideAllButton">Ẩn bớt <i
+                                class="bi bi-arrow-bar-up"></i></a>
+                    </div>
+                </div>
+            </div>
             @if ($detailService->service_code == 'dichthuat')
                 <div class="w-50 form-order rounded bg-light p-3 m-auto mt-5">
                     <h5 class="text-center">Yêu cầu báo giá</h5>
@@ -50,7 +158,8 @@
                         @enderror
                         <div class="mb-3">
                             <label for="content" class="form-label">Nội dung</label>
-                            <textarea class="form-control" id="content" style="height: 100px" name="content" id="content" placeholder="Mẫu: Hãy báo giá dịch thuật tài liệu này giúp tôi,...."></textarea>
+                            <textarea class="form-control" id="content" style="height: 100px" name="content" id="content"
+                                placeholder="Mẫu: Hãy báo giá dịch thuật tài liệu này giúp tôi,...."></textarea>
                         </div>
                         @error('content')
                             <div class="form-text text-danger">{{ $message }}</div>
@@ -58,7 +167,8 @@
                         <div class="mb-3 row">
                             <div class="col-8">
                                 <label for="formFile" class="form-label">Gửi tài liệu</label>
-                                <input class="form-control" type="file" id="formFile" name="files" placeholder="Chọn file">
+                                <input class="form-control" type="file" id="formFile" name="files"
+                                    placeholder="Chọn file">
                                 @error('files')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
@@ -72,8 +182,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-text text-danger mb-3 fw-bold">Nếu Khách hàng sử dụng dịch vụ dịch thuật công chứng
-                            với tài liệu bản gốc, vui lòng liên hệ với chúng tôi thông qua zalo hoặc số điện thoại để chúng
+                        <div class="form-text text-danger mb-3 fw-bold">Nếu Khách hàng sử dụng dịch vụ dịch thuật công
+                            chứng
+                            với tài liệu bản gốc, vui lòng liên hệ với chúng tôi thông qua zalo hoặc số điện thoại để
+                            chúng
                             tôi có thể nhận tài liệu bản gốc. Xin lỗi vì sự bất tiện này. </div>
                         <div class="mb-3 d-flex justify-content-center">
                             <button class="btn btn-success">Yêu cầu báo giá</button>
@@ -177,7 +289,8 @@
                             <div class="col-8 fw-bold" id="sum2"> </div>
                             <input type="hidden" name="sum" id="sum1" value="">
                         </div>
-                        <div class="form-text text-danger mb-3 fw-bold">Chúng tôi phải xác nhận lại số trang trong tài liệu
+                        <div class="form-text text-danger mb-3 fw-bold">Chúng tôi phải xác nhận lại số trang trong tài
+                            liệu
                             mà
                             khách hàng gửi và báo lại trong chi tiết đơn hàng, để đảm bảo tính minh bạch. Mong quý khách
                             thông cảm vì sự bất tiện này.</div>
@@ -214,7 +327,8 @@
                                             <div class="col-4 py-3 bg-body-secondary">Nhận hàng tại</div>
                                             <div class="col-8 text-success p-3">
                                                 <p class="fw-bold">VĂN PHÒNG GIAO DỊCH:</p>
-                                                <p>125 Điện biên phủ, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh</p>
+                                                <p>125 Điện biên phủ, Phường 15, Quận Bình Thạnh, Thành phố Hồ Chí Minh
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row ">

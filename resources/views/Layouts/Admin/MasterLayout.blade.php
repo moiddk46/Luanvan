@@ -20,7 +20,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <x-admin.sidebar />
+            <x-admin.sidebar :title="$title" />
             <main role="main" style="margin-left:20%; width: 80%;">
                 <div class="mt-5">
                     @yield('content')

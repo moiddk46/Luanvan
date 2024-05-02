@@ -33,16 +33,16 @@ class orderModel extends Model
     /**
      * Undocumented function
      *
-     * @return array
+     * 
      */
-    public function getAllOrderUser(): array
+    public function getAllOrderUser()
     {
         $user = Auth::user();
         $select  = DB::table('order_master as om')
             ->join('service_type as st', 'st.service_type_code', '=', 'om.service_type_code')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
             ->where('id_user', $user->id)
-            ->get()->toArray();
+            ->paginate(10);
         return $select;
     }
 
@@ -183,6 +183,7 @@ class orderModel extends Model
         $select = DB::table('order_master as om')
             ->join('assign_master as am', 'am.order_id', '=', 'om.order_id')
             ->where('om.order_id', '=', $orderId)
+            ->whereNot('om.status', KCconst::DB_STATUS_ORDER_HANDLING)
             ->count();
         if ($select > 0) {
             $update  = DB::table('assign_master')
@@ -674,12 +675,51 @@ class orderModel extends Model
     {
         $select = DB::table('assign_master as am')
             ->join('order_master as om', 'om.order_id', '=', 'am.order_id')
-            ->join('order_detail as od', 'od.order_id', '=', 'om.order_id') 
+            ->join('order_detail as od', 'od.order_id', '=', 'om.order_id')
             ->whereNot('am.status', KCconst::DB_STATUS_ORDER_FINISHED)
             ->where('staff_id', $formData['staff'])
             ->where('om.order_date', '<=', $formData['completeTime'])
             ->where('od.complete_time', '>=', $formData['completeTime'])
             ->count();
         return $select;
+    }
+
+    public function checkDeleteOrder($data)
+    {
+        $count = 0;
+        $count = DB::table('order_master')
+            ->where('order_id', $data)
+            ->where('status', KCconst::DB_STATUS_ORDER_HANDLING)
+            ->count();
+
+        return $count;
+    }
+    public function deleteOrderUser($data)
+    {
+        $count = 0;
+        DB::beginTransaction();
+        DB::table('assign_master')
+            ->where('order_id', $data)
+            ->delete();
+        $deleteReceipt = DB::table('receipts')
+            ->where('id_order', $data)
+            ->delete();
+        if ($deleteReceipt > 0) {
+            $deleteDetail = DB::table('order_detail')
+                ->where('order_id', $data)
+                ->delete();
+            if ($deleteDetail > 0) {
+                $deleteMaster = DB::table('order_master')
+                    ->where('order_id', $data)
+                    ->delete();
+                if ($deleteMaster > 0) {
+                    $count++;
+                    DB::commit();
+                    return $count;
+                }
+            }
+        }
+        DB::rollBack();
+        return $count;
     }
 }

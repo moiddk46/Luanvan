@@ -120,6 +120,14 @@ class priceRequestAdminController extends Controller
 
     public function deletePriceRequest($data)
     {
+        $check = $this->service->checkDeletePriceRequest($data);
+        if ($check > 0) {
+            $message = 'Bạn không thể xóa yêu cầu báo giá đã trả lời';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
         $delete = $this->service->deletePriceRequest($data);
         if ($delete < 1) {
             $message = 'Bạn đã xóa không thành công yêu cầu báo giá';

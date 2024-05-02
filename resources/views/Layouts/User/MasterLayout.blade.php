@@ -25,6 +25,19 @@
         <div class="mt-5">
             @yield('content')
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Bạn chắc có muốn tiếp tục?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-success" id="modalActionBtn">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{--  @extends('Pages.User.Home', compact('data'))  --}}
     </main>
     <footer class="bg-secondary">

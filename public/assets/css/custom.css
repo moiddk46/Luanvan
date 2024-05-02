@@ -717,3 +717,32 @@ a:link {
 .f-right {
     float: right;
 }
+
+.list-group-item:nth-child(n+5) {
+    display: none;
+}
+#showAllButton {
+    display: none; /* Mặc định ẩn nút */
+}
+#hideAllButton {
+    display: none; /* Mặc định ẩn nút */
+}
+
+.list-group {
+    list-style-type: none; /* Loại bỏ các dấu chấm đen */
+    padding-left: 0; /* Loại bỏ padding bên trái nếu cần */
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.rating .bi {
+    color: rgb(212, 205, 205); /* Màu mặc định của sao */
+    cursor: pointer;
+}
+
+.rating .bi.selected {
+    color: rgb(255, 152, 18); /* Màu khi ngôi sao được chọn */
+}
+
+

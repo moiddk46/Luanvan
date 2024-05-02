@@ -127,8 +127,9 @@ class orderUserController extends Controller
     }
 
 
-    public function giveOrder($data)
+    public function giveOrder(Request $request, $data)
     {
+        $formData= $request->all();
         if (isset($data)) {
             $count = $this->service->updateGiveOrder($data);
             if ($count < 1) {
@@ -138,8 +139,8 @@ class orderUserController extends Controller
                     'status' => false
                 ]);
             } else {
-                $message = "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi";
-                return redirect()->route('cart')->with([
+                $message = "Phản hồi của khách hàng";
+                return redirect()->route('ratingUser', ['data'=> $formData['serviceCode'] ])->with([
                     'message' => $message,
                     'status' => true
                 ]);
@@ -157,5 +158,31 @@ class orderUserController extends Controller
     {
         $this->service->updateClick($id);
         return redirect()->back();
+    }
+
+    public function deleteOrder($data)
+    {
+        $check  = $this->service->checkDeleteOrder($data);
+        if ($check < 1) {
+            $message = "Bạn chỉ có thể xóa đơn hàng ở trạng thái đang xử lý";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+
+        $delete = $this->service->deleteOrderUser($data);
+        if ($delete > 0) {
+            $message = "Bạn đã xóa đơn hàng thành công";
+            return redirect()->route('cart')->with([
+                'message' => $message,
+                'status' => true
+            ]);
+        }
+        $message = "Đã có lỗi xảy ra khi xóa đơn hàng này.";
+        return redirect()->back()->with([
+            'message' => $message,
+            'status' => false
+        ]);
     }
 }

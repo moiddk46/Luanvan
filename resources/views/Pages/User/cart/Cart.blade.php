@@ -65,12 +65,32 @@
                                             Hoàn thành
                                         </a>
                                     @endif
+                                    <a href="{{ route('deleteOrder', ['data' => $item->order_id]) }}"
+                                        class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-action="delete"
+                                        data-request-id="{{ $item->order_id }}">
+                                        Xóa
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
 
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center mt-3">
+                    <ul class="pagination">
+
+                        @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+                            @if ($page == $data->currentPage())
+                                <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
+                            @else
+                                <li class="page-item"><a href="{{ $url }}"
+                                        class="page-link">{{ $page }}</a></li>
+                            @endif
+                        @endforeach
+
+                    </ul>
+                </div>
             @else
                 <p class="mt-5 text-center">Chưa có đơn hàng nào.</p>
             @endif

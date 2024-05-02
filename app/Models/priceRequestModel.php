@@ -70,9 +70,9 @@ class priceRequestModel extends Model
     /**
      * Undocumented function
      *
-     * @return array
+     * 
      */
-    public function getAllPriceRequest(): array
+    public function getAllPriceRequest()
     {
         $user = Auth::user();
         $select  = DB::table('price_request as pr')
@@ -80,7 +80,7 @@ class priceRequestModel extends Model
             ->join('users as us', 'us.id', '=', 'pr.id_user')
             ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
             ->where('id_user', $user->id)
-            ->get()->toArray();
+            ->paginate(10);
         return $select;
     }
 
@@ -208,19 +208,23 @@ class priceRequestModel extends Model
     public function deletePriceRequest($data)
     {
         $delete = 0;
-        DB::beginTransaction();
-        $count = DB::table('price_request')->where('request_id', $data)->count();
-
-        if ($count > 0) {
-            $delete = DB::table('price_request')
-                ->where('request_id', $data)
-                ->delete();
-            DB::commit();
+        $delete = DB::table('price_request')
+            ->where('request_id', $data)
+            ->delete();
+        if ($delete > 0) {
             $delete++;
-            return $delete;
-        } else {
-            DB::rollBack();
-            return $delete;
         }
+        return $delete;
+    }
+
+
+    public function checkDeletePriceRequest($data)
+    {
+        $count = 0;
+        $count = DB::table('price_request')
+            ->where('request_id', $data)
+            ->where('status', KCconst::DB_STATUS_REPLY)
+            ->count();
+        return $count;
     }
 }

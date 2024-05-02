@@ -13,6 +13,90 @@ $(document).ready(function () {
             $("#sumPrice").text(res.sumPrice);
         },
     });
+
+    $("#sameReply").click(function () {
+        var sampleLetter = `TranslateGroup xin cảm ơn, phản hồi của bạn, 
+        chúng tôi sẽ khắc phục những thiếu xót và 
+        nâng cao chất lượng dịch vụ để quý khách có sự hài lòng hơn với chúng tôi.
+        <br>
+        Xin trân thành cảm ơn!`;
+        tinymce.get("mytext").setContent(sampleLetter);
+    });
+    function tinhToan(data) {
+        var val = data / 100;
+        var name = `${val * 1000}% `;
+        return name;
+    }
+    var valueStar1 = $("#star1").data("value");
+
+    var valClass1 = tinhToan(valueStar1);
+    $("#star1").css("width", valClass1);
+    var valueStar2 = $("#star2").data("value");
+    var valClass2 = tinhToan(valueStar2);
+    $("#star2").css("width", valClass2);
+    var valueStar3 = $("#star3").data("value");
+    var valClass3 = tinhToan(valueStar3);
+    $("#star3").css("width", valClass3);
+    var valueStar4 = $("#star4").data("value");
+    var valClass4 = tinhToan(valueStar4);
+    $("#star4").css("width", valClass4);
+    var valueStar5 = $("#star5").data("value");
+    var valClass5 = tinhToan(valueStar5);
+    $("#star5").css("width", valClass5);
+
+    var itemsCount = $(".list-group-item").length;
+    if (itemsCount > 5) {
+        $("#showAllButton").show();
+        $("#hideAllButton").hide(); // Hiển thị nút nếu có nhiều hơn 4 mục
+    }
+    $("#showAllButton").click(function () {
+        $("#hideAllButton").show();
+        $(".list-group-item:nth-child(n+5").show(); // Hiển thị tất cả các mục
+        $(this).hide(); // Ẩn nút sau khi được nhấn
+    });
+    $("#hideAllButton").click(function () {
+        $("#showAllButton").show();
+        $(".list-group-item:nth-child(n+5)").hide(); // Hiển thị tất cả các mục
+        $(this).hide(); // Ẩn nút sau khi được nhấn
+    });
+
+    $(".rating .bi").click(function () {
+        var index = $(this).data("index");
+        updateRating(index);
+        $("#starRating").val(index); // Cập nhật giá trị cho input ẩn
+    });
+
+    function updateRating(index) {
+        $(".rating .bi").each(function () {
+            var currentIndex = $(this).data("index");
+            if (currentIndex <= index) {
+                $(this).addClass("selected");
+            } else {
+                $(this).removeClass("selected");
+            }
+        });
+    }
+
+    $("#detail").on("keyup", function () {
+        var textareaVal = $(this);
+        console.log(textareaVal);
+        textareaVal.val(sanitizeInput(textareaVal.val()));
+    });
+
+    function sanitizeInput(input) {
+        var profanity = ["má", "mẹ", "lồn", "cặc", "cứt"];
+        var regex = new RegExp(profanity.join("|"), "gi");
+        return input.replace(regex, function (matched) {
+            return "*".repeat(matched.length);
+        });
+    }
+
+    console.log(sanitizeInput("Đây là một ví dụ má mẹ lồn cặc cứt"));
+
+    $("#search").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        console.log(value);
+    });
     var year = $("#year").val();
     var myChart = null; // Biến toàn cục để lưu biểu đồ
 

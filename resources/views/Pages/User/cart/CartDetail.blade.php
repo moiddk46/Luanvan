@@ -151,7 +151,7 @@
                                     </div>
                                     @if ($item->status_id == '4')
                                         <div class="col-2">
-                                            <a href="{{ route('giveOrder', ['data' => $item->order_id]) }}"
+                                            <a href="{{ route('giveOrder', ['data' => $item->order_id, 'serviceCode'=> $item->service_type_code]) }}"
                                                 class="btn btn-success  @if ($item->give_flag == 1) disabled @endif">Đã
                                                 nhận được
                                                 hàng</a>

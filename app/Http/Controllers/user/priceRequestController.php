@@ -61,4 +61,29 @@ class priceRequestController extends Controller
         $title = 'Giỏ hàng';
         return view('Pages.User.priceRequest.priceRequest', compact('title', 'data'));
     }
+
+    public function deletePriceRequest($data)
+    {
+        $check = $this->service->checkDeletePriceRequest($data);
+        if ($check > 0) {
+            $message = 'Bạn không thể xóa yêu cầu báo giá đã trả lời';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $delete = $this->service->deletePriceRequest($data);
+        if ($delete < 1) {
+            $message = 'Bạn đã xóa không thành công yêu cầu báo giá';
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
+        $message = 'Bạn đã xóa yêu cầu báo giá thành công';
+        return redirect()->route('priceRequestUser')->with([
+            'message' => $message,
+            'status' => true
+        ]);
+    }
 }

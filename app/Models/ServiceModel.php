@@ -28,6 +28,15 @@ class ServiceModel extends Model
             ->paginate(10);
         return $select;
     }
+
+    public function getAllServiceSearch()
+    {
+        $select = DB::table('laravel.service_type as tp')
+            ->join('service_master as sm', 'sm.service_code', '=', 'tp.service_code')
+            ->join('laravel.service_type_img as tm', 'tm.service_type_code', '=', 'tp.service_type_code')
+            ->get()->toArray();
+        return $select;
+    }
     /**
      * Undocumented function
      *
@@ -71,7 +80,7 @@ class ServiceModel extends Model
                 'tp.service_type_code',
                 'tp.service_type_name',
                 'tp.service_type_detail',
-                'tm.img'
+                'tm.img',
             )
             ->where('service_code', '=', $data)
             ->join('laravel.service_type_img as tm', 'tm.service_type_code', '=', 'tp.service_type_code')
@@ -94,11 +103,13 @@ class ServiceModel extends Model
                 'pt.price_id',
                 'pt.price',
                 'pt.detail_price',
-                'sm.service_code'
+                'sm.service_code',
+                'ra.*'
             )
             ->where('tp.service_type_code', '=', $data)
             ->join('laravel.price_service_type as pt', 'pt.service_type_code', '=', 'tp.service_type_code')
             ->join('service_master as sm', 'sm.service_code', '=', 'tp.service_code')
+            ->join('rating as ra', 'ra.service_type_code', '=', 'tp.service_type_code')
             ->first();
         return $select;
     }
@@ -200,6 +211,11 @@ class ServiceModel extends Model
                     'service_code' => $formData['serviceName'],
                     'service_type_detail' => $formData['detailService'],
 
+                ]);
+            DB::table('rating')
+                ->insert([
+                    'service_type_code' => $formData['serviceCode'],
+                    'rate' => '5'
                 ]);
             DB::table('service_type_img')
                 ->insert([

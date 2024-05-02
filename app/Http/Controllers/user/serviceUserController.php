@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\ratingModel;
 use App\Models\ServiceModel;
 
 class serviceUserController extends Controller
@@ -32,6 +33,9 @@ class serviceUserController extends Controller
         $title = $this->title . ' | ' . $serviceTypeName;
         $detailService = $this->service->getDetailService($data);
         $statusReceipt = $this->service->getStatusMethod();
-        return view('Pages.User.service.serviceDetail', compact('title', 'detailService', 'serviceTypeName', 'statusReceipt'));
+        $rating = new ratingModel();
+        $listRating = $rating->displayRating($data);
+        $countRating = $rating->countRating($data);
+        return view('Pages.User.service.serviceDetail', compact('title', 'detailService', 'serviceTypeName', 'statusReceipt', 'listRating', 'countRating'));
     }
 }

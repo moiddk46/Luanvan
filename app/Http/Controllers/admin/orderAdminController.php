@@ -86,6 +86,13 @@ class orderAdminController extends Controller
         $staff = $formData['staff'];
         $page = $formData['page'];
 
+        if (($status == KCconst::DB_STATUS_ORDER_HANDLING) && !empty($staff)) {
+            $message = "Bạn phải cập nhật trạng thái đơn hàng khác đang xử lý, mới có thể phân công.";
+            return redirect()->back()->with([
+                'message' => $message,
+                'status' => false
+            ]);
+        }
         $checkTask = $this->service->checkTask($formData);
         if ($checkTask > 0) {
             $message = "Nhân viên đã có nhiệm vụ trong khoản thời gian này.";

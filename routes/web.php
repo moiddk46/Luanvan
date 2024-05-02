@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\customerAdminController;
 use App\Http\Controllers\admin\homeAdminController;
 use App\Http\Controllers\admin\orderAdminController;
 use App\Http\Controllers\admin\priceRequestAdminController;
+use App\Http\Controllers\admin\ratingAdminController;
 use App\Http\Controllers\admin\serviceAdminController;
 use App\Http\Controllers\admin\staffAdminController;
 use App\Http\Controllers\admin\userAdminController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\user\homeUserController;
 use App\Http\Controllers\user\orderUserController;
 use App\Http\Controllers\user\priceRequestController;
 use App\Http\Controllers\user\serviceUserController;
+use App\Http\Controllers\userRatingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,6 +91,11 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
         Route::get('/getCustomer', [userAdminController::class, 'getCustomer'])->name('getCustomer');
         Route::get('/deleteUser/{data}', [userAdminController::class, 'deleteUser'])->name('deleteUser');
     });
+
+    Route::prefix('rating')->group(function () {
+        Route::get('/allRating', [ratingAdminController::class, 'listRating'])->name('listRating');
+        Route::get('/detailRating/{data}', [ratingAdminController::class, 'detailRating'])->name('detailRating');
+    });
 });
 
 Route::prefix('user')->group(function () {
@@ -110,6 +117,10 @@ Route::prefix('user')->group(function () {
         Route::get('/giveOrder/{data}', [orderUserController::class, 'giveOrder'])->name('giveOrder');
         Route::post('/orderLive', [orderUserController::class, 'orderLive'])->name('orderLive');
         Route::post('/comfirmUser', [orderUserController::class, 'comfirmUser'])->name('comfirmUser');
+        Route::get('/deletePriceRequestUser/{data}', [priceRequestController::class, 'deletePriceRequest'])->name('deletePriceRequestUser');
+        Route::get('/deleteOrder/{data}', [orderUserController::class, 'deleteOrder'])->name('deleteOrder');
+        Route::get('/ratingUser/{data}', [userRatingController::class, 'ratingUser'])->name('ratingUser');
+        Route::post('/rating', [userRatingController::class, 'rating'])->name('rating');
     });
 });
 
