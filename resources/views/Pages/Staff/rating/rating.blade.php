@@ -1,4 +1,4 @@
-@extends('Layouts.Admin.MasterLayout')
+@extends('Layouts.Staff.MasterLayout')
 
 @section('content')
     <div class="border border-light px-5">
@@ -16,8 +16,9 @@
             </div>
         @endif
         <div class="row">
+            <h3 class="text-center mt-5 mb-3 fw-bold">Đánh giá dịch vụ</h3>
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-5 table-striped">
+                <table class="table align-middle mb-0 bg-white mt-2 table-striped">
                     <thead class="bg-light">
                         <tr>
                             <th>Mã dịch vụ</th>

@@ -13,14 +13,30 @@ $(document).ready(function () {
             $("#sumPrice").text(res.sumPrice);
         },
     });
+    $(".editRate, .replyRate").on("click", function () {
+        var container = $(this).closest(".list-group-item");
+        container.find(".mytext").show(); // Hiển thị textarea
+        container.find(".updateRate, .sameReply").show(); // Hiển thị các nút "Cập nhật" và "Mẫu"
+        container.find(".editRate, .replyRate").hide(); //
+        container.find(".replySan").hide(); // Ẩn các nút "Chỉnh sửa" và "Trả lời"
+        if ($(this).hasClass("editRate")) {
+            // Nếu là chỉnh sửa, hiển thị nội dung hiện tại trong textarea
+            var reply = container.find(".reply_rating").val();
+            container.find(".mytext").val(reply);
+        }
+    });
 
-    $("#sameReply").click(function () {
-        var sampleLetter = `TranslateGroup xin cảm ơn, phản hồi của bạn, 
-        chúng tôi sẽ khắc phục những thiếu xót và 
-        nâng cao chất lượng dịch vụ để quý khách có sự hài lòng hơn với chúng tôi.
-        <br>
+    $(".replyRate").click(function () {
+        var container = $(this).closest(".list-group-item");
+        container.find(".updateRate, .sameReply, .mytext").show();
+        container.find(".editRate, .replyRate").hide();
+    });
+
+    $(".sameReply").click(function () {
+        var container = $(this).closest(".list-group-item");
+        var sampleLetter = `TranslateGroup xin cảm ơn, phản hồi của bạn, chúng tôi sẽ khắc phục những thiếu xót và nâng cao chất lượng dịch vụ để quý khách có sự hài lòng hơn với chúng tôi.
         Xin trân thành cảm ơn!`;
-        tinymce.get("mytext").setContent(sampleLetter);
+        container.find(".mytext").val(sampleLetter);
     });
     function tinhToan(data) {
         var val = data / 100;
@@ -79,7 +95,6 @@ $(document).ready(function () {
 
     $("#detail").on("keyup", function () {
         var textareaVal = $(this);
-        console.log(textareaVal);
         textareaVal.val(sanitizeInput(textareaVal.val()));
     });
 
@@ -90,8 +105,6 @@ $(document).ready(function () {
             return "*".repeat(matched.length);
         });
     }
-
-    console.log(sanitizeInput("Đây là một ví dụ má mẹ lồn cặc cứt"));
 
     $("#search").on("keyup", function () {
         var value = $(this).val().toLowerCase();

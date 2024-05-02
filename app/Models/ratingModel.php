@@ -36,6 +36,16 @@ class ratingModel extends Model
         return $select;
     }
 
+    public function replyRating($formData)
+    {
+        $count = DB::table('detail_rating')
+            ->where('id_detail', $formData['detailId'])
+            ->update([
+                'reply_rating' => $formData['ratingReply']
+            ]);
+        return $count;
+    }
+
     public function listRatingService()
     {
         $select = DB::table('service_type as st')

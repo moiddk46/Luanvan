@@ -34,7 +34,7 @@ CREATE TABLE `assign_master` (
   CONSTRAINT `assign_master_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `users` (`id`),
   CONSTRAINT `assign_master_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order_master` (`order_id`),
   CONSTRAINT `assign_master_ibfk_3` FOREIGN KEY (`status`) REFERENCES `status_master` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,8 +43,40 @@ CREATE TABLE `assign_master` (
 
 LOCK TABLES `assign_master` WRITE;
 /*!40000 ALTER TABLE `assign_master` DISABLE KEYS */;
-INSERT INTO `assign_master` VALUES (10,8,80,2);
+INSERT INTO `assign_master` VALUES (10,8,80,4),(11,8,84,4),(12,8,85,2);
 /*!40000 ALTER TABLE `assign_master` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `detail_rating`
+--
+
+DROP TABLE IF EXISTS `detail_rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `detail_rating` (
+  `id_detail` bigint NOT NULL AUTO_INCREMENT,
+  `rating_id` bigint NOT NULL,
+  `detail_rate` longtext,
+  `rate` enum('1','2','3','4','5') NOT NULL,
+  `id_user` bigint NOT NULL,
+  `reply_rating` longtext,
+  PRIMARY KEY (`id_detail`),
+  KEY `FK_detail_rating1_idx` (`rating_id`),
+  KEY `FK_detailrating2_idx` (`id_user`),
+  CONSTRAINT `FK_detailrating1` FOREIGN KEY (`rating_id`) REFERENCES `rating` (`rating_id`),
+  CONSTRAINT `FK_detailrating2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detail_rating`
+--
+
+LOCK TABLES `detail_rating` WRITE;
+/*!40000 ALTER TABLE `detail_rating` DISABLE KEYS */;
+INSERT INTO `detail_rating` VALUES (1,1,'Dịch vụ tuyệt vời','5',4,'Cảm ơn bạn đã sử dụng dịch vụ'),(2,1,'Dịch vụ trên cả tuyệt vời','4',4,'Cảm ơn bạn rất nhiều'),(3,1,'Dịch vụ quá tuyệt vời','5',4,'Đa đa'),(4,1,'như *** ấy','4',4,'TranslateGroup xin cảm ơn, phản hồi của bạn, chúng tôi sẽ khắc phục những thiếu xót và nâng cao chất lượng dịch vụ để quý khách có sự hài lòng hơn với chúng tôi.\r\nXin trân thành cảm ơn!'),(5,1,'Đánh giá cao chất lượng dịch vụ','5',4,'Đa đa');
+/*!40000 ALTER TABLE `detail_rating` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -73,7 +105,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (11,23,4,'Yêu cầu báo giá có mã 23 của bạn đang ở trạng thái Đã trả lời','0','1'),(13,77,4,'Đơn hàng có mã 77 của bạn đang ở trạng thái Đang xử lý','1','1'),(14,78,4,'Đơn hàng có mã 78 của bạn đang ở trạng thái Đang xử lý','1','1'),(15,79,4,'Đơn hàng có mã 79 của bạn đang ở trạng thái Đang xử lý','1','1'),(16,80,4,'Đơn hàng có mã 80 của bạn đang ở trạng thái Đã xác nhận','1','1'),(17,81,4,'Đơn hàng có mã 81 của bạn đang ở trạng thái Đang xử lý','1','1'),(18,82,4,'Đơn hàng có mã 82 của bạn đang ở trạng thái Đang xử lý','1','1'),(19,24,7,'Yêu cầu báo giá có mã 24 của bạn đang ở trạng thái Chưa trả lời','0','0'),(20,83,7,'Đơn hàng có mã 83 của bạn đang ở trạng thái Đang xử lý','1','0'),(21,84,7,'Đơn hàng có mã 84 của bạn đang ở trạng thái Đang xử lý','1','0'),(22,25,4,'Yêu cầu báo giá có mã 25 của bạn đang ở trạng thái Đã trả lời','0','1'),(23,85,4,'Đơn hàng có mã 85 của bạn đang ở trạng thái Đang xử lý','1','1'),(24,26,4,'Yêu cầu báo giá có mã 26 của bạn đang ở trạng thái Chưa trả lời','0','0');
+INSERT INTO `notice` VALUES (11,23,4,'Yêu cầu báo giá có mã 23 của bạn đang ở trạng thái Đã trả lời','0','1'),(13,77,4,'Đơn hàng có mã 77 của bạn đang ở trạng thái Đang xử lý','1','1'),(14,78,4,'Đơn hàng có mã 78 của bạn đang ở trạng thái Đang xử lý','1','1'),(15,79,4,'Đơn hàng có mã 79 của bạn đang ở trạng thái Đang xử lý','1','1'),(16,80,4,'Đơn hàng có mã 80 của bạn đang ở trạng thái Đã xác nhận','1','1'),(17,81,4,'Đơn hàng có mã 81 của bạn đang ở trạng thái Đã hoàn thành','1','1'),(18,82,4,'Đơn hàng có mã 82 của bạn đang ở trạng thái Đang xử lý','1','1'),(19,24,7,'Yêu cầu báo giá có mã 24 của bạn đang ở trạng thái Chưa trả lời','0','0'),(20,83,7,'Đơn hàng có mã 83 của bạn đang ở trạng thái Đã hoàn thành','1','0'),(21,84,7,'Đơn hàng có mã 84 của bạn đang ở trạng thái Đã hoàn thành','1','0'),(22,25,4,'Yêu cầu báo giá có mã 25 của bạn đang ở trạng thái Đã trả lời','0','1'),(23,85,4,'Đơn hàng có mã 85 của bạn đang ở trạng thái Đã xác nhận','1','1'),(24,26,4,'Yêu cầu báo giá có mã 26 của bạn đang ở trạng thái Chưa trả lời','0','1');
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +179,7 @@ CREATE TABLE `order_master` (
 
 LOCK TABLES `order_master` WRITE;
 /*!40000 ALTER TABLE `order_master` DISABLE KEYS */;
-INSERT INTO `order_master` VALUES (77,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(78,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(79,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(80,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',2,'0','1','1','1'),(81,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','1','1','0'),(82,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','0','1','0'),(83,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'dichthuatthongthuong',1,'0','0','1','1'),(84,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'inantrangden',1,'0','0','0','1'),(85,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',4,'dichvideo',1,'0','0','1','1');
+INSERT INTO `order_master` VALUES (77,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(78,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(79,NULL,NULL,NULL,'2024-04-29',4,'inantrangden',1,'0','1','1','0'),(80,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',4,'1','1','1','1'),(81,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',4,'1','1','1','1'),(82,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-29',4,'dichthuatcongchung',1,'0','0','1','0'),(83,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'dichthuatthongthuong',4,'0','0','1','1'),(84,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',7,'inantrangden',4,'0','0','0','1'),(85,'Trần Thanh Mới','Hẻm 51, Hưng Lợi, Ninh Kiều, Cần Thơ','0854172887','2024-04-30',4,'dichvideo',2,'0','0','1','1');
 /*!40000 ALTER TABLE `order_master` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,6 +279,33 @@ INSERT INTO `price_service_type` VALUES (2,'dichthuatcongchung',200000,'<p>B&aac
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rating` (
+  `rating_id` bigint NOT NULL AUTO_INCREMENT,
+  `service_type_code` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `rate` float NOT NULL,
+  PRIMARY KEY (`rating_id`),
+  KEY `service_type_code` (`service_type_code`),
+  CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`service_type_code`) REFERENCES `service_type` (`service_type_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rating`
+--
+
+LOCK TABLES `rating` WRITE;
+/*!40000 ALTER TABLE `rating` DISABLE KEYS */;
+INSERT INTO `rating` VALUES (1,'dichthuatcongchung',4.6),(2,'dichthuatthongthuong',4.5),(3,'dichvideo',4),(4,'inantrangden',5),(5,'photocopytrangden(A4)',4.2),(6,'inantrangden',5.2);
+/*!40000 ALTER TABLE `rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `receipts`
 --
 
@@ -279,7 +338,7 @@ CREATE TABLE `receipts` (
 
 LOCK TABLES `receipts` WRITE;
 /*!40000 ALTER TABLE `receipts` DISABLE KEYS */;
-INSERT INTO `receipts` VALUES (10,77,4,'5000',1,1,'2024-04-29'),(11,78,4,'5000',1,1,'2024-04-29'),(12,79,4,'25000',2,2,'2024-04-29'),(13,80,4,'300000',1,1,'2024-04-29'),(14,81,4,'300000',1,1,'2024-04-29'),(15,82,4,'300000',1,1,'2024-04-29'),(16,83,7,'200000',2,1,'2024-05-02'),(17,84,7,'25000',2,2,'2024-04-30'),(18,85,4,'300000',1,1,'2024-04-30');
+INSERT INTO `receipts` VALUES (10,77,4,'5000',1,1,'2024-04-29'),(11,78,4,'5000',1,1,'2024-04-29'),(12,79,4,'25000',2,2,'2024-04-29'),(13,80,4,'300000',1,1,'2024-04-29'),(14,81,4,'300000',1,1,'2024-05-03'),(15,82,4,'300000',1,1,'2024-04-29'),(16,83,7,'200000',2,1,'2024-05-03'),(17,84,7,'25000',2,2,'2024-05-03'),(18,85,4,'300000',1,1,'2024-05-03');
 /*!40000 ALTER TABLE `receipts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -331,7 +390,7 @@ CREATE TABLE `service_type` (
 
 LOCK TABLES `service_type` WRITE;
 /*!40000 ALTER TABLE `service_type` DISABLE KEYS */;
-INSERT INTO `service_type` VALUES ('dichthuatcongchung','Dịch thuật công chứng','dichthuat','<p>Dịch t&agrave;i liệu từ tiếng Việt sang ng&ocirc;n ngữ kh&aacute;c hoặc ngược lại c&oacute; c&ocirc;ng chứng trong thời gian nhanh nhất. Dịch thuật 24h tự h&agrave;o lu&ocirc;n nắm kịp thời những quy định mới nhất của c&aacute;c l&atilde;nh sự qu&aacute;n, cơ quan nh&agrave; nước.</p>'),('dichthuatthongthuong','Dịch thuật thông thường','dichthuat','<p>Dịch thuật tới gần 100 ng&ocirc;n ngữ tr&ecirc;n khắp thế giới. Tất cả quy tr&igrave;nh c&oacute; thể xử l&yacute; online m&agrave; kh&ocirc;ng cần phải tới văn ph&ograve;ng.</p>'),('dichvideo','Dịch thuật video','dichthuat','<p>Ch&uacute;ng t&ocirc;i đ&atilde; c&oacute; nhiều năm kinh nghiệm trong lĩnh vực dịch phim v&agrave; truyền h&igrave;nh, dịch phụ đề v&agrave; lồng tiếng cho c&aacute;c chương tr&igrave;nh truyền h&igrave;nh cũng như c&aacute;c video đ&agrave;o tạo nội bộ trong doanh nghiệp. Ch&uacute;ng t&ocirc;i c&oacute; thể xử l&yacute; nhiều loại định dạng tệp tin đa phương tiện để cung cấp dịch vụ dịch thuật, lồng tiếng v&agrave; phụ đề</p>'),('inantrangden','In ấn trắng đen','inan, photocopy','<p>Dịch vụ in ấn trắng đen cung cấp cho kh&aacute;ch h&agrave;ng in ấn t&agrave;i liệu quan trọng cần thiết khi cần sử dụng giấy b&igrave;a cứng. H&atilde;y đến với ch&uacute;ng t&ocirc;i để được trải nghiệm dịch vụ.</p>'),('phiendich','Phiên dịch','dichthuat','Cung cấp dịch vụ phiên dịch đáp ứng nhu cầu của khách hàng như dịch song song, dịch cabin, dịch ứng đoạn, dịch thầm cho một buổi nói chuyện, gặp mặt, hội nghị,… Dịch thuật 24h có lợi thế cực lớn khi có sẵn đội ngũ phiên dịch viên giỏi, nhiều năm kinh nghiệm tại công ty Cổ phần Giáo dục Quốc tế Trí Tài.'),('photocopytrangden(A4)','Photocopy trắng đen (A4)','inan, photocopy','<p>Dịch vụ photocopy của ch&uacute;ng t&ocirc;i thường được sử dụng để photocopy t&agrave;i liệu với khổ A4. H&atilde;y đến với ch&uacute;ng t&ocirc;i để được trải nghiệm dịch vụ với mức gi&aacute; ưu đ&atilde;i, hấp dẫn</p>');
+INSERT INTO `service_type` VALUES ('dichthuatcongchung','Dịch thuật công chứng','dichthuat','<p>Dịch t&agrave;i liệu từ tiếng Việt sang ng&ocirc;n ngữ kh&aacute;c hoặc ngược lại c&oacute; c&ocirc;ng chứng trong thời gian nhanh nhất. Dịch thuật 24h tự h&agrave;o lu&ocirc;n nắm kịp thời những quy định mới nhất của c&aacute;c l&atilde;nh sự qu&aacute;n, cơ quan nh&agrave; nước.</p>'),('dichthuatthongthuong','Dịch thuật thông thường','dichthuat','<p>Dịch thuật tới gần 100 ng&ocirc;n ngữ tr&ecirc;n khắp thế giới. Tất cả quy tr&igrave;nh c&oacute; thể xử l&yacute; online m&agrave; kh&ocirc;ng cần phải tới văn ph&ograve;ng.</p>'),('dichvideo','Dịch thuật video','dichthuat','<p>Ch&uacute;ng t&ocirc;i đ&atilde; c&oacute; nhiều năm kinh nghiệm trong lĩnh vực dịch phim v&agrave; truyền h&igrave;nh, dịch phụ đề v&agrave; lồng tiếng cho c&aacute;c chương tr&igrave;nh truyền h&igrave;nh cũng như c&aacute;c video đ&agrave;o tạo nội bộ trong doanh nghiệp. Ch&uacute;ng t&ocirc;i c&oacute; thể xử l&yacute; nhiều loại định dạng tệp tin đa phương tiện để cung cấp dịch vụ dịch thuật, lồng tiếng v&agrave; phụ đề</p>'),('inantrangden','In ấn trắng đen','inan, photocopy','<p>Dịch vụ in ấn trắng đen cung cấp cho kh&aacute;ch h&agrave;ng in ấn t&agrave;i liệu quan trọng cần thiết khi cần sử dụng giấy b&igrave;a cứng. H&atilde;y đến với ch&uacute;ng t&ocirc;i để được trải nghiệm dịch vụ.</p>'),('photocopytrangden(A4)','Photocopy trắng đen (A4)','inan, photocopy','<p>Dịch vụ photocopy của ch&uacute;ng t&ocirc;i thường được sử dụng để photocopy t&agrave;i liệu với khổ A4. H&atilde;y đến với ch&uacute;ng t&ocirc;i để được trải nghiệm dịch vụ với mức gi&aacute; ưu đ&atilde;i, hấp dẫn</p>');
 /*!40000 ALTER TABLE `service_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,4 +556,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-01  1:15:12
+-- Dump completed on 2024-05-03  2:52:33

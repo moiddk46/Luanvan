@@ -1,4 +1,4 @@
-@extends('Layouts.Admin.MasterLayout')
+@extends('Layouts.Staff.MasterLayout')
 
 @section('content')
     <div class="container">
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                     <div class="col-8 mb-2">
-                                        <textarea name="ratingReply" class="mytext form-control mb-2" style="display: none;"></textarea>
+                                        <textarea name="ratingReply" class="mytext form-control mb-2" rows="5" style="display: none;"></textarea>
                                         @if (isset($row->reply_rating))
                                             <input type="hidden" class="reply_rating" value="{{ $row->reply_rating }}">
                                             <div class="form-order rounded bg-light p-3 replySan">
@@ -139,7 +139,6 @@
                                 </li>
                             </form>
                         @endforeach
-
                     </ul>
                 </div>
                 <div class="d-flex justify-content-center mt-3">

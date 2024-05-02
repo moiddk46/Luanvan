@@ -118,6 +118,13 @@
                                         {{ $row->rate }}
                                     </p>
                                 </div>
+                                <div class="col-8 mb-2">
+                                    @if (isset($row->reply_rating))
+                                        <div class="form-order rounded bg-light p-3 replySan">
+                                            {!! $row->reply_rating !!}
+                                        </div>
+                                    @endif
+                                </div>
                             </li>
                         @endforeach
                     </ul>

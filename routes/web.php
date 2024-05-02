@@ -14,6 +14,7 @@ use App\Http\Controllers\core\register;
 use App\Http\Controllers\pay\paymentController;
 use App\Http\Controllers\staff\calenderStaffController;
 use App\Http\Controllers\staff\homeStaffController;
+use App\Http\Controllers\staff\ratingStaffController;
 use App\Http\Controllers\staff\taskStaffController;
 use App\Http\Controllers\user\aboutController;
 use App\Http\Controllers\user\contactController;
@@ -95,6 +96,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function () {
     Route::prefix('rating')->group(function () {
         Route::get('/allRating', [ratingAdminController::class, 'listRating'])->name('listRating');
         Route::get('/detailRating/{data}', [ratingAdminController::class, 'detailRating'])->name('detailRating');
+        Route::post('/replyRating', [ratingAdminController::class, 'replyRating'])->name('replyRating');
     });
 });
 
@@ -133,5 +135,9 @@ Route::prefix('staff')->middleware('is_staff')->group(function () {
     Route::get('/detailTask/{data}', [taskStaffController::class, 'detailTask'])->name('detailTask');
     Route::post('/updateTask', [taskStaffController::class, 'updateTask'])->name('updateTask');
     Route::get('/download/{data}', [taskStaffController::class, 'getDownload'])->name('downloadTask');
-    Route::get('/calendar', [calenderStaffController::class, 'home'])->name('calenderStaff');
+    Route::prefix('rating')->group(function () {
+        Route::get('/allRatingStaff', [ratingStaffController::class, 'listRating'])->name('listRatingStaff');
+        Route::get('/detailRatingStaff/{data}', [ratingStaffController::class, 'detailRating'])->name('detailRatingStaff');
+        Route::post('/replyRatingStaff', [ratingStaffController::class, 'replyRating'])->name('replyRatingStaff');
+    });
 });

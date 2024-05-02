@@ -17,10 +17,7 @@
                     <a class="nav-link text-black display-4" href="{{ route('task') }}">Nhiệm vụ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="#">Đánh giá dịch vụ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black display-4" href="{{ route('calenderStaff') }}">Lịch làm việc</a>
+                    <a class="nav-link text-black display-4" href="{{ route('listRatingStaff') }}">Đánh giá dịch vụ</a>
                 </li>
             </ul>
             <div class="ms-auto d-flex align-items-center">
