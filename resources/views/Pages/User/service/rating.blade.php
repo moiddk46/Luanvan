@@ -31,7 +31,7 @@
                         <tr>
                             <th>Lời nhận xet</th>
                             <td class="row">
-                                <textarea name="detail" id="detail" cols="30" rows="10"></textarea>
+                                <textarea name="detail" id="detail" cols="30" rows="10" class="form-control"></textarea>
                                 <input type="hidden" name="serviceTypeCode" value="{{ $data }}">
                             </td>
                         </tr>
