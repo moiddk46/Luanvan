@@ -27,6 +27,16 @@ class priceRequestAdminController extends Controller
         return view('Pages.Admin.priceRequest.priceRequest', compact('title', 'data'));
     }
 
+    public function priceRequestSearch(Request $request)
+    {
+        $formData = $request->all();
+        $key = $formData['key'];
+
+        $data  = $this->service->getSearchPriceRequestAdmin($key);
+
+        return response()->json($data);
+    }
+
     public function detailPriceRequest($data)
     {
         $title = 'Chi tiết báo giá | Admin';

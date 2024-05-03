@@ -17,18 +17,26 @@
         @endif
         <div class="container-fluid pt-2">
             <h3 class="text-center mt-5 mb-3 fw-bold">Danh sách nhiệm vụ</h3>
-            <div class="d-flex">
-                <div class="me-2">
-                    <input type="radio" class="btn-check" name="options-base" id="allTask" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" for="allTask">Tất cả</label>
+            <div class="row">
+                <div class="d-flex col-9">
+                    <div class="me-2">
+                        <input type="radio" class="btn-check" name="options-base" id="allTask" autocomplete="off"
+                            checked>
+                        <label class="btn btn-outline-success" for="allTask">Tất cả</label>
+                    </div>
+                    <div class="me-2">
+                        <input type="radio" class="btn-check" name="options-base" id="done" autocomplete="off">
+                        <label class="btn btn-outline-success" for="done">Đã làm</label>
+                    </div>
+                    <div>
+                        <input type="radio" class="btn-check" name="options-base" id="donot" autocomplete="off">
+                        <label class="btn btn-outline-success" for="donot">Chưa làm</label>
+                    </div>
                 </div>
-                <div class="me-2">
-                    <input type="radio" class="btn-check" name="options-base" id="done" autocomplete="off">
-                    <label class="btn btn-outline-success" for="done">Đã làm</label>
-                </div>
-                <div>
-                    <input type="radio" class="btn-check" name="options-base" id="donot" autocomplete="off">
-                    <label class="btn btn-outline-success" for="donot">Chưa làm</label>
+                <div class="col-3">
+                    <input class="form-control me-2" type="search" placeholder="Tìm kiếm nhiệm vụ" id="searchTask"
+                        aria-label="Search">
+                    <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
                 </div>
             </div>
             @if (isset($data))
@@ -72,7 +80,8 @@
                                                 rounded-pill d-inline">{{ $item->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailTask', ['data' => $item->order_id]) }}" class="btn btn-outline-dark">
+                                    <a href="{{ route('detailTask', ['data' => $item->order_id]) }}"
+                                        class="btn btn-outline-dark">
                                         Chi tiết
                                     </a>
                                 </td>

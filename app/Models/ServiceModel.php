@@ -302,4 +302,16 @@ class ServiceModel extends Model
         }
         return $count;
     }
+
+    public function searchService($formData)
+    {
+        $key = $formData['key'];
+
+        $data = DB::table('service_master as sm')
+            ->join('service_type as st', 'st.service_code', '=', 'sm.service_code')
+            ->where('service_type_name', 'LIKE', $key . '%')
+            ->get()->toArray(); 
+
+        return $data;
+    }
 }

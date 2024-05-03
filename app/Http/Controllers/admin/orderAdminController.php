@@ -31,6 +31,16 @@ class orderAdminController extends Controller
         return view('Pages.Admin.order.order', compact('title', 'data', 'status'));
     }
 
+    public function orderSearch(Request $request)
+    {
+        $formData = $request->all();
+        $key = $formData['key'];
+        $data['data'] = $this->service->getSearchOrder($key);
+
+        $data['status'] = $this->service->getStatus();
+        return response()->json($data);
+    }
+
 
     public function updateStatus(orderAdminRequest $request)
     {

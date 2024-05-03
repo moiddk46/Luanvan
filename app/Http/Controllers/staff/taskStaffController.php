@@ -34,6 +34,25 @@ class taskStaffController extends Controller
         $data = $this->service->getTask();
         return response()->json($data);
     }
+
+    public function searchTask(Request $request)
+    {
+        $formData = $request->all();
+        $key = $formData['key'];
+        $idUser = $formData['idUser'];
+        $data = $this->service->searchTask($key, $idUser);
+        return response()->json($data);
+    }
+
+    public function countTaskStaff(Request $request)
+    {
+        $formData = $request->all();
+        $idUser = $formData['idUser'];
+
+        $data['countTaskStaff'] = $this->service->countTaskStaff($idUser);
+        $data['countTaskDone'] = $this->service->countTaskDone($idUser);
+        return response()->json($data);
+    }
     public function index()
     {
         $title = $this->title;

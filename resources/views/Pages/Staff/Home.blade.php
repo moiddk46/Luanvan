@@ -15,18 +15,30 @@
                 </div>
             </div>
         @endif
+        <div class="col-5 m-auto align-content-center">
+            <div class="card bg-c-blue order-card mt-5">
+                <div class="card-block">
+                    <h6 class="m-b-20">Nhiệm vụ</h6>
+                    <h2 class="text-right"><i class="bi bi-person-workspace"></i></i><span class="ms-3"
+                            id="countTask">0</span>
+                    </h2>
+                    <p class="m-b-0">Nhiệm vụ đã hoàn thành<span class="f-right" id="staffComplete">0</span>
+                        <input type="hidden" id="user_id" value="{{ Auth::user()->id }}">
+                    </p>
+                </div>
+            </div>
+        </div>
         <div class="row p-5">
             <div class="col-7 row align-items-center">
                 <div class="textcotent">
-                    <p class="fs-1 fw-bold">Công ty chúng tôi có gì?</p>
-                    <p class="fs-3">Chúng tôi tự tin với các dịch vụ đang phục vụ khách hàng hiện tại như
-                        in ấn, photocopy, dịch thuật và dịch thuật công chứng. Đảm bảo chất lượng,
-                        an toàn bảo mật thông tin cho khách hàng.
+                    <p class="fs-1 fw-bold">Trách nhiệm với công việc là ưu tiên hàng đầu</p>
+                    <p class="fs-3">Đảm bảo đúng hạng giao hàng, không lơ là, tận tụy, hết mình với công việc là phương
+                        châm của công ty chúng ta
                     </p>
                 </div>
             </div>
             <div class="col-5">
-                <img class="imgHomePage" src="{{ asset('assets/images/image1.jpg') }}" alt="slider home page">
+                <img class="imgHomePage" src="{{ asset('assets/images/nhanvien.jpg') }}" alt="slider home page">
             </div>
         </div>
     </div>

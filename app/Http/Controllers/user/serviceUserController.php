@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\ratingModel;
 use App\Models\ServiceModel;
+use Illuminate\Http\Request;
 
 class serviceUserController extends Controller
 {
@@ -37,5 +38,14 @@ class serviceUserController extends Controller
         $listRating = $rating->displayRating($data);
         $countRating = $rating->countRating($data);
         return view('Pages.User.service.serviceDetail', compact('title', 'detailService', 'serviceTypeName', 'statusReceipt', 'listRating', 'countRating'));
+    }
+
+    public function searchService(Request $request)
+    {
+        $formData = $request->all();
+
+        $data = $this->service->searchService($formData);
+
+        return response()->json($data);
     }
 }

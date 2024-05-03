@@ -28,6 +28,16 @@ class orderModel extends Model
             ->paginate(10);
         return $select;
     }
+    public function getSearchOrder($data)
+    {
+        $select  = DB::table('order_master as om')
+            ->join('service_type as st', 'st.service_type_code', '=', 'om.service_type_code')
+            ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
+            ->where('st.service_type_name', 'LIKE', $data . '%')
+            ->orWhere('om.order_id', $data)
+            ->get()->toArray();
+        return $select;
+    }
 
 
     /**

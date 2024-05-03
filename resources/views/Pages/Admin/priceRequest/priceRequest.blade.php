@@ -16,12 +16,19 @@
             </div>
         @endif
         <div class="row">
-            <div class="mt-5 ">
-                <a href="{{ route('addPriceRequest') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm yêu
-                    cầu báo giá </a>
+            <div class="row">
+                <div class="col-8 mt-5">
+                    <a href="{{ route('addPriceRequest') }}" class="btn btn-success"><i class="bi bi-plus-lg me-2"></i>Thêm
+                        yêu
+                        cầu báo giá </a>
+                </div>
+                <div class="col-4 justify-content-end mt-5 mb-3">
+                    <input class="form-control me-2" type="search" id="searchPriceRequest" placeholder="Tìm kiếm yêu cầu báo giá"
+                        aria-label="Search">
+                </div>
             </div>
             @if (isset($data))
-                <table class="table align-middle mb-0 bg-white mt-2 table-striped">
+                <table class="table align-middle mb-0 bg-white mt-2 table-striped" id="priceRequestTable">
                     <thead class="bg-light">
                         <tr>
                             <th>Mã báo giá</th>

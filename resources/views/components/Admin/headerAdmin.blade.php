@@ -7,10 +7,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="ms-auto d-flex align-items-center">
-                <form class="d-flex me-2">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-dark" type="submit"><i class="bi bi-search"></i></button>
-                </form>
                 @if (Auth::check())
                     <a class="btn btn-outline-dark" href="{{ route('logout') }}">{{ Auth::user()->name }}</a>
                 @else

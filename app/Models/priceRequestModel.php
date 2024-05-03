@@ -98,6 +98,17 @@ class priceRequestModel extends Model
             ->paginate(10);
         return $select;
     }
+    public function getSearchPriceRequestAdmin($data)
+    {
+        $select  = DB::table('price_request as pr')
+            ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
+            ->join('users as us', 'us.id', '=', 'pr.id_user')
+            ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
+            ->where('st.service_type_name', 'LIKE', $data . '%')
+            ->orWhere('pr.request_id', $data)
+            ->get()->toArray();
+        return $select;
+    }
 
     /**
      * @return array

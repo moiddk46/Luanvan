@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\admin\homeAdminController;
+use App\Http\Controllers\admin\orderAdminController;
+use App\Http\Controllers\admin\priceRequestAdminController;
 use App\Http\Controllers\ajax\ajaxServiceController;
 use App\Http\Controllers\ajax\ajaxTranslateController;
+use App\Http\Controllers\staff\taskStaffController;
 use App\Http\Controllers\user\orderUserController;
+use App\Http\Controllers\user\serviceUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +31,13 @@ Route::get('/getPrice', [ajaxServiceController::class, 'getPriceService']);
 Route::get('/getSumYear', [ajaxServiceController::class, 'getSumYear']);
 
 Route::get('/static', [homeAdminController::class, 'static']);
+
+Route::get('/searchService', [serviceUserController::class, 'searchService']);
+
+Route::get('/searchOrder', [orderAdminController::class, 'orderSearch']);
+
+Route::get('/searchPriceRequest', [priceRequestAdminController::class, 'priceRequestSearch']);
+
+Route::get('/searchTask', [taskStaffController::class, 'searchTask']);
+
+Route::get('/countTask', [taskStaffController::class, 'countTaskStaff']);
