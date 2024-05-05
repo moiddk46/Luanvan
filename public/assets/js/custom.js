@@ -10,7 +10,7 @@ $(document).ready(function () {
             $("#countCustomer").text(res.countCustomer);
             $("#countOrder").text(res.countOrder);
             $("#receiptComplete").text(res.receiptComplete);
-            $("#sumPrice").text(res.sumPrice);
+            $("#sumPrice").text(formatCurrency(res.sumPrice));
         },
     });
     $(".editRate, .replyRate").on("click", function () {

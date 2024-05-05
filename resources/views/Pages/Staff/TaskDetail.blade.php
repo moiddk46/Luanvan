@@ -55,6 +55,10 @@
                                     <td>{{ $item->quantity }} Bản</td>
                                 </tr>
                                 <tr>
+                                    <th>Số trang trong tài liệu</th>
+                                    <td>{{ $item->page }} Trang</td>
+                                </tr>
+                                <tr>
                                     <th>Tài liệu</th>
                                     <td class="row">
                                         <span class="col-6">

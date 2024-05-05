@@ -37,7 +37,7 @@ class priceRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên người dùng',
             'name.min' => 'Tên người dùng phải có ít nhất 8 ký tự',
             'address.required' => 'Vui lòng nhập địa chỉ.',
-            'address.min' => 'Địa chỉ email không hợp lệ.',
+            'address.min' => 'Địa chỉ phải có ít nhất 20 ký tự.',
             'sdt.required' => 'Vui lòng nhập số điện thoại.',
             'sdt.regex' => 'Số điện thoại không đúng định dạng',
             'content.required' => 'Vui lòng nhập nội dung.',

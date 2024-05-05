@@ -84,7 +84,7 @@
                 <div class="d-flex justify-content-center mt-3">
                     <a href="{{ route('allUser') }}" class="btn btn-secondary me-2">Quay
                         lại</a>
-                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                    <button type="submit" class="btn btn-success">Thêm</button>
                 </div>
             </form>
         </div>

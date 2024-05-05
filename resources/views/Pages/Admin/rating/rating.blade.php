@@ -40,7 +40,7 @@
                                     {{ $item->rate }}/5 <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
                                 </td>
                                 <td>
-                                    <a href="{{ route('detailRatingStaff', ['data' => $item->service_type_code]) }}"
+                                    <a href="{{ route('detailRating', ['data' => $item->service_type_code]) }}"
                                         class="btn btn-outline-dark">
                                         Chi tiết
                                     </a>
