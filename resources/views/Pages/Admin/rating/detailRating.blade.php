@@ -102,7 +102,7 @@
                 <div class="row">
                     <ul class="list-group list-group-flush mt-4 ">
                         @foreach ($listRating as $row)
-                            <form action="{{ route('replyRatingStaff') }}" method="post">
+                            <form action="{{ route('replyRating') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="detailId" value="{{ $row->id_detail }}">
                                 <li class="list-group-item">
@@ -143,7 +143,7 @@
                     </ul>
                 </div>
                 <div class="d-flex justify-content-center mt-3">
-                    <a href="{{ route('listRatingStaff') }}" class="btn btn-secondary me-2">Quay
+                    <a href="{{ route('listRating') }}" class="btn btn-secondary me-2">Quay
                         lại</a>
                 </div>
             </div>

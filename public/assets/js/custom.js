@@ -1003,12 +1003,13 @@ $(document).ready(function () {
             table.html('<p class="text-center">Chưa có nhân viên nào.</p>');
         } else {
             $.each(data.data, function (index, item) {
-                tbody.hmtl(`
+                tbody.append(`
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
+                        <td id="date">${item.updated_at}</td>
                         <td>
                         <a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
                         <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="delete">
@@ -1096,18 +1097,20 @@ $(document).ready(function () {
     function updateTable(data) {
         var tbody = $("#ordersTableBody");
         var table = $("#table-user");
+        console.log(data.data);
         tbody.empty(); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
             table.empty();
             table.html('<p class="text-center">Chưa có khách hàng nào.</p>');
         } else {
             $.each(data.data, function (index, item) {
-                tbody.html(`
+                tbody.append(`
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
                         <td>${item.email}</td>
                         <td id="date">${item.created_at}</td>
+                        <td id="date">${item.updated_at}</td>
                         <td><a href="http://127.0.0.1:8000/admin/user/detailUser/${item.id}" class="btn btn-outline-dark">Chi tiết</a>
                         <a href="http://127.0.0.1:8000/admin/user/deleteUser/${item.id}" class="btn btn-outline-danger modalTrigger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="delete">
                                         Xóa

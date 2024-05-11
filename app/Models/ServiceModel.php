@@ -215,7 +215,7 @@ class ServiceModel extends Model
             DB::table('rating')
                 ->insert([
                     'service_type_code' => $formData['serviceCode'],
-                    'rate' => '5'
+                    'rate' => '0'
                 ]);
             DB::table('service_type_img')
                 ->insert([

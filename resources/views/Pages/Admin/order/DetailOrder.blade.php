@@ -42,7 +42,7 @@
                                     <tr>
                                         <th>Địa chỉ</th>
                                         <td>{{ $item->address }}</td>
-                                    </tr>   
+                                    </tr>
                                     <tr>
                                         <th>Số điện thoại</th>
                                         <td>{{ $item->phone }}</td>
@@ -69,7 +69,7 @@
                                 <tr>
                                     <th>Ngày hoàn thành dự kiến</th>
                                     <td id="date">{{ $item->complete_time }} </td>
-                                    <input type="hidden" name="completeTime" value="{{ $item->complete_time  }}">
+                                    <input type="hidden" name="completeTime" value="{{ $item->complete_time }}">
                                 </tr>
                                 <tr>
                                     <th>Số lượng</th>
@@ -203,9 +203,9 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay
-                            lại</a>
-                        @if ($item->status_id != '4' || $item->sr_status_id != '2')
+                        <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay lại</a>
+                        @if ($item->status_id != '4' && ($item->sd_status_id != '2' || $item->sr_status_id != '1'))
+
                             <button type="submit" class="btn btn-success">Cập nhật</button>
                         @endif
                     </div>

@@ -21,7 +21,7 @@
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/js/ajax.js') }}"></script>
-<script src="https://cdn.tiny.cloud/1/n9mq20pv5j3u8w8yootjsq2z0d9ubki83b1tw30h0p6byc8t/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/nzgy3vdl9tkqo96pjxiy1p1bm42q5t94b9rw74c0kphnf4ae/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
         selector: 'textarea#mytext',

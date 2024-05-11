@@ -36,8 +36,15 @@
                                 <td>
                                     {{ $item->service_type_name }}
                                 </td>
-                                <td>
-                                    {{ $item->rate }}/5 <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                                <td >
+                                    <div class="row">
+                                        <div class="col-3">
+                                            {{ $item->rate }}/5
+                                        </div>
+                                        <div class="col-2">
+                                            <i class="bi bi-star-fill" style="color: rgb(255, 152, 18);"></i>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <a href="{{ route('detailRating', ['data' => $item->service_type_code]) }}"

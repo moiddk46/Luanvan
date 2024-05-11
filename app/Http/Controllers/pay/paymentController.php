@@ -46,7 +46,7 @@ class paymentController extends Controller
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;
         $vnp_Locale = "vn";
-        $vnp_BankCode = "NCB";
+        $vnp_BankCode = "";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -165,7 +165,7 @@ class paymentController extends Controller
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;
         $vnp_Locale = "vn";
-        $vnp_BankCode = "NCB";
+        $vnp_BankCode = "";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -237,7 +237,7 @@ class paymentController extends Controller
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;
         $vnp_Locale = "vn";
-        $vnp_BankCode = "NCB";
+        $vnp_BankCode = "";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -302,7 +302,7 @@ class paymentController extends Controller
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $formData['sum'] * 100;
         $vnp_Locale = "vn";
-        $vnp_BankCode = "NCB";
+        $vnp_BankCode = "";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
