@@ -71,10 +71,11 @@ class taskStaffController extends Controller
     public function updateTask(Request $request)
     {
         $formData = $request->all();
+        $idUser = $formData['idUser'];
         $orderId = $formData['orderId'];
         $status = $formData['status'];
 
-        $count = $this->service->updateStatus($orderId, $status);
+        $count = $this->service->updateStatus($orderId, $status, $idUser);
         $message = "Vui lòng chọn trạng thái để cập nhật";
         if ($count > 0) {
             $message = "Bạn đã cập nhật trạng thái đơn hàng thành công";

@@ -127,6 +127,7 @@ class ratingModel extends Model
                 ->join('users as us', 'us.id', '=', 'dr.id_user')
                 ->where('ra.service_type_code', $formData['serviceTypeCode'])
                 ->avg('dr.rate');
+            $averageRate = round($averageRate, 1);
             DB::table('rating')
                 ->where('service_type_code', $formData['serviceTypeCode'])
                 ->update([

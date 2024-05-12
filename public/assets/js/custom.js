@@ -71,7 +71,7 @@ $(document).ready(function () {
     $("#star5").css("width", valClass5);
 
     var itemsCount = $(".list-group-item").length;
-    if (itemsCount > 5) {
+    if (itemsCount >= 5) {
         $("#showAllButton").show();
         $("#hideAllButton").hide(); // Hiển thị nút nếu có nhiều hơn 4 mục
     }
@@ -681,12 +681,13 @@ $(document).ready(function () {
     function updateTable(data) {
         var tbody = $("#ordersTableBody");
         var table = $("#table-task");
-        tbody.empty(); // Xóa dữ liệu hiện tại
+        var value = "";
+        tbody.html(''); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
-            table.empty();
-            table.html(
-                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ đã hoàn thành nào.</p>'
-            );
+            table.html('');
+            value +=
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ đã hoàn thành nào.</p>';
+            table.html(value);
         } else {
             if ($("#messageTask").text) {
                 $(this).hide;
@@ -707,37 +708,38 @@ $(document).ready(function () {
                         statusClass = "text-bg-success";
                         break;
                 }
-                tbody.html(`
-                    <tr>
-                        <td>${item.order_id}</td>
-                        <td>${item.service_type_name}</td>
-                        <td>${item.complete_time}</td>
-                        <td>${item.order_date}</td>
-                        <td>
-                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
-                </td>
-                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
-                    </tr>
-                `);
+                value += `
+                <tr>
+                    <td>${item.order_id}</td>
+                    <td>${item.service_type_name}</td>
+                    <td>${item.complete_time}</td>
+                    <td>${item.order_date}</td>
+                    <td>
+                <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+            </td>
+                    <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                </tr>
+            `;
             });
+            console.log(value);
+            tbody.html(value);
         }
     }
 
     function updatePagination(data) {
         var pagination = $(".pagination");
-        pagination.empty(); // Xóa phân trang hiện tại
-
+        var valuePani = "";
+        pagination.html(''); // Xóa phân trang hiện tại
         if (data.total > 0) {
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
-                pagination.html(
-                    `<li class="page-item ${
-                        page === data.current_page ? "active" : ""
-                    }"><a href="#" class="page-link" onclick="fetchPage('${
-                        data.path
-                    }?page=${page}')">${page}</a></li>`
-                );
+                valuePani += `<li class="page-item ${
+                    page === data.current_page ? "active" : ""
+                }"><a href="#" class="page-link" onclick="fetchPage('${
+                    data.path
+                }?page=${page}')">${page}</a></li>`;
             }
+            pagination.html(valuePani);
         }
     }
 
@@ -779,12 +781,13 @@ $(document).ready(function () {
     function updateTable(data) {
         var tbody = $("#ordersTableBody");
         var table = $("#table-task");
-        tbody.empty(); // Xóa dữ liệu hiện tại
+        var value = "";
+        tbody.html(''); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
-            table.empty();
-            table.html(
-                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ chưa hoàn thành nào.</p>'
-            );
+            table.html('');
+            value +=
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ chưa hoàn thành nào.</p>';
+            table.html(value);
         } else {
             if ($("#messageTask").text) {
                 $(this).hide;
@@ -805,37 +808,38 @@ $(document).ready(function () {
                         statusClass = "text-bg-success";
                         break;
                 }
-                tbody.html(`
-                    <tr>
-                        <td>${item.order_id}</td>
-                        <td>${item.service_type_name}</td>
-                        <td>${item.complete_time}</td>
-                        <td>${item.order_date}</td>
-                        <td>
-                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
-                </td>
-                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
-                    </tr>
-                `);
+                value += `
+                <tr>
+                    <td>${item.order_id}</td>
+                    <td>${item.service_type_name}</td>
+                    <td>${item.complete_time}</td>
+                    <td>${item.order_date}</td>
+                    <td>
+                <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+            </td>
+                    <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                </tr>
+            `;
             });
+            tbody.html(value);
         }
     }
 
     function updatePagination(data) {
         var pagination = $(".pagination");
-        pagination.empty(); // Xóa phân trang hiện tại
+        var valuePani = "";
+        pagination.html(''); // Xóa phân trang hiện tại
 
         if (data.total > 0) {
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
-                pagination.html(
-                    `<li class="page-item ${
-                        page === data.current_page ? "active" : ""
-                    }"><a href="#" class="page-link" onclick="fetchPage('${
-                        data.path
-                    }?page=${page}')">${page}</a></li>`
-                );
+                valuePani += `<li class="page-item ${
+                    page === data.current_page ? "active" : ""
+                }"><a href="#" class="page-link" onclick="fetchPage('${
+                    data.path
+                }?page=${page}')">${page}</a></li>`;
             }
+            pagination.html(valuePani);
         }
     }
 
@@ -877,12 +881,14 @@ $(document).ready(function () {
     function updateTable(data) {
         var tbody = $("#ordersTableBody");
         var table = $("#table-task");
-        tbody.empty(); // Xóa dữ liệu hiện tại
+        var value = "";
+        console.log(tbody.html());
+        tbody.html(''); // Xóa dữ liệu hiện tại
         if (data.data.length === 0) {
-            table.empty();
-            table.html(
-                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ nào.</p>'
-            );
+            table.html('');
+            value +=
+                '<p class="text-center" id="messageTask">Chưa có nhiệm vụ nào.</p>';
+            table.html(value);
         } else {
             if ($("#messageTask").text) {
                 $(this).hide;
@@ -903,37 +909,38 @@ $(document).ready(function () {
                         statusClass = "text-bg-success";
                         break;
                 }
-                tbody.html(`
-                    <tr>
-                        <td>${item.order_id}</td>
-                        <td>${item.service_type_name}</td>
-                        <td>${item.complete_time}</td>
-                        <td>${item.order_date}</td>
-                        <td>
-                    <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
-                </td>
-                        <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
-                    </tr>
-                `);
+                value += `
+                <tr>
+                    <td>${item.order_id}</td>
+                    <td>${item.service_type_name}</td>
+                    <td>${item.complete_time}</td>
+                    <td>${item.order_date}</td>
+                    <td>
+                <span class="badge ${statusClass} rounded-pill d-inline">${item.status}</span>
+            </td>
+                    <td><a href="http://127.0.0.1:8000/staff/detailTask/${item.order_id}" class="btn btn-outline-dark">Chi tiết</a></td>
+                </tr>
+            `;
             });
+            tbody.html(value);
         }
     }
 
     function updatePagination(data) {
         var pagination = $(".pagination");
-        pagination.empty(); // Xóa phân trang hiện tại
+        var valuePani = "";
+        pagination.html(''); // Xóa phân trang hiện tại
 
         if (data.total > 0) {
             // Tạo các nút cho mỗi trang
             for (let page = 1; page <= data.last_page; page++) {
-                pagination.html(
-                    `<li class="page-item ${
-                        page === data.current_page ? "active" : ""
-                    }"><a href="#" class="page-link" onclick="fetchPage('${
-                        data.path
-                    }?page=${page}')">${page}</a></li>`
-                );
+                valuePani += `<li class="page-item ${
+                    page === data.current_page ? "active" : ""
+                }"><a href="#" class="page-link" onclick="fetchPage('${
+                    data.path
+                }?page=${page}')">${page}</a></li>`;
             }
+            pagination.html(valuePani);
         }
     }
 

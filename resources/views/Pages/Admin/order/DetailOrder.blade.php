@@ -33,6 +33,10 @@
                                     <td>{{ $item->order_id }}</td>
                                     <input type="hidden" value="{{ $item->order_id }}" name="orderId">
                                 </tr>
+                                <tr>
+                                    <th>Mã khách hàng</th>
+                                    <td>{{ $item->id_user }}</td>
+                                </tr>
                                 <input type="hidden" value="{{ $item->id_user }}" name="idUser">
                                 @if ($item->delivery == '0')
                                     <tr>
@@ -77,17 +81,29 @@
                                 </tr>
                                 <tr>
                                     <th>Số trang trong tài liệu</th>
-                                    <td class="row">
-                                        <div class="col-3 row">
-                                            <div class="col">
-                                                <input type="text" id="page" name="page" class="form-control"
-                                                    value="{{ $item->page }}">
+                                    @if ($item->status_id != '4')
+                                        <td class="row">
+
+                                            <div class="col-3 row">
+
+                                                <div class="col">
+                                                    <input type="text" id="page" name="page" class="form-control"
+                                                        value="{{ $item->page }}">
+                                                </div>
+                                                <div class="col pt-2">
+                                                    Trang
+                                                </div>
+
                                             </div>
-                                            <div class="col pt-2">
-                                                Trang
-                                            </div>
-                                        </div>
-                                    </td>
+
+                                        </td>
+                                    @else
+                                        <td>
+                                            {{ $item->page }} Trang
+                                            <input type="hidden" id="page" name="page" class="form-control"
+                                                        value="{{ $item->page }}">
+                                        </td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <th>Tài liệu</th>
@@ -203,9 +219,11 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay lại</a>
-                        @if ($item->status_id != '4' && ($item->sd_status_id != '2' || $item->sr_status_id != '1'))
-
+                        <a href="{{ route('orderAdmin') }}" class="btn btn-secondary me-2">Quay lại
+                        </a>
+                        @if (
+                            ($item->status_id != '4' && ($item->sd_status_id != '2' || $item->sr_status_id != '1')) ||
+                                ($item->status_id == '4' && ($item->sd_status == '1' || $item->sr_status_id == '1')))
                             <button type="submit" class="btn btn-success">Cập nhật</button>
                         @endif
                     </div>

@@ -123,6 +123,13 @@ class taskStaffModel extends Model
         return $select;
     }
 
+    public function getStatusName($status)
+    {
+        $select = DB::table('status_master')
+            ->where('status_id', $status)
+            ->first();
+        return $select;
+    }
     /**
      * Undocumented function
      *
@@ -134,9 +141,10 @@ class taskStaffModel extends Model
             ->get()->toArray();
         return $select;
     }
-    public function updateStatus($orderId, $status)
+    public function updateStatus($orderId, $status, $idUser)
     {
         $user = Auth::user();
+        $statusName = $this->getStatusName($status);
         $count = 0;
 
         DB::beginTransaction();
@@ -145,6 +153,16 @@ class taskStaffModel extends Model
             ->update([
                 'status' => $status
             ]);
+        DB::table('notice')
+            ->where('type_id', $orderId)
+            ->where('id_user', $idUser)
+            ->where('flash_order', '1')
+            ->update(
+                [
+                    'detail' => 'Đơn hàng có mã ' . $orderId . ' của bạn đang ở trạng thái ' . $statusName->status,
+                    'click' => '0',
+                ]
+            );
         if ($update1 > 0) {
             $update2 = DB::table('assign_master as am')
                 ->where('am.order_id', '=', $orderId)

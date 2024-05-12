@@ -40,6 +40,7 @@ class ajaxServiceModel extends Model
     {
         $sumPricesByMonth = DB::table('receipts')
             ->select(DB::raw('MONTH(receipt_date) as month'), DB::raw('SUM(sum_price) as total_sum_price'))
+            ->where('status', '2')
             ->whereYear('receipt_date', $data)
             ->groupBy(DB::raw('MONTH(receipt_date)'))
             ->orderBy('month')

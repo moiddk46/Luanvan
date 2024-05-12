@@ -35,8 +35,9 @@
                                     <input type="hidden" value="{{ $item->order_id }}" name="orderId">
                                 </tr>
                                 <tr>
-                                    <th>Tên khách hàng</th>
-                                    <td>{{ $item->name }}</td>
+                                    <th>Mã khách hàng</th>
+                                    <td>{{ $item->id_user }}</td>
+                                    <input type="hidden" name="idUser" value="{{ $item->id_user }}">
                                 </tr>
                                 <tr>
                                     <th>Loại dịch vụ</th>

@@ -151,7 +151,7 @@
                                     </div>
                                     @if ($item->status_id == '4')
                                         <div class="col-2">
-                                            <a href="{{ route('giveOrder', ['data' => $item->order_id, 'serviceCode'=> $item->service_type_code]) }}"
+                                            <a href="{{ route('giveOrder', ['data' => $item->order_id, 'serviceCode' => $item->service_type_code]) }}"
                                                 class="btn btn-success  @if ($item->give_flag == 1) disabled @endif">Đã
                                                 nhận được
                                                 hàng</a>
@@ -313,8 +313,11 @@
                                 <div class="d-flex justify-content-center mt-4">
                                     <a href="{{ route('cart') }}" class="btn btn-secondary me-2">Quay
                                         lại</a>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" id="orderButton">Xác nhận</button>
+                                    @if ($item->check_page != '0')
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" id="orderButton">Xác nhận</button>
+                                    @endif
+
                                 </div>
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -453,7 +456,7 @@
                                         <div class="form-text text-danger fw-bold col-10">Số trang đã được đúng tôi
                                             kiểm
                                             tra,
-                                            nếu không đúng vui lòng liên hệ lại với chúng tôi. </div>
+                                            nếu không đúng vui lòng liên hệ l   ại với chúng tôi. </div>
                                     @endif
                                 </div>
 

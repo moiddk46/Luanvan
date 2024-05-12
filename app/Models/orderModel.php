@@ -580,7 +580,9 @@ class orderModel extends Model
 
     public function sumPrice(): int
     {
-        $sum = DB::table('order_detail')->sum('unit_price');
+        $sum = DB::table('receipts')
+        ->where('status', '2')
+        ->sum('sum_price');
         return $sum;
     }
 
