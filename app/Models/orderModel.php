@@ -25,6 +25,7 @@ class orderModel extends Model
         $select  = DB::table('order_master as om')
             ->join('service_type as st', 'st.service_type_code', '=', 'om.service_type_code')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
+            ->orderBy('om.order_date', 'desc')
             ->paginate(10);
         return $select;
     }
@@ -52,6 +53,7 @@ class orderModel extends Model
             ->join('service_type as st', 'st.service_type_code', '=', 'om.service_type_code')
             ->join('status_master as sm', 'sm.status_id', '=', 'om.status')
             ->where('id_user', $user->id)
+            ->orderBy('om.order_date', 'desc')
             ->paginate(10);
         return $select;
     }
@@ -153,21 +155,21 @@ class orderModel extends Model
         $statusName = $this->getStatusName($status);
         $count = 0;
         $date = Carbon::now();
-        $update  = DB::table('order_master')
+        $update1  = DB::table('order_master')
             ->where('order_id', '=', $orderId)
             ->update([
                 'status' => $status,
                 'check_page' => '1'
             ]);
-        if ($update > 0) {
+        if ($update1 > 0) {
             $count++;
         }
-        $update  = DB::table('order_detail')
+        $update2  = DB::table('order_detail')
             ->where('order_id', '=', $orderId)
             ->update([
                 'page' => $page,
             ]);
-        if ($update > 0) {
+        if ($update2 > 0) {
             $count++;
         }
 
@@ -181,13 +183,13 @@ class orderModel extends Model
                     'click' => '0',
                 ]
             );
-        $update = DB::table('receipts')
+        $update3 = DB::table('receipts')
             ->where('id_order', $orderId)
             ->update([
                 'status' => $statusReceipt,
                 'receipt_date' => $date,
             ]);
-        if ($update > 0) {
+        if ($update3 > 0) {
             $count++;
         }
         $select = DB::table('order_master as om')
@@ -196,20 +198,24 @@ class orderModel extends Model
             ->whereNot('om.status', KCconst::DB_STATUS_ORDER_HANDLING)
             ->count();
         if ($select > 0) {
-            $update  = DB::table('assign_master')
+            $update4  = DB::table('assign_master')
                 ->where('order_id', '=', $orderId)
                 ->update([
-                    'status' => $status
+                    'status' => $status,
+                    'staff_id' => $staff
                 ]);
+            if ($update4 > 0) {
+                $count++;
+            }
         } else {
             if (isset($staff)) {
-                $update = DB::table('assign_master')->insert([
+                $update5 = DB::table('assign_master')->insert([
                     'staff_id' => $staff,
                     'order_id' => $orderId,
                     'status' => $status
                 ]);
             }
-            if ($update > 0) {
+            if ($update5 > 0) {
                 $count++;
             }
         }
@@ -581,8 +587,8 @@ class orderModel extends Model
     public function sumPrice(): int
     {
         $sum = DB::table('receipts')
-        ->where('status', '2')
-        ->sum('sum_price');
+            ->where('status', '2')
+            ->sum('sum_price');
         return $sum;
     }
 

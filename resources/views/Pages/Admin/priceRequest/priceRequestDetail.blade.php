@@ -84,9 +84,9 @@
                                     <td class="row">
                                         <div class="col-3 row">
                                             <div class="col">
-                                                <input type="text" id="complete_time" name="completeTime"
+                                                <input type="number" id="complete_time" name="completeTime"
                                                     class="form-control"
-                                                    value="{{ !empty($item->complete_time) ? $item->complete_time : '' }}">
+                                                    value="{{ !empty($item->complete_time) ? $item->complete_time : '1' }}" min="1">
                                             </div>
                                             <div class="col pt-2">
                                                 Ngày
@@ -99,9 +99,9 @@
                                     <td class="row">
                                         <div class="col-3 row">
                                             <div class="col">
-                                                <input type="text" id="page" name="page"
+                                                <input type="number" id="page" name="page"
                                                     class="form-control"
-                                                    value="{{ $item->page }}">
+                                                    value="{{ $item->page }}" min="1">
                                             </div>
                                             <div class="col pt-2">
                                                 Trang
@@ -114,8 +114,8 @@
                                     <td class="row">
                                         <div class="col-6 row">
                                             <div class="col">
-                                                <input type="text" id="price" name="price" class="form-control"
-                                                    value="{{ !empty($item->price) ? $item->price : '' }}">
+                                                <input type="number" id="price" name="price" class="form-control"
+                                                    value="{{ !empty($item->price) ? $item->price : $item->price_service }}" min="1">
                                             </div>
                                             <div class="col pt-2">
                                                 VND

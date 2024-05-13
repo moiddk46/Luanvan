@@ -87,8 +87,8 @@
                                             <div class="col-3 row">
 
                                                 <div class="col">
-                                                    <input type="text" id="page" name="page" class="form-control"
-                                                        value="{{ $item->page }}">
+                                                    <input type="number" id="page" name="page" class="form-control"
+                                                        value="{{ $item->page }}" min="1">
                                                 </div>
                                                 <div class="col pt-2">
                                                     Trang

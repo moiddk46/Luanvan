@@ -90,7 +90,7 @@
                                     <td class="row">
                                         <div class="col-lg-2 col-md-4 col-sm-4">
                                             <input class="form-control" type="number" id="price" name="price"
-                                                value="{{ $item->price }}">
+                                                value="{{ $item->price }}" min="1">
                                         </div>
                                         <div class="col align-content-center">
                                             VND

@@ -80,6 +80,7 @@ class priceRequestModel extends Model
             ->join('users as us', 'us.id', '=', 'pr.id_user')
             ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
             ->where('id_user', $user->id)
+            ->orderBy('pr.request_date', 'desc')
             ->paginate(10);
         return $select;
     }
@@ -95,6 +96,7 @@ class priceRequestModel extends Model
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
             ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
+            ->orderBy('pr.request_date', 'desc')
             ->paginate(10);
         return $select;
     }
@@ -117,9 +119,11 @@ class priceRequestModel extends Model
     {
 
         $select  = DB::table('price_request as pr')
+            ->select('pr.*', 'st.*', 'sm.*', 'pt.price as price_service', 'us.*')
             ->join('service_type as st', 'st.service_type_code', '=', 'pr.service_type_code')
             ->join('users as us', 'us.id', '=', 'pr.id_user')
             ->join('status_reply as sm', 'sm.status_id', '=', 'pr.status')
+            ->join('price_service_type as pt', 'pt.service_type_code', '=', 'st.service_type_code')
             ->where('pr.request_id', $data)
             ->get()->toArray();
         return $select;

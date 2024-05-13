@@ -57,7 +57,7 @@
                                 <td class="row">
                                     <div class="col-2">
                                         <input class="form-control" type="number" name="completeTime" id="completeTime"
-                                            value="1">
+                                            value="1" min="1">
                                     </div>
                                     <div class="col-4  align-content-center ">
                                         Ngày( Bắt
@@ -70,7 +70,7 @@
                                 <td class="row">
                                     <div class="col-2">
                                         <input class="form-control" type="number" min="1" name="quantity"
-                                            id="quantity" value="1">
+                                            id="quantity" value="1" min="1">
                                     </div>
                                     <div class="col-1 align-content-center">
                                         Bản

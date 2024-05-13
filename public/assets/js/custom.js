@@ -109,12 +109,13 @@ $(document).ready(function () {
     });
 
     function sanitizeInput(input) {
-        var profanity = ["má", "mẹ", "lồn", "cặc", "cứt"];
+        var profanity = ["má", "mẹ", "lồn", "cặc", "cứt", "cac",];
         var regex = new RegExp(profanity.join("|"), "gi");
         return input.replace(regex, function (matched) {
             return "*".repeat(matched.length);
         });
     }
+    
     $("#resultSearch").hide();
     $("#search").on("keyup", function () {
         $("#resultSearch").show();

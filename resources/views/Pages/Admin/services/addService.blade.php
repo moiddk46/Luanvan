@@ -77,7 +77,7 @@
                             <th>Giá</th>
                             <td class="row">
                                 <div class="col-2">
-                                    <input class="form-control" type="number" id="price" name="price">
+                                    <input class="form-control" type="number" id="price" name="price" min="1">
                                 </div>
                                 <div class="col align-content-center">
                                     VND
